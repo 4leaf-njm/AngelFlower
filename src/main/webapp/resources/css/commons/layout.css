@@ -1,0 +1,128 @@
+@CHARSET "UTF-8";
+
+/* util area */
+.util{height: 30px; background: #f4f4f4; border-bottom: 3px solid #e4e4e4;}
+.util > div {width: 1200px; margin: 0 auto;}
+.util .util_left {float: left; margin: 5px 0 0 80px;}
+.util .util_left > li {float: left; margin-right: 20px; color: #666165; font-weight: bold;}
+.util .util_left > li a {font-size: 14px;}
+.util .util_right {float: right; margin: 5px 0 0 0;}
+.util .util_right > li {float: left; margin-left: 23px; color: #666666; font-weight: bold;}
+.util .util_right > li:after {content: '|'; position: relative; left: 13px;}
+.util .util_right > li:last-child:after {content: '';}
+.util .util_right > li a {font-size: 14px;}
+
+/* logo area */
+.logo {height: 170px;}
+.logo > div {position: relative; width: 1200px; height: 170px; margin: 0 auto; text-align: center;}
+.logo > div > h1 {position: relative; top: 60px; right: 10px;}
+.logo > div > p {position: absolute; left: 40px; bottom: 5px;}
+.logo > div > div {position: absolute; right: 10px; bottom: 10px;}
+.logo .ad {position: relative; top: -20px; right: 35px;}
+.logo .ad p {display: inline-block; vertical-align: middle; color: #383838; font-size: 13px; font-weight: bold;}
+.logo .ad p > span {display: block; padding-bottom: 3px; color: #707070; font-size: 11px;}
+.logo .ad div {position: absolute; top: -10px; right: 60px; font-size: 0;}
+.logo .search p {padding-bottom: 5px; color: #666666; font-size: 13px; font-weight: bold;}
+.logo .search input {width: 225px; height: 30px; margin-left: 75px; border: 2px solid #503f21;}
+.logo .search a {background: #f5a100; border: 2px solid #e29700; border-radius: 5px; padding: 7px 14px; color: #fff; font-size: 14px; font-weight: bold;}
+
+/* gnb area */
+.gnb {height: 36px; background: #503f21; border-top: 3px solid #44361c; border-bottom: 3px solid #44361c;}
+.gnb > div {width: 1200px; margin: 0 auto;}
+.gnb ul {text-align: center; font-size: 0;}
+.gnb ul > li{position: relative; display: inline-block; padding: 0 4px;}
+.gnb ul > li:after {content: ''; position: absolute; top: 8px; left: 0; width: 1.5px; height: 20px; background: #fff;}
+.gnb ul > li:first-child:after {display: none;}
+.gnb ul > li a {display: inline-block; height: 36px; line-height: 36px; padding: 0 16px; color: #fff; font-size: 19px; font-weight: bold;}
+
+/* category area */
+.category {width: 1200px; margin: 0 auto;}
+.category ul {margin: 80px 0 0;}
+.category ul > li {position: relative; display: inline-block; margin: 0 12px;}
+.category ul > li img {position: absolute; top: -50px; left: -20px;}
+.category ul > li a {display: block; width: 130px; height: 60px; padding: 12px 0 0 80px; text-align: center; border: 1px solid #e4e4e4; font-size: 25px; font-weight: bold; color: #000;}
+.category ul > li a span {display: block; padding: 5px 0 0 0; font-size: 13px; color: #666666;}
+
+/* visual area */
+.visual {width: 1100px; height: 370px; margin: 70px auto 60px; border: 1px solid #ababab;}
+
+/* item area */ 
+.item {width: 1200px; margin: 0 auto 80px; padding: 20px 0 0 0; border-top: 2px solid #e4e4e4;}
+.item .top {background: url(../../images/bg/bg_item.png) no-repeat right top; border-bottom: 7px solid #e4e4e4;}
+.item .top h2 {display: inline-block; padding: 0 0 0 10px; font-size: 30px; font-weight: bold;}
+.item .top span {padding: 0 0 0 7px; font-size: 13px; font-weight: bold; color: #595959;}
+.item .top ul {display: inline-block; float: right; font-size: 0; margin-right: 25px;}
+.item .top ul li {position: relative; display: inline-block; padding: 0 7px;}
+.item .top ul li:after {content:''; position: absolute; top: 17px; left: 0; width: 1px; height: 15px; background: #666666;}
+.item .top ul li:first-child:after {display: none;}
+.item .top ul li a {display: block; height: 50px; padding: 0 10px; line-height: 50px; font-size: 15px; font-weight: bold; color: #666666;}
+.item .top ul li.on a {color: #fe0355;}
+.item .top table {width: 1100px; margin: 40px auto 45px; border: 2px solid #e4e4e4;}
+.item .top table td {padding: 20px 30px; border: 2px solid #e4e4e4;}
+.item .top table td div {position: relative; display: inline-block; top: 30px; left: 20px;}
+.item .top table td h3 {color: #454545; font-size: 16px; font-weight: bold;}
+.item .top table td .price {padding: 20px 0 5px; color: #454545; font-weight: bold; font-size: 16px;}
+.item .top table td .price del {padding: 0 10px 0 0; color: #696969; font-size: 14px;}
+.item .top table td .save {color: #5d5d5d; font-size: 14px; font-weight: bold;}
+.item .top table td .save span {display: inline-block; margin: 0 5px 0 0; padding: 1px 2px; width: 40px; height: 20px; text-align: center; background: #cd2224; color: #fefbf4; line-height: 20px;}
+.item .top table td.one {padding: 0; text-align: center;}
+.item .top table td.one h3 {margin: 30px 0 0 0;}
+.item .top table td.one .save {margin: 7px 0 0 0;}
+
+.item .item_list {width: 1200px; margin: 5px auto 0; border-top: 2px solid #e4e4e4;}
+.item .list {text-align: center;}
+.item .list li {width: 20%; display: inline-block; margin: 40px 20px 30px;}
+.item .list li > div {margin: 15px 0 0 0; text-align: left;}
+.item .list li > div h3 {padding: 0 0 25px 0; color: #454545; font-size: 17px;}
+.item .list li > div p {margin: 9px 0; font-size: 16px; color: #595959;}
+.item .list li > div p.sale strong {font-size: 19px; padding: 0 6px 0 0;}
+.item .list li > div p.save span {display: inline-block; width: 45px; height: 20px; margin: 0 10px 0 0; padding: 1px 2px; text-align: center; background: #ca2223; color: #fcf2ee; font-size: 15px; line-height: 20px;}
+
+.item .paging {margin: 60px 0 0 0; text-align: center; font-size: 0;}
+.item .paging li {display: inline-block; margin: 0 6px;}
+.item .paging li a {display: block; width: 35px; height: 35px; line-height: 35px; border: 1px solid #e4e4e4; color: #a6a6a6; background: #fff;}
+.item .paging li.on a {background: #e2161c; border: 1px solid #e2161c; color: #fff;}
+
+/* sub area */
+.sub {width: 1200px; margin: 0 auto;}
+.sub > div {display: inline-block;}
+.sub .account {width: 320px;}
+.sub .account > img {position: relative; top: 15px; right: 40px;}
+.sub .account > div {position: relative; width: 206px; padding: 15px 0; border-bottom: 2px solid #efefef;}
+.sub .account > div.bank03 {border: none;}
+.sub .account > div > img {position: absolute; top: 5px; right: -84px;}
+.sub .account > div p {padding: 4px 0 0 0; font-size: 23px; font-weight: bold; font-family: HY헤드라인M}
+.sub .account > div.bank01 p {color: #ff9900;}
+.sub .account > div.bank02 p {color: #49ab48;}
+.sub .account > div.bank03 p {color: #426bb2;}
+.sub .board {width: 540px;}
+.sub .board > div {position: relative; margin: 0 0 30px 0;}
+.sub .board > div > p {position: absolute; top: 0; right: 0;}
+.sub .board > div ul {padding: 0 0 0 40px; list-style: disc;}
+.sub .board > div ul li {position: relative; width: 100%; padding: 5px 0;}
+.sub .board > div ul li a {color: #333333; font-size: 15px;}
+.sub .board > div ul li span {position: absolute; top: 0; right: 0; color: #999999;}
+.sub > img {margin: 55px 0 0 20px; vertical-align: top;}
+
+/* quick menu */
+.quick {position: absolute; top: 300px; right: 12px; width: 135px;}
+.quick > h2 {height: 30px; line-height: 30px; text-align: center; color: #fff; background: #364058; border: 3px solid #242b41;}
+.quick > div {padding: 10px; text-align: center; border: 3px solid #e4e4e4; border-top: none;}
+.quick > div h3 {color: #4e4e4e; font-family: HY헤드라인M; font-size: 14px;}
+.quick > div ul {margin: 10px 0 0 0; padding: 8px; background: #e9f0fa;}
+.quick > div ul li {width: 90px; margin: 0 auto 10px; padding: 5px 0 10px; background: #fff; text-align: center;}
+.quick > div ul li:last-child {margin-bottom: 0;}
+.quick > div ul li p {padding: 5px 0 0 0; color: #666666; font-size: 10px; font-weight: bold;}
+.quick > p.cart {border: 3px solid #364058;}
+.quick > p.top {margin: 20px 0 0 0; text-align: center; background: url(../../images/bullet/bu_arrow_top.png) no-repeat center top}
+.quick > p.top a {display: block; padding: 10px 5px 0; color: #303030; font-size: 13px; font-weight: bold;}
+
+/* footer area */
+#footer > div {overflow: hidden; width: 1200px; margin: 0 auto; border-top: 2px solid #000;}
+#footer > div > ul {float: left; padding-top: 5px; font-size: 0;}
+#footer > div > ul > li {position: relative; display: inline-block; padding: 0 10px;}
+#footer > div > ul > li:after {content: ''; position: absolute; top: 14px; left: 0; width: 2px; height: 16px; background: #d6e0ef;}
+#footer > div > ul > li:first-child:after {display: none;}
+#footer > div > ul > li a {display: inline-block; height: 45px; line-height: 45px; color: #333333;}
+#footer > div > select {float: right; margin-top: 10px; width: 150px; height: 30px; font-size: 13px;}
+#footer > address {width: 860px; margin: 70px auto 50px; line-height: 200%;}
