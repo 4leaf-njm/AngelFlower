@@ -3,7 +3,7 @@
 /* util area */
 .util{height: 30px; background: #f4f4f4; border-bottom: 3px solid #e4e4e4;}
 .util > div {width: 1200px; margin: 0 auto;}
-.util .util_left {float: left; margin: 5px 0 0 80px;}
+.util .util_left {float: left; margin: 5px 0 0 0;}
 .util .util_left > li {float: left; margin-right: 20px; color: #666165; font-weight: bold;}
 .util .util_left > li a {font-size: 14px;}
 .util .util_right {float: right; margin: 5px 0 0 0;}
@@ -34,6 +34,8 @@
 .gnb ul > li:after {content: ''; position: absolute; top: 8px; left: 0; width: 1.5px; height: 20px; background: #fff;}
 .gnb ul > li:first-child:after {display: none;}
 .gnb ul > li a {display: inline-block; height: 36px; line-height: 36px; padding: 0 16px; color: #fff; font-size: 19px; font-weight: bold;}
+
+#container {position: relative; width: 1200px; margin: 0 auto;}
 
 /* category area */
 .category {width: 1200px; margin: 0 auto;}
@@ -88,7 +90,7 @@
 .sub > div {display: inline-block;}
 .sub .account {width: 320px;}
 .sub .account > img {position: relative; top: 15px; right: 40px;}
-.sub .account > div {position: relative; width: 206px; padding: 15px 0; border-bottom: 2px solid #efefef;}
+.sub .account > div {position: relative; width: 222px; padding: 15px 0; border-bottom: 2px solid #efefef;}
 .sub .account > div.bank03 {border: none;}
 .sub .account > div > img {position: absolute; top: 5px; right: -84px;}
 .sub .account > div p {padding: 4px 0 0 0; font-size: 23px; font-weight: bold; font-family: HY헤드라인M}
@@ -105,7 +107,7 @@
 .sub > img {margin: 55px 0 0 20px; vertical-align: top;}
 
 /* quick menu */
-.quick {position: absolute; top: 300px; right: 12px; width: 135px;}
+.quick {position: absolute; top: 0; right: -150px; width: 135px;}
 .quick > h2 {height: 30px; line-height: 30px; text-align: center; color: #fff; background: #364058; border: 3px solid #242b41;}
 .quick > div {padding: 10px; text-align: center; border: 3px solid #e4e4e4; border-top: none;}
 .quick > div h3 {color: #4e4e4e; font-family: HY헤드라인M; font-size: 14px;}
