@@ -6,7 +6,6 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>엔젤 플라워</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/commons/default.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/commons/layout.css" />
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
@@ -23,8 +22,8 @@
 					<li><a href="#">바로주문전화 <span>1588-8282</span></a></li>
 				</ul>
 				<ul class="util_right">
-					<li><a href="#">로그인</a></li>
-					<li><a href="#">회원가입</a></li>
+					<li><a href='<c:url value="/commons/login.do" />'>로그인</a></li>
+					<li><a href='<c:url value="/commons/join.do" />'>회원가입</a></li>
 					<li><a href="#">주문내역조회</a></li>
 					<li><a href="#">마이페이지</a></li>
 					<li><a href="#">찾아오시는길</a></li>

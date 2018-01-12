@@ -1,0 +1,26 @@
+@CHARSET "UTF-8";
+
+.content {border-top: 5px solid #e4e4e4; margin: 10px 0;}
+.content > h2 {margin: 4px 0; padding: 25px 0 0 40px; border-top: 3px solid #e4e4e4; font-family: '한컴 소망 B'; font-size: 28px; font-weight: bold; color: #595959;}
+.content > p {padding: 5px 0 0 45px; font-family: '한컴 소망 B'; font-size: 16px; font-weight: bold; color: #595959;}
+
+.tap {width: 1150px; margin: 70px auto 0; border-bottom: 7px solid #7f7f7f; font-size: 0; text-align: center;}
+.tap > li {display: inline-block; width: 300px; height: 56px; line-height: 56px; background: #fff; text-align: center; font-family: '한컴 소망 B'; font-size : 22px; font-weight: bold; color: #7f7f7f; }
+.tap > li.on {color: #fff; background: #7f7f7f;}
+
+.tap_content {display: none; width: 1150px; }
+.tap_content.on {display: block;}
+
+#step2 {width: 1050px; margin: 90px auto;}
+#step2 .form01 {padding: 5px 0; background: #fafafa; border-top: 1px solid #e6e6e6; border-bottom: 1px solid #e6e6e6;}
+#step2 .form02 {padding: 5px 0;}
+#step2 .form03 {padding: 2px 0; border-top: 1px solid #e6e6e6; border-bottom: 1px solid #e6e6e6;}
+#step2 .row {margin: 13px 0;}
+#step2 label {display: inline-block; width: 150px; padding: 0 0 0 26px; mfont-family: '한컴 소망 B'; font-size: 15px; font-weight: bold; color: #333333;}
+#step2 .input01 {width: 70px;}
+#step2 .input02 {width: 185px;}
+#step2 .input03 {width: 500px;}
+#step2 .space {padding: 0 4px;}
+#step2 .info {display: inline-block; padding: 0 0 0 25px; font-family: '한컴 소망 B'; font-size: 13px; color: #ff0000;}
+#step2 .btn_white {display: inline-block; margin: 0 0 0 15px; padding: 10px 8px; border: 1px solid #dddddd; border-radius: 5px; background: #fff; font-family: '한컴 소망 B'; font-size: 14px; font-weight: bold; color: #000;}
+#step2 .btn_join {display: block; margin: 60px auto; width: 250px; height: 70px; line-height: 70px; text-align: center; background: #e2161c; font-family: '한컴 소망 B'; font-size: 25px; font-weight: bold; color: #fff;}
