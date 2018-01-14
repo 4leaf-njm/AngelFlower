@@ -45,7 +45,7 @@ h2.title {margin: 40px 0 5px; color: #666666; font-size: 28px; font-weight: bold
 .tap1 .top > p {display: inline-block; margin: 0 29px; vertical-align: top; font-size: 14px;}
 .tap1 .bottom {padding: 20px 0; background: #fafafa;}
 .tap1 .bottom > p {padding: 0 50px; line-height: 170%; font-size: 14px;}
-.tap1 .bottom > p > img {padding 0 7px 0 0;}
+.tap1 .bottom > p > img {padding: 0 7px 0 0;}
 
 .tap2 {width: 1000px; margin: 10px auto; border-top: 1px solid #dddddd; border-bottom: 2px solid #dddddd;}
 .tap2 > h3 {display: inline-block; width: 180px; height: 400px; line-height: 400px; text-align: center; vertical-align: top; color: #898989; font-size: 23px; font-weight: bold; background: #f7f7f7;}
@@ -61,3 +61,7 @@ h2.title {margin: 40px 0 5px; color: #666666; font-size: 28px; font-weight: bold
 .tap3 > div > p {display: inline-block; margin: 20px 0 0 0; padding: 0 0 0 15px; background: url(../../images/bullet/bu_arrow_right_02.gif) no-repeat 0px 5px; font-size: 19px;}
 .tap3 > div > ul li {line-height: 170%;}
 .tap3 > div li span {color: #c40c0e;}
+
+.slider {text-align: center;}
+.slider > ul {margin: 20px 0 0 0;}
+.slider > ul li {display:inline-block;}

@@ -69,11 +69,19 @@
 					location.href='<c:url value="productDetail.do" />';
 				})
 			</script>
-			
-			
 		</div>
 	</div>
 	
+	<div class="slider">
+		<img src="${pageContext.request.contextPath }/resources/images/item/sample_06.jpg" width="340" height="500"/>
+		<ul>
+			<li><img src="${pageContext.request.contextPath }/resources/images/item/slide01.jpg" /></li>
+			<li><img src="${pageContext.request.contextPath }/resources/images/item/slide02.jpg" /></li>
+			<li><img src="${pageContext.request.contextPath }/resources/images/item/slide03.jpg" /></li>
+			<li><img src="${pageContext.request.contextPath }/resources/images/item/slide04.jpg" /></li>
+			<li><img src="${pageContext.request.contextPath }/resources/images/item/slide05.jpg" /></li>
+		</ul>
+	</div>
 	<%@ include file="/WEB-INF/views/include/quick.jsp" %>
 </div>
 <!-- container (E) -->
