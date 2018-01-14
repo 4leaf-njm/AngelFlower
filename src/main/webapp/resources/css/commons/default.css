@@ -8,7 +8,7 @@ body,div,dl,dt,dd,h1,h2,h3,h4,h5,h6,form,fieldset,p,th,td,input,textarea,select,
 textarea {width: 100%;}
 select, input, img, button {vertical-align: middle;}
 ul, ol{list-style-type: none;}
-.hide, legend, hr, caption span {position: absolute; left: -3000%;}
+.hide, legend, caption span {position: absolute; left: -3000%;}
 em, address {font-style: normal;}
 table {border-collapse: collapse; border-spacing: 0; width: 100%;}
 a {color: #666; text-decoration: none;}

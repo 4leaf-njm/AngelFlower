@@ -1,0 +1,63 @@
+@CHARSET "UTF-8";
+
+div.title {text-align: center; margin: 10px 0 20px;}
+div.title > h3 {font-family: '한컴 소망 B'; font-size: 27px; color: #252525;}
+div.title > p {margin: 5px 0 0 0;}
+div.title > p span {margin: 0; }
+.img_prod {width: 400px; height: 545.5px; border: 2px solid #ededed; background: #fafafa; vertical-align: top;}
+
+.info {display: inline-block; padding: 0 0 0 30px;}
+.detail {display: inline-block; width: 700px; border-top: 3px solid #bcbcbc;}
+.detail th,
+.detail td {border: 1px solid #ebebeb; font-family: '한컴 소망 B';}
+.detail th {width: 140px; height: 50px; background: #fafafa; color: #333333; text-align: left; padding: 0 0 0 30px;}
+.detail td {padding: 0 0 0 25px; width: 160px;}
+.detail td.price {color: #d81f25;}
+.detail td.price b {font-size: 24px; padding: 0 5px 0 0;}
+.detail td.number > div {position: relative; top: -7px; display: inline-block; width: 45px; height: 26px; padding: 4px 5px 0 0; text-align: right; border: 2px solid #cccccc;}
+.detail td.number > span {position: relative; top: 5.5px; display: inline-block;}
+.detail td.number > span img {display: block; margin: 2.5px 0; cursor: pointer;}
+
+.btn_box {padding: 20px 0 0 0;}
+.btn_box a {display: inline-block; text-align: center; font-family: '한컴 소망 B'; font-size: 27px; font-weight: bold;}
+.btn_box .buy {width: 250px; height: 84px; line-height: 84px; color: #fff; background: #e2161c;}
+.btn_box .cart {width: 250px; height: 84px; line-height: 84px; color: #fff; background: #262626; margin: 0 15px;}
+.btn_box .zim {width: 157px; height: 84px; line-height: 84px; color: #262626; background: #fff; border: 2px solid #a6a6a6;}
+.btn_box .ad {width: 694px; height: 110px; line-height: 110px; margin: 20px 0 0 0; color: #000; background: #fff; border: 3px solid #000; font-family: '양재 튼튼체 B'; font-size: 45px;}
+
+h2.title {margin: 40px 0 5px; color: #666666; font-size: 28px; font-weight: bold; font-family: '양재 튼튼체 B'}
+
+.rel_prod {padding: 40px 0;}
+.rel_prod ul {text-align: center;}
+.rel_prod li {display: inline-block; width: 20%; margin: 0 10px;}
+.rel_prod li > div {margin: 15px 0 0 0; padding: 0 0 0 38px; text-align: left;}
+.rel_prod li > div h3 {padding: 0 0 15px 0; color: #454545; font-size: 17px;}
+.rel_prod li > div p {margin: 9px 0; font-size: 16px; color: #595959;}
+.rel_prod li > div p.sale strong {font-size: 19px; padding: 0 6px 0 0;}
+
+.tap1 {width: 1150px; margin: 30px auto 70px;}
+.tap1 > ul {border-bottom: 2px solid #dfdfdf; padding: 0 0 17px; font-size: 1px;}
+.tap1 > ul > li {display:inline-block; margin: 0 20px; color: #595959; font-size: 16px;}
+.tap1 > div {border-bottom: 2px solid #eaeaea;}
+.tap1 > div > img {width: 110px; padding: 20px 0 0; vertical-align: top;}
+.tap1 > div > div {display: inline-block;}
+.tap1 .top {padding: 20px 0; border-bottom: 1px dashed #cccccc;}
+.tap1 .top > p {display: inline-block; margin: 0 29px; vertical-align: top; font-size: 14px;}
+.tap1 .bottom {padding: 20px 0; background: #fafafa;}
+.tap1 .bottom > p {padding: 0 50px; line-height: 170%; font-size: 14px;}
+.tap1 .bottom > p > img {padding 0 7px 0 0;}
+
+.tap2 {width: 1000px; margin: 10px auto; border-top: 1px solid #dddddd; border-bottom: 2px solid #dddddd;}
+.tap2 > h3 {display: inline-block; width: 180px; height: 400px; line-height: 400px; text-align: center; vertical-align: top; color: #898989; font-size: 23px; font-weight: bold; background: #f7f7f7;}
+.tap2 > ul {display: inline-block; width: 785px; padding: 10px 0 10px 5px;}
+.tap2 > ul li {margin: 17px 0; padding: 0px 0 0 13px; background: url(../../images/bullet/bu_arrow_right_02.gif) no-repeat 0px 4px; font-size: 16px;}
+.tap2 > ul li span {color: #c40c0e;}
+
+.tap3 {width: 1000px; margin: 10px auto; border-top: 1px solid #dddddd; border-bottom: 2px solid #dddddd;}
+.tap3 > h3 {display: inline-block; width: 180px; height:230px; padding: 170px 0 0 0; text-align: center; vertical-align: top; color: #898989; font-size: 23px; font-weight: bold; background: #f7f7f7;}
+.tap3 > h3 span {display: block; padding: 6px 0 0 0;}
+.tap3 > div {display: inline-block;width: 810px; padding: 10px 0 10px 5px; font-size: 16px;}
+.tap3 > div li {margin: 15px 0;}
+.tap3 > div > p {display: inline-block; margin: 20px 0 0 0; padding: 0 0 0 15px; background: url(../../images/bullet/bu_arrow_right_02.gif) no-repeat 0px 5px; font-size: 19px;}
+.tap3 > div > ul li {line-height: 170%;}
+.tap3 > div li span {color: #c40c0e;}

@@ -9,7 +9,78 @@
 <!-- container (S) -->
 <div id="container">
 	<div class="visual">
-		
+		<div class="info on">
+			<a href="#">
+				<img src="${pageContext.request.contextPath }/resources/images/main/v_img01.jpg" alt="가을시즌"/>
+			</a>
+		</div>
+		<div class="info">
+			<a href="#">
+				<img src="${pageContext.request.contextPath }/resources/images/main/v_img02.jpg" alt="가을시즌"/>
+			</a>
+		</div>
+		<div class="info">
+			<a href="#">
+				<img src="${pageContext.request.contextPath }/resources/images/main/v_img03.jpg" alt="가을시즌"/>
+			</a>
+		</div>
+		<div class="info">
+			<a href="#">
+				<img src="${pageContext.request.contextPath }/resources/images/main/v_img04.jpg" alt="가을시즌"/>
+			</a>
+		</div>
+		<div class="info">
+			<a href="#">
+				<img src="${pageContext.request.contextPath }/resources/images/main/v_img05.jpg" alt="가을시즌"/>
+			</a>
+		</div>
+		<div class="info">
+			<a href="#">
+				<img src="${pageContext.request.contextPath }/resources/images/main/v_img06.jpg" alt="가을시즌"/>
+			</a>
+		</div>
+		<div class="info">
+			<a href="#">
+				<img src="${pageContext.request.contextPath }/resources/images/main/v_img07.jpg" alt="가을시즌"/>
+			</a>
+		</div>
+		<div class="cate">
+			<ul>
+				<li class="on" data-no="0"><a href="#">겨울시즌</a></li>
+				<li data-no="1"><a href="#" >승진/영전 특가</a></li>
+				<li data-no="2"><a href="#" >미니블룸</a></li>
+				<li data-no="3"><a href="#" >정관장 기획전</a></li>
+				<li data-no="4"><a href="#" >오설록 티세트</a></li>
+				<li data-no="5"><a href="#" >꽃&amp;선물</a></li>
+			</ul>
+		</div>
+		<script>
+			var intervalId = setInterval(move_cate, 2500);
+			var select = 0;
+			$('.cate li').hover(function(){
+				clearInterval(intervalId);
+				
+				$('.cate li').removeClass('on');
+				$(this).addClass('on');
+				select = parseInt($(this).data('no'));
+			
+				$('.info').removeClass('on');
+				$('.info').eq(select).addClass('on');
+			}, function(){
+				intervalId = setInterval(move_cate, 2500);
+			});
+			
+			function move_cate() {
+				select = parseInt(select) + 1;
+				if(select > 5) select = 0;
+				
+				$('.cate li').removeClass('on');
+				$('.cate li').eq(select).addClass('on');
+				
+				$('.info').removeClass('on');
+				$('.info').eq(select).addClass('on');
+			}			
+		</script>
 	</div>
 	
 	<div class="item">
@@ -149,61 +220,6 @@
 		</ul>
 	</div>
 </div>
-
-<!-- 
-	<div class="content">
-		<div class="visual_area">
-			<div class="main_visual">
-				<div class="info">
-					<a href="#">
-						<img src="${pageContext.request.contextPath }/resources/images/main/v_img01.jpg" alt="가을시즌"/>
-					</a>
-				</div>
-				<div class="info">
-					<a href="#">
-						<img src="${pageContext.request.contextPath }/resources/images/main/v_img02.jpg" alt="가을시즌"/>
-					</a>
-				</div>
-				<div class="info">
-					<a href="#">
-						<img src="${pageContext.request.contextPath }/resources/images/main/v_img03.jpg" alt="가을시즌"/>
-					</a>
-				</div>
-				<div class="info">
-					<a href="#">
-						<img src="${pageContext.request.contextPath }/resources/images/main/v_img04.jpg" alt="가을시즌"/>
-					</a>
-				</div>
-				<div class="info">
-					<a href="#">
-						<img src="${pageContext.request.contextPath }/resources/images/main/v_img05.jpg" alt="가을시즌"/>
-					</a>
-				</div>
-				<div class="info">
-					<a href="#">
-						<img src="${pageContext.request.contextPath }/resources/images/main/v_img06.jpg" alt="가을시즌"/>
-					</a>
-				</div>
-				<div class="info">
-					<a href="#">
-						<img src="${pageContext.request.contextPath }/resources/images/main/v_img07.jpg" alt="가을시즌"/>
-					</a>
-				</div>
-				<div class="category_area">
-					<ul class="cate">
-						<li><a href="#"><span class="tit">카테고리 1</span></a></li>
-						<li><a href="#"><span class="tit">카테고리 2</span></a></li>
-						<li><a href="#"><span class="tit">카테고리 3</span></a></li>
-						<li><a href="#"><span class="tit">카테고리 4</span></a></li>
-						<li><a href="#"><span class="tit">카테고리 5</span></a></li>
-						<li><a href="#"><span class="tit">카테고리 6</span></a></li>
-						<li><a href="#"><span class="tit">카테고리 7</span></a></li>
-					</ul>
-				</div>
-			</div>		
-		</div>
-	</div>
-	 -->
 	 
 <%@ include file="/WEB-INF/views/include/quick.jsp" %>
 </div>

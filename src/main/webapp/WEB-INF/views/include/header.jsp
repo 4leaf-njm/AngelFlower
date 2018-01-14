@@ -22,7 +22,7 @@
 					<li><a href="#">바로주문전화 <span>1588-8282</span></a></li>
 				</ul>
 				<ul class="util_right">
-					<li><a href='<c:url value="/commons/login.do" />'>로그인</a></li>
+					<li><a href="#">로그인</a></li>
 					<li><a href='<c:url value="/commons/join.do" />'>회원가입</a></li>
 					<li><a href="#">주문내역조회</a></li>
 					<li><a href="#">마이페이지</a></li>
@@ -32,7 +32,7 @@
 		</div>
 		<div class="logo">
 			<div>
-				<h1><img src="${pageContext.request.contextPath }/resources/images/commons/logo.png" alt="엔젤 플라워" width="290" height="90"/></h1>
+				<h1><a href='<c:url value="/" />'><img src="${pageContext.request.contextPath }/resources/images/commons/logo.png" alt="엔젤 플라워" width="290" height="90"/></a></h1>
 				<p><img src="${pageContext.request.contextPath }/resources/images/text/txt_tel_01.png" alt="24시간 전화상담 1588-8282" width="240" height="100"/></p>
 				<div>
 					<div class="ad">
@@ -54,13 +54,13 @@
 		<div class="gnb">
 			<div>
 				<ul>
-					<li><a href="#">핫딜상품</a></li>
-					<li><a href="#">근조화환</a></li>
-					<li><a href="#">축하화환</a></li>
-					<li><a href="#">승진&amp;취임</a></li>
-					<li><a href="#">개업&amp;이전</a></li>
-					<li><a href="#">전체상품</a></li>
-					<li><a href="#">입점문의</a></li>
+					<li><a href='<c:url value="/product/productList.do" />'>핫딜상품</a></li>
+					<li><a href='<c:url value="/product/productList.do" />'>근조화환</a></li>
+					<li><a href='<c:url value="/product/productList.do" />'>축하화환</a></li>
+					<li><a href='<c:url value="/product/productList.do" />'>승진&amp;취임</a></li>
+					<li><a href='<c:url value="/product/productList.do" />'>개업&amp;이전</a></li>
+					<li><a href='<c:url value="/product/productList.do" />'>전체상품</a></li>
+					<li><a href='<c:url value="/product/productList.do" />'>입점문의</a></li>
 				</ul>
 			</div>
 		</div>
@@ -69,23 +69,23 @@
 			<ul>
 				<li>
 					<img src="${pageContext.request.contextPath }/resources/images/item/sample_01.jpg" alt="추모.근조" width="100" height="160"/>
-					<a href="#">추모.근조<span>애도의마음</span></a>
+					<a href='<c:url value="/product/productList.do" />'>추모.근조<span>애도의마음</span></a>
 				</li>
 				<li>
 					<img src="${pageContext.request.contextPath }/resources/images/item/sample_02.jpg" alt="결혼.축하" width="100" height="160"/>
-					<a href="#">결혼.축하<span>진심을담은 축하</span></a>
+					<a href='<c:url value="/product/productList.do" />'>결혼.축하<span>진심을담은 축하</span></a>
 				</li>
 				<li>
 					<img src="${pageContext.request.contextPath }/resources/images/item/sample_01.jpg" alt="승진&취임" width="100" height="160"/>
-					<a href="#">승진&amp;취임<span>축하의 마음</span></a>
+					<a href='<c:url value="/product/productList.do" />'>승진&amp;취임<span>축하의 마음</span></a>
 				</li>
 				<li>
 					<img src="${pageContext.request.contextPath }/resources/images/item/sample_02.jpg" alt="개업&이전" width="100" height="160"/>
-					<a href="#">개업&amp;이전<span>대박기원</span></a>
+					<a href='<c:url value="/product/productList.do" />'>개업&amp;이전<span>대박기원</span></a>
 				</li>
 				<li>
 					<img src="${pageContext.request.contextPath }/resources/images/item/sample_01.jpg" alt="전체상품" width="100" height="160"/>
-					<a href="#">전체상품<span>핫딜 특가</span></a>
+					<a href='<c:url value="/product/productList.do" />'>전체상품<span>핫딜 특가</span></a>
 				</li>
 			</ul>
 		</div>

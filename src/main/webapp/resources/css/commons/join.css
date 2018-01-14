@@ -4,17 +4,15 @@
 .content > h2 {margin: 4px 0; padding: 25px 0 0 40px; border-top: 3px solid #e4e4e4; font-family: '한컴 소망 B'; font-size: 28px; font-weight: bold; color: #595959;}
 .content > p {padding: 5px 0 0 45px; font-family: '한컴 소망 B'; font-size: 16px; font-weight: bold; color: #595959;}
 
-.tap {width: 1150px; margin: 70px auto 0; border-bottom: 7px solid #7f7f7f; font-size: 0; text-align: center;}
-.tap > li {display: inline-block; width: 300px; height: 56px; line-height: 56px; background: #fff; text-align: center; font-family: '한컴 소망 B'; font-size : 22px; font-weight: bold; color: #7f7f7f; }
-.tap > li.on {color: #fff; background: #7f7f7f;}
-
 .tap_content {display: none; width: 1150px; }
 .tap_content.on {display: block;}
 
 #step2 {width: 1050px; margin: 90px auto;}
-#step2 .form01 {padding: 5px 0; background: #fafafa; border-top: 1px solid #e6e6e6; border-bottom: 1px solid #e6e6e6;}
-#step2 .form02 {padding: 5px 0;}
-#step2 .form03 {padding: 2px 0; border-top: 1px solid #e6e6e6; border-bottom: 1px solid #e6e6e6;}
+#step2 .form01 {padding: 5px 0; border-top: 1px solid #e6e6e6;}
+#step2 .form02 {display: none; padding: 5px 0; border-top: 1px solid #e6e6e6; background: #fafafa;}
+#step2 .form03 {padding: 5px 0; background: #fafafa; border-top: 1px solid #e6e6e6; border-bottom: 1px solid #e6e6e6;}
+#step2 .form04 {padding: 5px 0;}
+#step2 .form05 {padding: 2px 0; border-top: 1px solid #e6e6e6; border-bottom: 1px solid #e6e6e6;}
 #step2 .row {margin: 13px 0;}
 #step2 label {display: inline-block; width: 150px; padding: 0 0 0 26px; mfont-family: '한컴 소망 B'; font-size: 15px; font-weight: bold; color: #333333;}
 #step2 .input01 {width: 70px;}

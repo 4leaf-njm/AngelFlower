@@ -13,7 +13,7 @@
 	<div class="content">
 		<h2>회원가입</h2>
 		<p>엔젤플라워는 개인정보취급방침을 따르고 있으며 입력하신 개인정보는 회원님의 동의없이 3자에게 제공되지 않습니다.</p>
-		<ul class="tap">
+		<ul class="tap" style="text-align: center;">
 			<li data-tap="step1">01.약관 동의</li> <!-- step -->
 			<li class="on" data-tap="step2">02.회원정보입력</li>
 			<li data-tap="step3">03.가입완료</li>
@@ -22,8 +22,34 @@
 		111
 		</div>
 		<div id="step2" class="tap_content on">
-			<form method="post">  
+			<form method="post">
 				<div class="form01">
+					<div class="row">
+						<label>회원 구분</label>
+						<input type="radio" name="gubun" value="일반" checked="checked" />&nbsp;일반회원&nbsp;&nbsp;
+						<input type="radio" name="gubun" value="기업" />&nbsp;기업회원
+					</div>
+				</div>  
+				<div class="form02">
+					<div class="row">
+						<label for="company">* 상호 (회사명)</label>
+						<input type="text" name="company" id="company" class="input02"/>
+					</div>
+					<div class="row">
+						<label for="reg_no">* 사업자 등록번호</label>
+						<input type="text" name="reg_no1" id="reg_no" class="input01" maxlength="3"/>
+						<span class="space">-</span>
+						<input type="text" name="reg_no2" class="input01" maxlength="2" />
+						<span class="space">-</span>
+						<input type="text" name="reg_no3" class="input01" maxlength="5" />
+						<a href="#" class="btn_white">인증하기</a>
+					</div>
+					<div class="row">
+						<label for="represent">* 대표자</label>
+						<input type="text" name="represent" id="represent" class="input02" />
+					</div>
+				</div>
+				<div class="form03">
 					<div class="row">
 						<label for="name">* 이름</label>
 						<input type="text" name="name" id="name" class="input02"/>
@@ -66,7 +92,7 @@
 						<input type="radio" name="gender" value="여" />&nbsp;여
 					</div>
 				</div>
-				<div class="form02">
+				<div class="form04">
 					<div class="row">
 						<label for="phone">* 휴대폰</label>
 						<select name="phone1" id="phone" class="input01">
@@ -95,7 +121,7 @@
 						<input type="text" name="address2" id="address2" class="input03" />
 					</div>
 				</div>
-				<div class="form03">
+				<div class="form05">
 					<div class="row">
 						<label for="email">* 이메일</label>
 						<input type="text" name="email1" id="email" class="input02" />
@@ -109,6 +135,15 @@
 				</div>
 				<a href="#" class="btn_join">회원가입</a>
 			</form>
+			<script>
+				$('input:radio[name="gubun"]').click(function(){
+					var gubun = $(this).val();
+					if(gubun == '일반') 
+						$('#step2 .form02').hide();
+					else
+						$('#step2 .form02').show();
+				})
+			</script>
 		</div>
 		<div id="step3" class="tap_content">
 		333
