@@ -5,6 +5,9 @@
 .metadata
 bin/
 tmp/
+lib/
+doc/
+sql/
 *.tmp
 *.bak
 *.swp
