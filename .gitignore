@@ -3,8 +3,11 @@
 ### Eclipse ###
 
 .metadata
-.project.*
-.classpath.*
+.project
+.classpath
+META-INF/
+target/
+classes/
 bin/
 tmp/
 lib/
