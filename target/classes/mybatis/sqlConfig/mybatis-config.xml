@@ -5,5 +5,10 @@
     <typeAliases>
     	<typeAlias type="java.lang.String" alias="str"/>
     	<typeAlias type="java.lang.Integer" alias="int"/>
+    	<typeAlias type="com.dawn.angel.domain.MemberVO" alias="member"/>
+    	<typeAlias type="com.dawn.angel.domain.AdminVO" alias="admin"/>
+    	<typeAlias type="com.dawn.angel.domain.ProductVO" alias="product"/>
+    	<typeAlias type="com.dawn.angel.domain.CommentVO" alias="comment"/>
+    	<typeAlias type="com.dawn.angel.domain.ReviewVO" alias="review"/>
     </typeAliases>
 </configuration>

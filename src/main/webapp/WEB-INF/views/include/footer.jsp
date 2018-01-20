@@ -29,7 +29,7 @@
 				</div>		
 			</div>
 			<div class="board">
-				<div class="review">
+				<div class="revi">
 					<h3><img src="${pageContext.request.contextPath }/resources/images/text/txt_review.png" alt="후기 게시판" width="100" height="40"/></h3>
 					<p><a href="#"><img src="${pageContext.request.contextPath }/resources/images/text/txt_more.png" alt="더보기" width="66" height="32"/></a></p>
 					<ul>

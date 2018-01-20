@@ -83,150 +83,47 @@
 		</script>
 	</div>
 	
-	<div class="item">
-		<div class="top">
-			<h2>추모 &amp; 근조</h2>
-			<span>총 121개의 상품이 검색되었습니다.</span>
-			<ul>
-				<li class="on"><a href="#">인기순</a></li>
-				<li><a href="#">상품후기많은순</a></li>
-				<li><a href="#">높은가격순</a></li>
-				<li><a href="#">낮은가격순</a></li>
+	<div class="best">
+		<h2><img src="${pageContext.request.contextPath }/resources/images/temp/best02.PNG" alt=""/></h2>
+		<div>
+			<ul class="menu">
+				<li class="on" data-menu="1">근조화환</li>
+				<li data-menu="2">근조바구니</li>
+				<li data-menu="3">축하화환</li>
+				<li data-menu="4">꽃다발</li>
+				<li data-menu="5">꽃바구니</li>
+				<li data-menu="6">동·서양란</li>
 			</ul>
-			<table>
-			<tr>
-				<td rowspan="2" width="350" class="one">
-					<img src="${pageContext.request.contextPath }/resources/images/item/sample_01.jpg" alt="특별한 고품격 검정리본 화환" width="210" height="340" />
-				<h3>특별한 고품격 [검정리본] 화환</h3>
-				<p class="price"><del>150,000</del>145,500 원</p>
-				<p class="save"><span>적립금</span>10,500</p>
-			</td>
-			<td width="400">
-				<img src="${pageContext.request.contextPath }/resources/images/item/sample_01.jpg" alt="근조화환 3단" width="150" height="210"/>
-				<div>
-					<h3>근조화환3단 &lt;애...</h3>
-					<p class="price"><del>100,000</del>97,000원</p>
-					<p class="save"><span>적립금</span>7,000</p>
-				</div>
-			</td>
-			<td width="400">
-				<img src="${pageContext.request.contextPath }/resources/images/item/sample_01.jpg" alt="근조화환 3단" width="150" height="210"/>
-				<div>
-					<h3>근조화환3단 &lt;애...</h3>
-					<p class="price"><del>100,000</del>97,000원</p>
-					<p class="save"><span>적립금</span>7,000</p>
-				</div>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<img src="${pageContext.request.contextPath }/resources/images/item/sample_01.jpg" alt="근조화환 3단" width="150" height="210"/>
-				<div>
-					<h3>근조화환3단 (분...</h3>
-					<p class="price"><del>99,000</del>96,000원</p>
-					<p class="save"><span>적립금</span>6,900</p>
-				</div>
-			</td>
-			<td>
-				<img src="${pageContext.request.contextPath }/resources/images/item/sample_01.jpg" alt="근조화환 3단" width="150" height="210"/>
-				<div>
-					<h3>근조화환3단 (분...</h3>
-					<p class="price"><del>99,000</del>96,000원</p>
-					<p class="save"><span>적립금</span>6,900</p>
-				</div>
-			</td>
-		</tr>
-		</table>
+			
+			<div class="bestMenu">
+				<ul></ul>
+			</div>
+		</div>
 	</div>
 	
-	<div class="item_list">
-		<ul class="list">
-			<li>
-				<img src="${pageContext.request.contextPath }/resources/images/item/sample_01.jpg" alt="근조화환 3단" width="150" height="210"/>
-				<div>
-					<h3>[ST-FB141] 근조3단</h3>
-					<p class="price">판매가 : 77,000 원</p>
-					<p class="sale">회원가 : <strong>74,700</strong>원</p>
-					<p class="save"><span>적립금</span>5,400</p>
-				</div>
-			</li>
-			<li>
-				<img src="${pageContext.request.contextPath }/resources/images/item/sample_01.jpg" alt="근조화환 3단" width="150" height="210"/>
-				<div>
-					<h3>[ST-FB228] 명품 근조3단</h3>
-					<p class="price">판매가 : 125,000 원</p>
-					<p class="sale">회원가 : <strong>121,300</strong>원</p>
-					<p class="save"><span>적립금</span>8,800</p>
-				</div>
-			</li>
-			<li>
-				<img src="${pageContext.request.contextPath }/resources/images/item/sample_01.jpg" alt="근조화환 3단" width="150" height="210"/>
-				<div>
-					<h3>[ST-FB205] NEW 근조화환 3단</h3>
-					<p class="price">판매가 : 103,000 원</p>
-					<p class="sale">회원가 : <strong>99,900</strong>원</p>
-					<p class="save"><span>적립금</span>7,200</p>
-				</div>
-			</li>
-			<li>
-				<img src="${pageContext.request.contextPath }/resources/images/item/sample_01.jpg" alt="근조화환 3단" width="150" height="210"/>
-				<div>
-					<h3>[ST-FB239] 고급 근조 3단 화환</h3>
-					<p class="price">판매가 : 130,000 원</p>
-					<p class="sale">회원가 : <strong>126,100</strong>원</p>
-					<p class="save"><span>적립금</span>9,100</p>
-				</div>
-			</li>
-			<li>
-				<img src="${pageContext.request.contextPath }/resources/images/item/sample_01.jpg" alt="근조화환 3단" width="150" height="210"/>
-				<div>
-					<h3>[ST-FB141] 근조3단</h3>
-					<p class="price">판매가 : 77,000 원</p>
-					<p class="sale">회원가 : <strong>74,700</strong>원</p>
-					<p class="save"><span>적립금</span>5,400</p>
-				</div>
-			</li>
-			<li>
-				<img src="${pageContext.request.contextPath }/resources/images/item/sample_01.jpg" alt="근조화환 3단" width="150" height="210"/>
-				<div>
-					<h3>[ST-FB228] 명품 근조3단</h3>
-					<p class="price">판매가 : 125,000 원</p>
-					<p class="sale">회원가 : <strong>121,300</strong>원</p>
-					<p class="save"><span>적립금</span>8,800</p>
-				</div>
-			</li>
-			<li>
-				<img src="${pageContext.request.contextPath }/resources/images/item/sample_01.jpg" alt="근조화환 3단" width="150" height="210"/>
-				<div>
-					<h3>[ST-FB205] NEW 근조화환 3단</h3>
-					<p class="price">판매가 : 103,000 원</p>
-					<p class="sale">회원가 : <strong>99,900</strong>원</p>
-					<p class="save"><span>적립금</span>7,200</p>
-				</div>
-			</li>
-			<li>
-				<img src="${pageContext.request.contextPath }/resources/images/item/sample_01.jpg" alt="근조화환 3단" width="150" height="210"/>
-				<div>
-					<h3>[ST-FB239] 고급 근조 3단 화환</h3>
-					<p class="price">판매가 : 130,000 원</p>
-					<p class="sale">회원가 : <strong>126,100</strong>원</p>
-					<p class="save"><span>적립금</span>9,100</p>
-				</div>
-			</li>
-		</ul>
-		<ul class="paging">
-			<li class="on"><a href="#">1</a></li>
-			<li><a href="#">2</a></li>
-		</ul>
+	<div class="review">
+		<h2><img src="${pageContext.request.contextPath }/resources/images/text/txt_delivery.png" alt=""/></h2>
+		<div>
+			<ul class="menu">
+				<li class="on" data-menu="1">근조화환</li>
+				<li data-menu="2">근조바구니</li>
+				<li data-menu="3">축하화환</li>
+				<li data-menu="4">꽃다발</li>
+				<li data-menu="5">꽃바구니</li>
+				<li data-menu="6">동·서양란</li>
+			</ul>
+			
+			<ul class="list"></ul>
+		</div>
 	</div>
-</div>
-	 
+	
 <%@ include file="/WEB-INF/views/include/quick.jsp" %>
 </div>
 <!-- container (E) -->
 	
 <%@ include file="/WEB-INF/views/include/footer.jsp" %>
 
+<script src="${pageContext.request.contextPath }/resources/js/product.js"></script>
 <script>
 	$('.category_area .cate a').hover(function(){
 		$(this).addClass('on');
@@ -235,4 +132,32 @@
 		$(this).removeClass('on');
 		$(this).parent('div').css('display', 'none');
 	});
+	
+	$('.best .menu > li').hover(function(){
+		$('.best .menu > li').removeClass('on');
+		$(this).addClass('on');
+		
+		var menu = $(this).data('menu');
+		ajaxBestList(menu);
+	});
+	ajaxBestList(1);
+
+	$(document).on('click', '.bestMenu li', function(){
+		var prodNo = $(this).data('no');
+		location.href='<c:url value="/product/detail.do?no=' + prodNo + '"/>';
+	})
+	$(document).on('mouseover', '.bestMenu li', function(){
+		$(this).find('h3').addClass('on');	
+	})
+	$(document).on('mouseout', '.bestMenu li', function(){
+		$(this).find('h3').removeClass('on');	
+	})
+	$('.review .menu > li').hover(function(){
+		$('.review .menu > li').removeClass('on');
+		$(this).addClass('on');
+		
+		var menu = $(this).data('menu');
+		ajaxReviewList(menu);
+	});
+	ajaxReviewList(1);
 </script>

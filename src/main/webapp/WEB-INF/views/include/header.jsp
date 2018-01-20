@@ -7,8 +7,9 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/commons/default.css" />
-<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/commons/layout.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/commons/main.css" />
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="${pageContext.request.contextPath }/resources/js/default.js"></script>
 </head>
 <body>
 <!-- wrapper (S) -->
@@ -22,10 +23,18 @@
 					<li><a href="#">바로주문전화 <span>1588-8282</span></a></li>
 				</ul>
 				<ul class="util_right">
-					<li><a href="#">로그인</a></li>
-					<li><a href='<c:url value="/commons/join.do" />'>회원가입</a></li>
+				<c:choose>
+					<c:when test="${empty loginUser}">
+						<li><a href='<c:url value="/commons/login.do" />'>로그인</a></li>
+						<li><a href='<c:url value="/commons/join.do" />'>회원가입</a></li>
+					</c:when>
+					<c:otherwise>
+						<li><a href='<c:url value="/commons/logout.do" />'>로그아웃</a></li>
+						<li><a href="#">마이페이지</a></li>
+					</c:otherwise>
+				</c:choose>
+					<li><a href="#">장바구니</a></li>
 					<li><a href="#">주문내역조회</a></li>
-					<li><a href="#">마이페이지</a></li>
 					<li><a href="#">찾아오시는길</a></li>
 				</ul>
 			</div>
@@ -54,13 +63,14 @@
 		<div class="gnb">
 			<div>
 				<ul>
-					<li><a href='<c:url value="/product/productList.do" />'>핫딜상품</a></li>
-					<li><a href='<c:url value="/product/productList.do" />'>근조화환</a></li>
-					<li><a href='<c:url value="/product/productList.do" />'>축하화환</a></li>
-					<li><a href='<c:url value="/product/productList.do" />'>승진&amp;취임</a></li>
-					<li><a href='<c:url value="/product/productList.do" />'>개업&amp;이전</a></li>
-					<li><a href='<c:url value="/product/productList.do" />'>전체상품</a></li>
-					<li><a href='<c:url value="/product/productList.do" />'>입점문의</a></li>
+					<li><a href='<c:url value="/product/list.do" />'>핫딜상품</a></li>
+					<li><a href='<c:url value="/product/list.do?menu=1" />'>근조화환</a></li>
+					<li><a href='<c:url value="/product/list.do?menu=2" />'>근조바구니</a></li>
+					<li><a href='<c:url value="/product/list.do?menu=3" />'>축하화환</a></li>
+					<li><a href='<c:url value="/product/list.do?menu=4" />'>꽃다발</a></li>
+					<li><a href='<c:url value="/product/list.do?menu=5" />'>꽃바구니</a></li>
+					<li><a href='<c:url value="/product/list.do?menu=6" />'>동·서양란</a></li>
+					<li><a href='<c:url value="/product/list.do?menu=7" />'>★ 플라워</a></li>
 				</ul>
 			</div>
 		</div>
@@ -69,23 +79,23 @@
 			<ul>
 				<li>
 					<img src="${pageContext.request.contextPath }/resources/images/item/sample_01.jpg" alt="추모.근조" width="100" height="160"/>
-					<a href='<c:url value="/product/productList.do" />'>추모.근조<span>애도의마음</span></a>
+					<a href='<c:url value="/product/list.do" />'>추모.근조<span>애도의마음</span></a>
 				</li>
 				<li>
 					<img src="${pageContext.request.contextPath }/resources/images/item/sample_02.jpg" alt="결혼.축하" width="100" height="160"/>
-					<a href='<c:url value="/product/productList.do" />'>결혼.축하<span>진심을담은 축하</span></a>
+					<a href='<c:url value="/product/list.do" />'>결혼.축하<span>진심을담은 축하</span></a>
 				</li>
 				<li>
 					<img src="${pageContext.request.contextPath }/resources/images/item/sample_01.jpg" alt="승진&취임" width="100" height="160"/>
-					<a href='<c:url value="/product/productList.do" />'>승진&amp;취임<span>축하의 마음</span></a>
+					<a href='<c:url value="/product/list.do" />'>승진&amp;취임<span>축하의 마음</span></a>
 				</li>
 				<li>
 					<img src="${pageContext.request.contextPath }/resources/images/item/sample_02.jpg" alt="개업&이전" width="100" height="160"/>
-					<a href='<c:url value="/product/productList.do" />'>개업&amp;이전<span>대박기원</span></a>
+					<a href='<c:url value="/product/list.do" />'>개업&amp;이전<span>대박기원</span></a>
 				</li>
 				<li>
 					<img src="${pageContext.request.contextPath }/resources/images/item/sample_01.jpg" alt="전체상품" width="100" height="160"/>
-					<a href='<c:url value="/product/productList.do" />'>전체상품<span>핫딜 특가</span></a>
+					<a href='<c:url value="/product/list.do" />'>전체상품<span>핫딜 특가</span></a>
 				</li>
 			</ul>
 		</div>

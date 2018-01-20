@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Member-Mapper">
+	<resultMap id="memberMap" type="member">
+		<id property="id" column="mem_id" />
+		<result property="pwd" column="mem_pwd" />
+		<result property="name" column="mem_name" />
+		<result property="birth" column="mem_birth" />
+		<result property="gender" column="mem_gender" />
+		<result property="phone" column="mem_phone" />
+		<result property="address" column="mem_address" />
+		<result property="email" column="mem_email" />
+		<result property="useyn" column="use_yn" />
+	</resultMap>
+
+	<update id="insertMember" parameterType="member">
+		insert into member(mem_id, mem_pwd, mem_name, mem_birth,
+		mem_gender, mem_phone, mem_address, mem_email)
+		values (#{id}, #{pwd}, #{name}, #{birth}, #{gender},
+		#{phone}, #{address}, #{email})
+	</update>
+	
+	<select id="selectMemberById" parameterType="str" resultMap="memberMap">
+		select * from member where mem_id=#{id}
+	</select>
+</mapper>
