@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Review-Mapper">
+	<resultMap id="reviewMap" type="review">
+		<id property="reviewNo" column="review_no" />
+		<result property="region" column="review_region" />
+		<result property="image" column="review_image" />
+		<result property="prodNo" column="prod_no" />
+		<result property="memId" column="mem_id" />
+		<result property="prodName" column="prod_name" />
+		<result property="price1" column="prod_price1" />
+		<result property="price2" column="prod_price2" />
+		<result property="category" column="category" />
+	</resultMap>
+	
+	<select id="selectReviewListByCate" parameterType="int" resultMap="reviewMap">
+		select * from review_view where category = #{category}
+	</select>
+</mapper>

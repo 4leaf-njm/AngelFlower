@@ -22,12 +22,12 @@
 		111
 		</div>
 		<div id="step2" class="tap_content on">
-			<form method="post">
+			<form method="post" name="frm_join">
 				<div class="form01">
 					<div class="row">
 						<label>회원 구분</label>
-						<input type="radio" name="gubun" value="일반" checked="checked" />&nbsp;일반회원&nbsp;&nbsp;
-						<input type="radio" name="gubun" value="기업" />&nbsp;기업회원
+						<label><input type="radio" name="gubun" value="일반" checked="checked" />&nbsp;일반회원</label>&nbsp;&nbsp;
+						<label><input type="radio" name="gubun" value="기업" />&nbsp;기업회원</label>
 					</div>
 				</div>  
 				<div class="form02">
@@ -36,12 +36,13 @@
 						<input type="text" name="company" id="company" class="input02"/>
 					</div>
 					<div class="row">
-						<label for="reg_no">* 사업자 등록번호</label>
-						<input type="text" name="reg_no1" id="reg_no" class="input01" maxlength="3"/>
+						<input type="hidden" name="busiNo" />
+						<label for="busiNo">* 사업자 등록번호</label>
+						<input type="text" name="busiNo1" id="busiNo" class="input01" maxlength="3"/>
 						<span class="space">-</span>
-						<input type="text" name="reg_no2" class="input01" maxlength="2" />
+						<input type="text" name="busiNo2" class="input01" maxlength="2" />
 						<span class="space">-</span>
-						<input type="text" name="reg_no3" class="input01" maxlength="5" />
+						<input type="text" name="busiNo3" class="input01" maxlength="5" />
 						<a href="#" class="btn_white">인증하기</a>
 					</div>
 					<div class="row">
@@ -69,8 +70,9 @@
 						<input type="password" name="pwd_chk" id="pwd_chk" class="input02"/>
 					</div>
 					<div class="row">
-						<label for="birth">* 생일/성별</label>
-						<select name="year" id="birth" class="input01">
+						<input type="hidden" name="birth" />
+						<label for="year">* 생일/성별</label>
+						<select name="year" id="year" class="input01">
 							<option value="">선택</option>
 							<option value="1997">1997</option>
 							<option value="1998">1998</option>
@@ -78,34 +80,36 @@
 						<span class="space">년</span>&nbsp;
 						<select name="month" class="input01">
 							<option value="">선택</option>
-							<option value="1">1</option>
-							<option value="2">2</option>
+							<option value="01">1</option>
+							<option value="02">2</option>
 						</select>
 						<span class="space">월</span>&nbsp;
 						<select name="day" class="input01">
 							<option value="">선택</option>
-							<option value="1">1</option>
-							<option value="2">2</option>
+							<option value="01">1</option>
+							<option value="02">2</option>
 						</select>
 						<span class="space">일</span>&nbsp;&nbsp;
-						<input type="radio" name="gender" value="남" />&nbsp;남
-						<input type="radio" name="gender" value="여" />&nbsp;여
+						<input type="radio" name="gender" value="1" />&nbsp;남
+						<input type="radio" name="gender" value="2" />&nbsp;여
 					</div>
 				</div>
 				<div class="form04">
 					<div class="row">
-						<label for="phone">* 휴대폰</label>
-						<select name="phone1" id="phone" class="input01">
+						<input type="hidden" name="phone" />
+						<label for="user_phone">* 휴대폰</label>
+						<select name="phone1" id="user_phone" class="input01">
 							<option value="">선택</option>
 							<option value="010">010</option>
 							<option value="011">011</option>
 						</select>
 						<span class="space">-</span>
-						<input type="text" name="phone2" size="4" class="input01"/>
+						<input type="text" name="phone2" size="4" maxlength="4" class="input01"/>
 						<span class="space">-</span>
-						<input type="text" name="phone3" size="4" class="input01"/>
+						<input type="text" name="phone3" size="4" maxlength="4" class="input01"/>
 					</div>
 					<div class="row">
+						<input type="hidden" name="address" />
 						<label>우편번호</label>
 						<input type="text" name="zip_code1" class="input01" readonly="readonly" />
 						<span class="space">-</span>
@@ -123,8 +127,9 @@
 				</div>
 				<div class="form05">
 					<div class="row">
-						<label for="email">* 이메일</label>
-						<input type="text" name="email1" id="email" class="input02" />
+						<input type="hidden" name="email" />
+						<label for="mem_email">* 이메일</label>
+						<input type="text" name="email1" id="mem_email" class="input02" />
 						<span class="space">@</span>
 						<select name="email2" class="input02">
 							<option value="">선택</option>
@@ -133,7 +138,7 @@
 						<a href="#" class="btn_white">중복확인</a>
 					</div>
 				</div>
-				<a href="#" class="btn_join">회원가입</a>
+				<a href="javascript:go_join()" class="btn_join">회원가입</a>
 			</form>
 			<script>
 				$('input:radio[name="gubun"]').click(function(){
@@ -143,6 +148,68 @@
 					else
 						$('#step2 .form02').show();
 				})
+				
+				function go_join() {
+					var frm = document.frm_join;
+					var gubun = frm.gubun.value;
+					
+					if(gubun == '기업') { // 기업회원일 경우
+						frm.busiNo.value = frm.busiNo1.value + '-' + frm.busiNo2.value + '-' + frm.busiNo3.value;
+						frm.action = '/admin/join.do';
+						
+						if(frm.company.value == '') {
+							alert('상호(회사명)을 입력해주세요.');
+							frm.company.focus();
+							return;
+						} else if (frm.busiNo.value == '--') {
+							alert('사업자등록번호를 입력해주세요.');
+							frm.busiNo1.focus();
+							return;
+						} else if (frm.represent.value == '') {
+							alert('대표자를 입력해주세요.');
+							frm.represent.focus();
+							return;
+						}
+					}
+					frm.birth.value = frm.year.value.substr(2, 2) + frm.month.value + frm.day.value;
+					frm.phone.value = frm.phone1.value + '-' + frm.phone2.value + '-' + frm.phone3.value;
+					frm.address.value = frm.address1.value + ' ' + frm.address2.value + '(' + frm.zip_code1.value + '-' + frm.zip_code2.value + ')';
+					frm.email.value = frm.email1.value + '@' + frm.email2.value;
+					
+					if(frm.name.value == '') {
+						alert('이름을 입력해주세요.');
+						frm.name.focus();
+						return;
+					} else if (frm.id.value == '') {
+						alert('아이디를 입력해주세요.');
+						frm.id.focus();
+						return;
+					} else if (frm.pwd.value == '') {
+						alert('비밀번호를 입력해주세요.');
+						frm.pwd.focus();
+						return;
+					} else if (frm.pwd.value != frm.pwd_chk.value) {
+						alert('비밀번호가 일치하지 않습니다.');
+						frm.pwd_chk.focus();
+						return;
+					} else if (frm.birth.value == '') {
+						alert('생년월일을 입력해주세요.');
+						return;
+					} else if (frm.gender.value == '') {
+						alert('성별을 선택해주세요.');
+						return;
+					} else if (frm.phone.value == '--') {
+						alert('휴대폰 번호를 입력해주세요.');
+						frm.phone2.focus();
+						return;
+					} else if (frm.email.value == '@') {
+						alert('이메일을 입력해주세요.');
+						frm.email1.focus();
+						return;
+					}
+					
+					frm.submit();
+				}
 			</script>
 		</div>
 		<div id="step3" class="tap_content">
@@ -158,7 +225,6 @@
 			}) */
 		</script>
 	</div>
-	<%@ include file="/WEB-INF/views/include/quick.jsp" %>
 </div>
 <!-- container (E) -->
 

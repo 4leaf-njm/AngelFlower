@@ -28,7 +28,6 @@
 		
 	    $(window).scroll(function() { 
 	            var scrollPos = $(window).scrollTop(); 
-	            console.log(scrollPos + ' ' + move);
 	            if(scrollPos < 300) {
 	            	init();
 	            	return;

@@ -1,15 +1,85 @@
 package com.dawn.angel.controller;
 
+import java.sql.SQLException;
+
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.dawn.angel.domain.AdminVO;
+import com.dawn.angel.domain.MemberVO;
+import com.dawn.angel.service.AdminService;
+import com.dawn.angel.service.MemberService;
 
 @Controller
 @RequestMapping("/commons")
 public class CommonController {
 	
+	@Autowired
+	private MemberService memberService;
+	
+	@Autowired 
+	private AdminService adminService;
+	
 	@RequestMapping(value="/join.do", method=RequestMethod.GET)
 	public String join() {
 		return "commons/join";
+	}
+	
+	@RequestMapping(value="/join.do", method=RequestMethod.POST)
+	public String join(MemberVO member, HttpSession session) throws SQLException{
+		System.out.println(member);
+		
+		memberService.createMember(member);
+		return "redirect:login.do";
+	}
+	
+	@RequestMapping(value="/login.do", method=RequestMethod.GET)
+	public String login() {
+		return "commons/login";
+	}
+	
+	@RequestMapping(value="/login.do", method=RequestMethod.POST)
+	public String login(String id, String pw, HttpSession session, Model model) throws SQLException{
+		String url = "redirect:/home.do";
+		MemberVO member = memberService.getMemberById(id);
+		AdminVO admin = adminService.getAdminById(id);
+		
+		String msg = null;
+		if(member == null && admin == null) { 
+			url = "commons/login";
+			msg = "아이디가 존재하지 않습니다.";
+		} else {
+			if(member != null) {
+				if(!member.getPwd().equals(pw)) { 
+					url = "commons/login";
+					msg = "비밀번호가 일치하지 않습니다.";
+				} else {
+					session.setAttribute("loginUser", member);
+				}
+			}
+			
+			if(admin != null) {
+				if(!admin.getPwd().equals(pw)) { 
+					url = "commons/login";
+					msg = "비밀번호가 일치하지 않습니다.";
+				} else {
+					session.setAttribute("loginUser", admin);
+				}
+			}
+		}
+		model.addAttribute("msg", msg);
+		
+		return url;
+	}
+	
+	@RequestMapping("/logout.do")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "redirect:/home.do";
 	}
 }

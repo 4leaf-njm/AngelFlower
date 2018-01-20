@@ -13,28 +13,28 @@
 	<hr class="line01" />
 	
 	<div class="title">
-		<h3>근조 3단 B</h3>
+		<h3>${prod.name }</h3>
 		<p>
 			<span class="lbl lbl02">전국배송</span>
 			<span class="lbl lbl01">적립금</span>
 		</p>
 	</div>
-	<img src="${pageContext.request.contextPath }/resources/images/item/sample_04.PNG" alt="근조 3단 B" class="img_prod"/>
+	<img src="${pageContext.request.contextPath }/resources/images/item/${prod.image}" alt="${prod.name }" class="img_prod"/>
 	<div class="info">
 		<table class="detail">
 			<tr>
 				<th>판매가격</th>
-				<td colspan="3"><del><b>100,000</b>원</del></td>
+				<td colspan="3"><span class="del"><b class="price1"><fmt:formatNumber value="${prod.price1}" pattern="#,##0" /></b>원</span></td>
 			</tr>
 			<tr>
-				<th>쿠폰할인가</th>
-				<td colspan="3" class="price"><b>90,000</b>원</td>
+				<th>회원할인가</th>
+				<td colspan="3" class="price"><b class="price2"><fmt:formatNumber value="${prod.price2}" pattern="#,##0" /></b>원</td>
 			</tr>
 			<tr>
 				<th>품명</th>
-				<td>화환</td>
-				<th>원산지</th>
-				<td>한국</td>
+				<td>${menu}</td>
+				<th>적립금</th>
+				<td><fmt:formatNumber value="${prod.save}" pattern="#,##0" /></td>
 			</tr>
 			<tr>
 				<th>제조원</th>
@@ -47,68 +47,71 @@
 				<td colspan="3" class="number">
 					<div>1</div>
 					<span>
-						<img src="${pageContext.request.contextPath }/resources/images/bullet/bu_arrow_top_02.gif" alt="수량 증가"/>
-						<img src="${pageContext.request.contextPath }/resources/images/bullet/bu_arrow_bottom.gif" alt="수량 감소" />
+						<a href="javascript:quantity(1)"><img src="${pageContext.request.contextPath }/resources/images/bullet/bu_arrow_top_02.gif" alt="수량 증가"/></a>
+						<a href="javascript:quantity(-1)"><img src="${pageContext.request.contextPath }/resources/images/bullet/bu_arrow_bottom.gif" alt="수량 감소"/></a>
 					</span>
 				</td>
 			</tr>
 			<tr>
 				<th>상품정보</th>
-				<td colspan="3">장례식장에 귀(사)하의 조의를 표하는 3단 상품</td>
+				<td colspan="3">${prod.info }</td>
 			</tr>
 		</table>
-		
 		<div class="btn_box">
 			<a href="#" class="buy">바로구매</a>
 			<a href="#" class="cart">장바구니</a>
 			<a href="#" class="zim">찜하기</a>
 			<p><a href="#" class="ad">광고</a></p>
+		</div>
+		
+		<script>
+			var num = 1;
+			function quantity(n) {
+				if(num == 1 && n == -1) {
+					alert('해당 상품은 최소 구매수량이 1개입니다.');
+					return;
+				}
+				var price1 = '${prod.price1}';
+				var price2 = '${prod.price2}';
+				
+				num = num + n;
+				
+				$('.number > div').text(num);
+				$('.price1').text(comma(price1 * num));
+				$('.price2').text(comma(price2 * num));
+			}
+		</script>
 	</div>
-	</div>
-	
 	
 	<h2 class="title">연관상품</h2>
 	<hr class="line01" />
 	
 	<div class="rel_prod">
 		<ul>
-			<li>
-				<img src="${pageContext.request.contextPath }/resources/images/item/sample_01.jpg" alt="근조화환 3단" width="160" height="220"/>
+		<c:forEach var="prod" items="${relList}">
+			<li data-no="${prod.prodNo }">
+				<img src="${pageContext.request.contextPath }/resources/images/item/${prod.image}" alt="${prod.name}" width="160" height="220"/>
 				<div>
-					<h3>[ST-FB141] 근조3단</h3>
-					<p class="price">판매가 : 77,000 원</p>
-					<p class="sale">회원가 : <strong>74,700</strong>원</p>
-					<p><span class="lbl lbl01">적립금</span>5,400</p>
+					<h3>${prod.name}</h3>
+					<p class="price">판매가 : <fmt:formatNumber value="${prod.price1}" pattern="#,##0" /> 원</p>
+					<p class="sale">회원가 : <strong><fmt:formatNumber value="${prod.price2}" pattern="#,##0" /></strong>원</p>
+					<p><span class="lbl lbl01">적립금</span><fmt:formatNumber value="${prod.save}" pattern="#,##0" /></p>
 				</div>
 			</li>
-			<li>
-				<img src="${pageContext.request.contextPath }/resources/images/item/sample_01.jpg" alt="근조화환 3단" width="160" height="220"/>
-				<div>
-					<h3>[ST-FB141] 근조3단</h3>
-					<p class="price">판매가 : 77,000 원</p>
-					<p class="sale">회원가 : <strong>74,700</strong>원</p>
-					<p><span class="lbl lbl01">적립금</span>5,400</p>
-				</div>
-			</li>
-			<li>
-				<img src="${pageContext.request.contextPath }/resources/images/item/sample_01.jpg" alt="근조화환 3단" width="160" height="220"/>
-				<div>
-					<h3>[ST-FB141] 근조3단</h3>
-					<p class="price">판매가 : 77,000 원</p>
-					<p class="sale">회원가 : <strong>74,700</strong>원</p>
-					<p><span class="lbl lbl01">적립금</span>5,400</p>
-				</div>
-			</li>
-			<li>
-				<img src="${pageContext.request.contextPath }/resources/images/item/sample_01.jpg" alt="근조화환 3단" width="160" height="220"/>
-				<div>
-					<h3>[ST-FB141] 근조3단</h3>
-					<p class="price">판매가 : 77,000 원</p>
-					<p class="sale">회원가 : <strong>74,700</strong>원</p>
-					<p><span class="lbl lbl01">적립금</span>5,400</p>
-				</div>
-			</li>
-		</ul>	
+		</c:forEach>
+		</ul>
+		<script>
+			$('.rel_prod li').click(function(){
+				var prodNo = $(this).data('no');
+				location.href='<c:url value="detail.do?no=' + prodNo + '"/>';
+			})
+		
+			$('.rel_prod li').hover(function(){
+				$(this).find('h3').addClass('on');
+			}, function(){
+				$(this).find('h3').removeClass('on');
+			});
+		</script>
 	</div>
 	
 	<ul class="tap">
@@ -120,178 +123,31 @@
 	<div class="tap1">
 		<ul>
 			<li style="width: 110px;">상품이미지</li>
-			<li style="width: 110px;">만족도</li>
-			<li style="width: 492px;">구매후기</li>
-			<li style="width: 110px;">작성자</li>
-			<li style="width: 110px;">일자</li>
+			<li style="width: 83px;">만족도</li>
+			<li style="width: 525px;">구매후기</li>
+			<li style="width: 133px;">작성자</li>
+			<li style="width: 35px;">일자</li>
 		</ul>
+		<c:forEach var="com" items="${comList}">
 		<div>
-			<img src="${pageContext.request.contextPath }/resources/images/item/sample_05.jpg" />
+			<img src="${pageContext.request.contextPath }/resources/images/item/${com.image}" />
 			<div>
 				<div class="top">
-					<p style="width: 110px; text-align: center;">
+					<p style="width: 101px; margin: 0 21px 0 40px; text-align: left;">
+						<c:forEach begin="1" end="${com.star}">
 						<img src="${pageContext.request.contextPath }/resources/images/icon/ico_star.gif" />
-						<img src="${pageContext.request.contextPath }/resources/images/icon/ico_star.gif" />
-						<img src="${pageContext.request.contextPath }/resources/images/icon/ico_star.gif" />
-						<img src="${pageContext.request.contextPath }/resources/images/icon/ico_star.gif" />
-						<img src="${pageContext.request.contextPath }/resources/images/icon/ico_star.gif" />
+						</c:forEach>
 					</p>
-					<p style="width: 492px; line-height: 170%;">정성이 가득한 꽃 바구니 예쁘게 만들어 빠른 배송까지 감사합니다. 마음에 들어하시네요. 다음에 또 이용하겠습니다.</p>
-					<p style="width: 90px;">비회원</p>
-					<p style="width: 90px;">2017-10-31</p>
+					<p style="width: 517px; line-height: 170%;">${com.content}</p>
+					<p style="width: 101px;">${com.memId}</p>
+					<p style="width: 78px;"><fmt:formatDate value="${com.regdate}" pattern="yyyy-MM-dd"/></p>
 				</div>
 				<div class="bottom">
-					<p><img src="${pageContext.request.contextPath }/resources/images/icon/ico_reply.gif" />안녕하세요. (주)엔젤 플라워 입니다.<br>고객님의 마음과 행복이 듬뿍 담긴 좋은 선물이 되셨기를 바라겠습니다~^^ 늘 항상 더 좋은 상품으로 배송될 수 있도록 노력하겠습니다.<br>감사합니다.</p>
+					<p><img src="${pageContext.request.contextPath }/resources/images/icon/ico_reply.gif" />${com.reply}</p>
 				</div>
 			</div>
 		</div>
-		
-		<div>
-			<img src="${pageContext.request.contextPath }/resources/images/item/sample_05.jpg" />
-			<div>
-				<div class="top">
-					<p style="width: 110px; text-align: center;">
-						<img src="${pageContext.request.contextPath }/resources/images/icon/ico_star.gif" />
-						<img src="${pageContext.request.contextPath }/resources/images/icon/ico_star.gif" />
-						<img src="${pageContext.request.contextPath }/resources/images/icon/ico_star.gif" />
-						<img src="${pageContext.request.contextPath }/resources/images/icon/ico_star.gif" />
-						<img src="${pageContext.request.contextPath }/resources/images/icon/ico_star.gif" />
-					</p>
-					<p style="width: 492px; line-height: 170%;">정성이 가득한 꽃 바구니 예쁘게 만들어 빠른 배송까지 감사합니다. 마음에 들어하시네요. 다음에 또 이용하겠습니다.</p>
-					<p style="width: 90px;">비회원</p>
-					<p style="width: 90px;">2017-10-31</p>
-				</div>
-				<div class="bottom">
-					<p><img src="${pageContext.request.contextPath }/resources/images/icon/ico_reply.gif" />안녕하세요. (주)엔젤 플라워 입니다.<br>고객님의 마음과 행복이 듬뿍 담긴 좋은 선물이 되셨기를 바라겠습니다~^^ 늘 항상 더 좋은 상품으로 배송될 수 있도록 노력하겠습니다.<br>감사합니다.</p>
-				</div>
-			</div>
-		</div>
-		
-		<div>
-			<img src="${pageContext.request.contextPath }/resources/images/item/sample_05.jpg" />
-			<div>
-				<div class="top">
-					<p style="width: 110px; text-align: center;">
-						<img src="${pageContext.request.contextPath }/resources/images/icon/ico_star.gif" />
-						<img src="${pageContext.request.contextPath }/resources/images/icon/ico_star.gif" />
-						<img src="${pageContext.request.contextPath }/resources/images/icon/ico_star.gif" />
-						<img src="${pageContext.request.contextPath }/resources/images/icon/ico_star.gif" />
-						<img src="${pageContext.request.contextPath }/resources/images/icon/ico_star.gif" />
-					</p>
-					<p style="width: 492px; line-height: 170%;">정성이 가득한 꽃 바구니 예쁘게 만들어 빠른 배송까지 감사합니다. 마음에 들어하시네요. 다음에 또 이용하겠습니다.</p>
-					<p style="width: 90px;">비회원</p>
-					<p style="width: 90px;">2017-10-31</p>
-				</div>
-				<div class="bottom">
-					<p><img src="${pageContext.request.contextPath }/resources/images/icon/ico_reply.gif" />안녕하세요. (주)엔젤 플라워 입니다.<br>고객님의 마음과 행복이 듬뿍 담긴 좋은 선물이 되셨기를 바라겠습니다~^^ 늘 항상 더 좋은 상품으로 배송될 수 있도록 노력하겠습니다.<br>감사합니다.</p>
-				</div>
-			</div>
-		</div>
-		
-		<div>
-			<img src="${pageContext.request.contextPath }/resources/images/item/sample_05.jpg" />
-			<div>
-				<div class="top">
-					<p style="width: 110px; text-align: center;">
-						<img src="${pageContext.request.contextPath }/resources/images/icon/ico_star.gif" />
-						<img src="${pageContext.request.contextPath }/resources/images/icon/ico_star.gif" />
-						<img src="${pageContext.request.contextPath }/resources/images/icon/ico_star.gif" />
-						<img src="${pageContext.request.contextPath }/resources/images/icon/ico_star.gif" />
-						<img src="${pageContext.request.contextPath }/resources/images/icon/ico_star.gif" />
-					</p>
-					<p style="width: 492px; line-height: 170%;">정성이 가득한 꽃 바구니 예쁘게 만들어 빠른 배송까지 감사합니다. 마음에 들어하시네요. 다음에 또 이용하겠습니다.</p>
-					<p style="width: 90px;">비회원</p>
-					<p style="width: 90px;">2017-10-31</p>
-				</div>
-				<div class="bottom">
-					<p><img src="${pageContext.request.contextPath }/resources/images/icon/ico_reply.gif" />안녕하세요. (주)엔젤 플라워 입니다.<br>고객님의 마음과 행복이 듬뿍 담긴 좋은 선물이 되셨기를 바라겠습니다~^^ 늘 항상 더 좋은 상품으로 배송될 수 있도록 노력하겠습니다.<br>감사합니다.</p>
-				</div>
-			</div>
-		</div>
-		
-		<div>
-			<img src="${pageContext.request.contextPath }/resources/images/item/sample_05.jpg" />
-			<div>
-				<div class="top">
-					<p style="width: 110px; text-align: center;">
-						<img src="${pageContext.request.contextPath }/resources/images/icon/ico_star.gif" />
-						<img src="${pageContext.request.contextPath }/resources/images/icon/ico_star.gif" />
-						<img src="${pageContext.request.contextPath }/resources/images/icon/ico_star.gif" />
-						<img src="${pageContext.request.contextPath }/resources/images/icon/ico_star.gif" />
-						<img src="${pageContext.request.contextPath }/resources/images/icon/ico_star.gif" />
-					</p>
-					<p style="width: 492px; line-height: 170%;">정성이 가득한 꽃 바구니 예쁘게 만들어 빠른 배송까지 감사합니다. 마음에 들어하시네요. 다음에 또 이용하겠습니다.</p>
-					<p style="width: 90px;">비회원</p>
-					<p style="width: 90px;">2017-10-31</p>
-				</div>
-				<div class="bottom">
-					<p><img src="${pageContext.request.contextPath }/resources/images/icon/ico_reply.gif" />안녕하세요. (주)엔젤 플라워 입니다.<br>고객님의 마음과 행복이 듬뿍 담긴 좋은 선물이 되셨기를 바라겠습니다~^^ 늘 항상 더 좋은 상품으로 배송될 수 있도록 노력하겠습니다.<br>감사합니다.</p>
-				</div>
-			</div>
-		</div>
-		
-		<div>
-			<img src="${pageContext.request.contextPath }/resources/images/item/sample_05.jpg" />
-			<div>
-				<div class="top">
-					<p style="width: 110px; text-align: center;">
-						<img src="${pageContext.request.contextPath }/resources/images/icon/ico_star.gif" />
-						<img src="${pageContext.request.contextPath }/resources/images/icon/ico_star.gif" />
-						<img src="${pageContext.request.contextPath }/resources/images/icon/ico_star.gif" />
-						<img src="${pageContext.request.contextPath }/resources/images/icon/ico_star.gif" />
-						<img src="${pageContext.request.contextPath }/resources/images/icon/ico_star.gif" />
-					</p>
-					<p style="width: 492px; line-height: 170%;">정성이 가득한 꽃 바구니 예쁘게 만들어 빠른 배송까지 감사합니다. 마음에 들어하시네요. 다음에 또 이용하겠습니다.</p>
-					<p style="width: 90px;">비회원</p>
-					<p style="width: 90px;">2017-10-31</p>
-				</div>
-				<div class="bottom">
-					<p><img src="${pageContext.request.contextPath }/resources/images/icon/ico_reply.gif" />안녕하세요. (주)엔젤 플라워 입니다.<br>고객님의 마음과 행복이 듬뿍 담긴 좋은 선물이 되셨기를 바라겠습니다~^^ 늘 항상 더 좋은 상품으로 배송될 수 있도록 노력하겠습니다.<br>감사합니다.</p>
-				</div>
-			</div>
-		</div>
-		
-		<div>
-			<img src="${pageContext.request.contextPath }/resources/images/item/sample_05.jpg" />
-			<div>
-				<div class="top">
-					<p style="width: 110px; text-align: center;">
-						<img src="${pageContext.request.contextPath }/resources/images/icon/ico_star.gif" />
-						<img src="${pageContext.request.contextPath }/resources/images/icon/ico_star.gif" />
-						<img src="${pageContext.request.contextPath }/resources/images/icon/ico_star.gif" />
-						<img src="${pageContext.request.contextPath }/resources/images/icon/ico_star.gif" />
-						<img src="${pageContext.request.contextPath }/resources/images/icon/ico_star.gif" />
-					</p>
-					<p style="width: 492px; line-height: 170%;">정성이 가득한 꽃 바구니 예쁘게 만들어 빠른 배송까지 감사합니다. 마음에 들어하시네요. 다음에 또 이용하겠습니다.</p>
-					<p style="width: 90px;">비회원</p>
-					<p style="width: 90px;">2017-10-31</p>
-				</div>
-				<div class="bottom">
-					<p><img src="${pageContext.request.contextPath }/resources/images/icon/ico_reply.gif" />안녕하세요. (주)엔젤 플라워 입니다.<br>고객님의 마음과 행복이 듬뿍 담긴 좋은 선물이 되셨기를 바라겠습니다~^^ 늘 항상 더 좋은 상품으로 배송될 수 있도록 노력하겠습니다.<br>감사합니다.</p>
-				</div>
-			</div>
-		</div>
-		
-		<div>
-			<img src="${pageContext.request.contextPath }/resources/images/item/sample_05.jpg" />
-			<div>
-				<div class="top">
-					<p style="width: 110px; text-align: center;">
-						<img src="${pageContext.request.contextPath }/resources/images/icon/ico_star.gif" />
-						<img src="${pageContext.request.contextPath }/resources/images/icon/ico_star.gif" />
-						<img src="${pageContext.request.contextPath }/resources/images/icon/ico_star.gif" />
-						<img src="${pageContext.request.contextPath }/resources/images/icon/ico_star.gif" />
-						<img src="${pageContext.request.contextPath }/resources/images/icon/ico_star.gif" />
-					</p>
-					<p style="width: 492px; line-height: 170%;">정성이 가득한 꽃 바구니 예쁘게 만들어 빠른 배송까지 감사합니다. 마음에 들어하시네요. 다음에 또 이용하겠습니다.</p>
-					<p style="width: 90px;">비회원</p>
-					<p style="width: 90px;">2017-10-31</p>
-				</div>
-				<div class="bottom">
-					<p><img src="${pageContext.request.contextPath }/resources/images/icon/ico_reply.gif" />안녕하세요. (주)엔젤 플라워 입니다.<br>고객님의 마음과 행복이 듬뿍 담긴 좋은 선물이 되셨기를 바라겠습니다~^^ 늘 항상 더 좋은 상품으로 배송될 수 있도록 노력하겠습니다.<br>감사합니다.</p>
-				</div>
-			</div>
-		</div>
+		</c:forEach>
 	</div>
 	
 	<ul class="tap">

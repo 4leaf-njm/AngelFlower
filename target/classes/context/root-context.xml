@@ -1,8 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 	
-	<!-- Root Context: defines shared resources visible to all other web components -->
+	<!-- DAO -->
+	<bean id="memberDAO" class="com.dawn.angel.dao.impl.MemberDAOImpl"
+		p:sqlSession-ref="sqlSession" 
+		/>
+	
+	<bean id="adminDAO" class="com.dawn.angel.dao.impl.AdminDAOImpl"
+		p:sqlSession-ref="sqlSession" 
+		/>
 		
+	<bean id="productDAO" class="com.dawn.angel.dao.impl.ProductDAOImpl"
+		p:sqlSession-ref="sqlSession" 
+		/>
+		
+	<bean id="commentDAO" class="com.dawn.angel.dao.impl.CommentDAOImpl"
+		p:sqlSession-ref="sqlSession" 
+		/>
+	
+	<bean id="reviewDAO" class="com.dawn.angel.dao.impl.ReviewDAOImpl"
+		p:sqlSession-ref="sqlSession" 
+		/>
+			
+	<!-- Service -->
+	<bean id="memberService" class="com.dawn.angel.service.impl.MemberServiceImpl"
+		p:memberDAO-ref="memberDAO"
+		/>
+	
+	<bean id="adminService" class="com.dawn.angel.service.impl.AdminServiceImpl"
+		p:adminDAO-ref="adminDAO"
+		/>
+	
+	<bean id="productService" class="com.dawn.angel.service.impl.ProductServiceImpl"
+		p:productDAO-ref="productDAO"
+		/>
+		
+	<bean id="reviewService" class="com.dawn.angel.service.impl.ReviewServiceImpl"
+		p:commentDAO-ref="commentDAO"
+		p:reviewDAO-ref="reviewDAO"
+		/>	
 </beans>
