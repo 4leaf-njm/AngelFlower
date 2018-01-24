@@ -14,6 +14,7 @@
 		<result property="phone" column="mem_phone" />
 		<result property="address" column="mem_address" />
 		<result property="email" column="mem_email" />
+		<result property="save" column="mem_save" />
 		<result property="useyn" column="use_yn" />
 	</resultMap>
 
@@ -27,4 +28,8 @@
 	<select id="selectMemberById" parameterType="str" resultMap="memberMap">
 		select * from member where mem_id=#{id}
 	</select>
+	
+	<update id="updateSave" parameterType="hashmap">
+		update member set mem_save = #{memSave} where mem_id = #{memId} 
+	</update>
 </mapper>

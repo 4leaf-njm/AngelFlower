@@ -2,9 +2,17 @@
 
 ### Eclipse ###
 
+META-INF/
 .metadata
+.project
+.classpath
 bin/
 tmp/
+target/
+classes/
+lib/
+sql/
+doc/
 *.tmp
 *.bak
 *.swp

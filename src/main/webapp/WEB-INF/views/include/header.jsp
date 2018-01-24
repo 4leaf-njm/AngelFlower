@@ -8,12 +8,15 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/commons/default.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/commons/main.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/jquery-ui/jquery-ui.min.css" />
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="${pageContext.request.contextPath }/resources/jquery-ui/jquery-ui.min.js"></script>
 <script src="${pageContext.request.contextPath }/resources/js/default.js"></script>
 </head>
 <body>
 <!-- wrapper (S) -->
 <div id="wrapper">
+	<span id="ctx" style="display: none;">${pageContext.request.contextPath}</span>
 	<!-- header (S) -->
 	<div id="header">
 		<div class="util">
@@ -33,7 +36,7 @@
 						<li><a href="#">마이페이지</a></li>
 					</c:otherwise>
 				</c:choose>
-					<li><a href="#">장바구니</a></li>
+					<li><a href='<c:url value="/order/cart.do" />'>장바구니</a></li>
 					<li><a href="#">주문내역조회</a></li>
 					<li><a href="#">찾아오시는길</a></li>
 				</ul>

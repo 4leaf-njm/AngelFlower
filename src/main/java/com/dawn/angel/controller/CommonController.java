@@ -7,8 +7,11 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.dawn.angel.domain.AdminVO;
 import com.dawn.angel.domain.MemberVO;
@@ -26,16 +29,18 @@ public class CommonController {
 	private AdminService adminService;
 	
 	@RequestMapping(value="/join.do", method=RequestMethod.GET)
-	public String join() {
+	public String join(String type, String name, Model model) {
+		model.addAttribute("type", type);
+		model.addAttribute("name", name);
 		return "commons/join";
 	}
 	
 	@RequestMapping(value="/join.do", method=RequestMethod.POST)
-	public String join(MemberVO member, HttpSession session) throws SQLException{
-		System.out.println(member);
-		
+	public String join(MemberVO member, RedirectAttributes rttr) throws SQLException{
 		memberService.createMember(member);
-		return "redirect:login.do";
+		rttr.addAttribute("type", "complete");
+		rttr.addFlashAttribute("name", member.getName());
+		return "redirect:join.do";
 	}
 	
 	@RequestMapping(value="/login.do", method=RequestMethod.GET)
@@ -81,5 +86,19 @@ public class CommonController {
 	public String logout(HttpSession session) {
 		session.invalidate();
 		return "redirect:/home.do";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="ajaxIdCheck.do", method=RequestMethod.POST, produces={"application/json"})
+	public int ajaxIdCheck(String id) throws SQLException {
+		MemberVO member = memberService.getMemberById(id);
+		int result;
+		
+		if(member == null) 
+			result = 1;
+		else 
+			result = 0;
+		
+		return result;
 	}
 }

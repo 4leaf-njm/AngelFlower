@@ -71,30 +71,102 @@
 	
 	<div class="review">
 		<h2><img src="${pageContext.request.contextPath }/resources/images/text/txt_delivery.png" alt=""/></h2>
-		<div>
+		
+		<div class="top">
+			<div class="nav">
+				<ul>
+					<li class="on" data-type="0">전체 후기<span class="line"></span></li>
+					<li data-type="1">배송 후기<span class="line"></span></li>
+					<li data-type="2">회원 후기<span class="line"></span></li>
+				</ul>
+				<script>
+					$('.review .nav li').click(function(){
+						$('.review .nav li').removeClass('on');
+						$(this).addClass('on');
+						
+						var menu = $('.reviewTap .menu li.on').data('menu');
+						var type = $(this).data('type');
+					
+						ajaxReviewList(menu, type, 1);
+					});
+				</script>
+			</div>
+			
+			<div class="search">
+				<p>지역별 검색</p>
+				<select name="sel_addr_1" id="sel_addr_1" class="sel_addr">
+					<option value="">시/도</option>
+				</select>
+				<select name="sel_addr_2" id="sel_addr_2" class="sel_addr">
+					<option value="">구/군</option>
+				</select>
+			</div>
+		</div>
+		
+		<div class="reviewTap">
 			<ul class="menu">
-				<li class="on" data-menu="menu01">근조화환</li>
-				<li data-menu="menu02">근조바구니</li>
-				<li data-menu="menu03">축하화환</li>
-				<li data-menu="menu04">꽃다발</li>
-				<li data-menu="menu05">꽃바구니</li>
-				<li data-menu="menu06">동·서양란</li>
+				<li class="on" data-menu="1">근조화환</li>
+				<li data-menu="2">근조바구니</li>
+				<li data-menu="3">축하화환</li>
+				<li data-menu="4">꽃다발</li>
+				<li data-menu="5">꽃바구니</li>
+				<li data-menu="6">동·서양란</li>
 			</ul>
 			
 			<ul class="list">
 				<c:forEach var="review" items="${reviewList}">
+				<c:choose>
+				<c:when test="${review.type eq 1 }">
 				<li>
 					<img src="${pageContext.request.contextPath }/resources/images/item/${review.image}" alt="${review.prodName}" />
 					<div class="region">
-						<span>배송지역</span>
+						<span class="type01">배송지역</span>
 						<h3>${review.region}</h3>
+						<p>${review.title}</p>
 					</div>
 					<div class="info">
 						<h3>${review.prodName}</h3>
 						<p><fmt:formatNumber value="${review.price2}" pattern="#,##0" />원</p>
 					</div>
 				</li>
+				</c:when>
+				<c:otherwise>
+				<li>
+					<img src="${pageContext.request.contextPath }/resources/images/item/${review.comImage}" alt="${review.prodName}" />
+					<div class="region">
+						<span class="type02">상품후기</span>
+						<h3>${review.memId}</h3>
+						<p>
+						<c:forEach begin="1" end="${review.comStar}">
+							<img src="${pageContext.request.contextPath }/resources/images/icon/ico_star.gif" />
+						</c:forEach>
+						</p>
+					</div>
+					<div class="info">
+						<h3>${review.prodName}</h3>
+						<p><fmt:formatNumber value="${review.price2}" pattern="#,##0" />원</p>
+					</div>
+				</li>
+				</c:otherwise>
+				</c:choose>
 				</c:forEach>
+			</ul>
+			
+			<ul class="paging">
+				<c:if test="${pageMaker.prev}">
+					<li><a href="javascript:ajaxReviewList(1, 0, '${pageMaker.startPage - 1}')">&laquo;</a></li>
+				</c:if>
+
+				<c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
+					<li
+						<c:out value="${pageMaker.cri.page == idx?'class=active':''}"/>>
+						<a href="javascript:ajaxReviewList(1, 0, '${idx}')">${idx}</a>
+					</li>
+				</c:forEach>
+
+				<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+					<li><a href="javascript:ajaxReviewList(1, 0, '${pageMaker.endPage +1}')">&raquo;</a></li>
+				</c:if>
 			</ul>
 		</div>
 	</div>
@@ -104,3 +176,16 @@
 <!-- container (E) -->
 
 <%@ include file="/WEB-INF/views/include/footer.jsp" %>
+<script src="${pageContext.request.contextPath }/resources/js/product.js"></script>
+
+<script>
+	$('.review .menu > li').click(function(){
+		$('.review .menu > li').removeClass('on');
+		$(this).addClass('on');
+		
+		var menu = $(this).data('menu');
+		var type = $('.top .nav li.on').data('type');
+	
+		ajaxReviewList(menu, type, 1);
+	});
+</script>

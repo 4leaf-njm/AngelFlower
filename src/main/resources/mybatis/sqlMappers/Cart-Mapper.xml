@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Cart-Mapper">
+	<resultMap id="cartMap" type="cart">
+		<id property="cartNo" column="cart_no" />
+		<result property="quantity" column="quantity" />
+		<result property="memId" column="mem_id" />
+		<result property="prodNo" column="prod_no" />
+		<result property="prodName" column="prod_name" />
+		<result property="prodPrice1" column="prod_price1" />
+		<result property="prodPrice2" column="prod_price2" />
+		<result property="prodSave" column="prod_save" />
+		<result property="prodImage" column="prod_image" />
+		<result property="useyn" column="use_yn" />
+	</resultMap>
+	
+	<select id="selectCartListById" parameterType="str" resultMap="cartMap">
+		select * from cart_view where mem_id = #{memId} and use_yn = 'y'
+	</select>
+	
+	<update id="insertCart" parameterType="cart">
+		insert into cart(quantity, mem_id, prod_no) 
+		values (#{quantity}, #{memId}, #{prodNo})
+	</update>
+	
+	<update id="updateQuantity" parameterType="cart">
+		update cart set quantity = #{quantity}
+		where cart_no = #{cartNo}
+	</update>
+	
+	<update id="deleteCart" parameterType="int">
+		update cart set use_yn = 'n'
+		where cart_no = #{cartNo}
+	</update>
+	
+	<update id="deleteCartAll" parameterType="str">
+		update cart set use_yn = 'n'
+		where mem_id = #{memId}
+	</update>
+</mapper>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Order-Mapper">
+	<resultMap id="orderMap" type="order">
+		<id property="orderNo" column="order_no" />
+		<result property="memId" column="mem_id" />
+		<result property="memName" column="mem_name" />
+		<result property="memPhone" column="mem_phone" />
+		<result property="memEmail" column="mem_email" />
+		<result property="receiveName" column="receive_name" />
+		<result property="receivePhone" column="receive_phone" />
+		<result property="receiveAddr" column="receive_addr" />
+		<result property="orderMsg1" column="order_msg1" />
+		<result property="orderMsg2" column="order_msg2" />
+		<result property="orderRequest" column="order_request" />
+		<result property="hopeDate" column="hope_date" />
+		<result property="orderDate" column="order_date" />
+		<result property="orderWay" column="order_way" />
+		<result property="orderState" column="order_state" />
+		<result property="useSave" column="use_save" />
+		<result property="odetailNo" column="odetail_no" />
+		<result property="prodNo" column="prod_no" />
+		<result property="quantity" column="quantity" />
+		<result property="prodName" column="prod_name" />
+		<result property="prodPrice1" column="prod_price1" />
+		<result property="prodPrice2" column="prod_price2" />
+		<result property="prodSave" column="prod_save" />
+		<result property="prodImage" column="prod_image" />
+	</resultMap>
+	
+	<select id="selectOrderByNo" parameterType="int" resultMap="orderMap">
+		select * from order_view where order_no = #{orderNo} limit 1
+	</select>
+	
+	<select id="selectOrderDetailList" parameterType="int" resultMap="orderMap">
+		select * from order_view where order_no = #{orderNo}
+		order by odetail_no desc
+	</select>
+	
+	<update id="insertOrder" parameterType="hashmap">
+		insert into `order`(mem_id, receive_name, receive_phone, receive_addr, order_msg1, order_msg2, order_request, hope_date, order_way, order_state, use_save)
+		values (#{order.memId}, #{order.receiveName}, #{order.receivePhone}, #{order.receiveAddr}, #{order.orderMsg1}, #{order.orderMsg2}, #{order.orderRequest}, #{order.hopeDate}, #{order.orderWay}, #{orderState}, #{order.useSave})
+	</update>
+	
+	<update id="insertOrderDetail" parameterType="order">
+		insert into order_detail(order_no, prod_no, quantity)
+		values(#{orderNo}, #{prodNo}, #{quantity})
+	</update>
+	
+	<select id="selectMaxOrderNo" resultType="int">
+		select max(order_no) from `order`
+	</select>
+	
+	<select id="selectOrderByNoForGuest" parameterType="int" resultMap="orderMap">
+		select * from order_guest_view where order_no = #{orderNo} limit 1
+	</select>
+	
+	<select id="selectOrderDetailListForGuest" parameterType="int" resultMap="orderMap">
+		select * from order_guest_view where order_no = #{orderNo}
+		order by odetail_no desc
+	</select>
+</mapper>
