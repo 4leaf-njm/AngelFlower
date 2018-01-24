@@ -61,7 +61,7 @@
 .best > h2 {text-align: center;}
 .best > div {width: 1106px; margin: 15px auto 0; border: 1px solid #d7d7d7;}
 .best .menu {border-bottom: 3px solid #34353a; font-size: 0;}
-.best .menu li {display: inline-block; width: 183.4px; height: 60px; text-align: center; line-height: 60px; font-size: 18px; font-weight: bold; border-left: 1px solid #d7d7d7}
+.best .menu li {display: inline-block; width: 183.4px; height: 60px; text-align: center; line-height: 60px; font-size: 18px; font-weight: bold; border-left: 1px solid #d7d7d7; cursor: pointer;}
 .best .menu li:first-child {border-left: none;}
 .best .menu li.on {background: #34353a; color: #fff;}
 .best .bestMenu {padding: 15px 20px;}
@@ -80,18 +80,32 @@
 /* 상품 후기 */
 .review {margin: 80px 0 0;}
 .review > h2 {text-align: center;}
-.review > div {width: 1106px; margin: 40px auto 0; border: 1px solid #d7d7d7;}
+.review > .top .nav {width:600px; margin: 30px auto 0;}
+.review > .top .nav {border: 1px solid #d7d7d7; border-top-left-radius: 10px; border-top-right-radius: 10px; font-size: 0;}
+.review > .top .nav li {display: inline-block; width:199px; height: 60px; line-height: 60px; text-align: center; border-left: 1px solid #d7d7d7; font-size: 15px; font-weight: bold;}
+.review > .top .nav li span.line {position: relative; bottom: 2px; display: none; width: 199px; height:5px; background: #34353a; border-radius: 10px;}
+.review > .top .nav li.on span.line {display: block;}
+.review > .top .nav li:first-child {border-left: none;}
+.review > .top .nav li:hover {cursor: pointer;}
+.review > .top .search {position: relative; width: 606px; margin: 30px auto 0;}
+.review > .top .search > p {position: absolute; top: 10px; left: -118px; font-family: '맑은 고딕'; font-weight: bold; color: #454545;}
+.review > .top .search .sel_addr{width: 300px; height: 40px; line-height: 40px; padding-left: 10px; color: #777; letter-spacing: -1px; border: 3px solid #ddd; background: #fff url(../../images/icon/ico_btnSelect.png) no-repeat 97% 50%; font-size: 14px; 
+								-webkit-appearance: none; -moz-appearance: none; -ms-appearance: none; -o-appearance: none; appearance: none;}
+.review > .reviewTap {width: 1106px; margin: 40px auto 0; border: 1px solid #d7d7d7;}
 .review .menu {border-bottom: 3px solid #34353a; font-size: 0;}
-.review .menu li {display: inline-block; width: 183.4px; height: 60px; text-align: center; line-height: 60px; font-size: 18px; font-weight: bold; border-left: 1px solid #d7d7d7}
+.review .menu li {display: inline-block; width: 183.4px; height: 60px; text-align: center; line-height: 60px; font-size: 18px; font-weight: bold; border-left: 1px solid #d7d7d7; cursor: pointer;}
 .review .menu li:first-child {border-left: none;}
 .review .menu li.on {background: #34353a; color: #fff;}
-.review .list {padding: 20px 0 5px; text-align: center; font-size: 0;}
+.review .list {width: 1068px; padding: 20px 24px 5px; text-align: left; font-size: 0;}
 .review .list li {display: inline-block; width: 257px; margin: 0 5px; font-size: 16px;}
-.review .list li > img {width: 250px; height: 300px;}
-.review .list .region {padding: 10px 0 15px 50px; border-bottom: 2px dotted #f0f0f0; text-align: left;}
-.review .list .region span {display: inline-block; padding: 1px 7px; border: 2px solid #ce2f2f; color: #cf3333; font-size: 12px; font-weight: bold;}
+.review .list li > img {width: 245px; height: 285px;}
+.review .list .region {padding: 10px 0 15px 50px; height: 46px; border-bottom: 2px dotted #f0f0f0; text-align: left;}
+.review .list .region span {display: inline-block; padding: 1px 7px; font-size: 12px; font-weight: bold;}
+.review .list .region span.type01 {border: 2px solid #5a7ade; color: #1d43bb;}
+.review .list .region span.type02 {border: 2px solid #ce2f2f; color: #cf3333;}
 .review .list .region h3 {display: inline-block; padding: 1px 5px; color: #4f4d4d; font-family: 'HY 견고딕'; font-size: 14px; font-weight: bold;}
-.review .list .info {padding: 10px 0 20px;}
+.review .list .region p {width: 85px; padding: 8px 0 0 40px; text-align: center; font-family: '맑은 고딕'; font-size: 13px; font-weight: bold; color: #716a6a;}
+.review .list .info {padding: 10px 0 20px; text-align: center;}
 .review .list .info h3 {color: #5d5d5d; font-family: 'HY 견고딕'; font-size: 14px; font-weight: bold;}
 .review .list .info p {padding: 4px 0 0; color: #e73535; font-family: 'HY 견고딕'; font-size: 15px; font-weight: bold;}
 
@@ -125,7 +139,7 @@
 .quick > div ul li {width: 90px; margin: 0 auto 10px; padding: 5px 0 10px; background: #fff; text-align: center;}
 .quick > div ul li:last-child {margin-bottom: 0;}
 .quick > div ul li p {padding: 5px 0 0 0; color: #666666; font-size: 10px; font-weight: bold;}
-.quick > p.cart {border: 3px solid #364058;}
+.quick > p.gocart {border: 3px solid #364058;}
 .quick > p.top {margin: 20px 0 0 0; text-align: center; background: url(../../images/bullet/bu_arrow_top.png) no-repeat center top}
 .quick > p.top a {display: block; padding: 10px 5px 0; color: #303030; font-size: 13px; font-weight: bold;}
 
@@ -139,11 +153,16 @@
 #footer > div > select {float: right; margin-top: 10px; width: 150px; height: 30px; font-size: 13px;}
 #footer > address {width: 860px; margin: 70px auto 50px; line-height: 200%;}
 
-.tap {width: 1150px; margin: 70px auto 0; border-bottom: 7px solid #7f7f7f; font-size: 0;}
-.tap > li {display: inline-block; width: 300px; height: 56px; line-height: 56px; background: #fff; text-align: center; font-family: '한컴 소망 B'; font-size : 22px; font-weight: bold; color: #7f7f7f; }
-.tap > li.on {color: #fff; background: #7f7f7f;}
+.tap {width: 1150px; margin: 70px auto 0; border-bottom: 7px solid #555; font-size: 0;}
+.tap > li {display: inline-block; width: 300px; height: 56px; line-height: 56px; background: #fff; text-align: center; vertical-align: bottom; font-family: '한컴 소망 B'; font-size : 23px; font-weight: bold; color: #7f7f7f; }
+.tap > li.on {padding: 5px 0 0; height: 54px; color: #fff; background: #555;}
 
 hr.line01 {display: block; height: 4px; border-top: 5px solid #e4e4e4; border-bottom: 3px solid #e4e4e4; border-left: none; border-right: none;}
 span.lbl {display: inline-block; margin: 0 5px 0 0; padding: 1px 4px; height: 20px; text-align: center; color: #fefbf4; line-height: 20px; font-family: '한컴 소망 B'; font-weight: bold; }
 span.lbl01 {background: #cd2224;}
 span.lbl02 {background: #4bacc6;}
+
+.paging {margin: 50px 0 20px 0; text-align: center; font-size: 0;}
+.paging li {display: inline-block; margin: 0 6px;}
+.paging li a {display: block; width: 35px; height: 35px; line-height: 35px; border: 1px solid #e4e4e4; color: #a6a6a6; background: #fff;}
+.paging li.on a {background: #e2161c; border: 1px solid #e2161c; color: #fff;}

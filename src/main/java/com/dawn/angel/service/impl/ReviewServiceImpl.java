@@ -6,6 +6,7 @@ import java.util.List;
 import com.dawn.angel.dao.CommentDAO;
 import com.dawn.angel.dao.ReviewDAO;
 import com.dawn.angel.domain.CommentVO;
+import com.dawn.angel.domain.Criteria;
 import com.dawn.angel.domain.ReviewVO;
 import com.dawn.angel.service.ReviewService;
 
@@ -29,8 +30,13 @@ public class ReviewServiceImpl implements ReviewService{
 	}
 
 	@Override
-	public List<ReviewVO> getReviewListByCate(int category) throws SQLException {
-		return reviewDAO.selectReviewListByCate(category);
+	public List<ReviewVO> getReviewListByCate(Criteria cri, int category, int type) throws SQLException {
+		return reviewDAO.selectReviewListByCate(cri, category, type);
+	}
+
+	@Override
+	public int getReviewListCount(int category, int type) throws SQLException {
+		return reviewDAO.selectReviewListCount(category, type);
 	}
 	
 }

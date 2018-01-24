@@ -19,7 +19,7 @@
 			</li>
 		</ul>
 	</div>
-	<p class="cart"><a href="#"><img src="${pageContext.request.contextPath }/resources/images/icon/ico_cart.PNG" alt="장바구니" width="129" height="90"/></a></p>
+	<p class="gocart"><a href="#"><img src="${pageContext.request.contextPath }/resources/images/icon/ico_cart.PNG" alt="장바구니" width="129" height="90"/></a></p>
 	<p class="top"><a href="#">TOP</a></p>
 	
 	<script>

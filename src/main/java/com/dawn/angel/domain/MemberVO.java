@@ -10,6 +10,7 @@ public class MemberVO { // 일반회원
 	private String phone; // 핸드폰
 	private String address; // 주소
 	private String email; // 이메일
+	private int save; // 적립금
 	private char useyn; // 사용여부 (사용가능 : y, 사용 불가능 : n)
 	
 	public String getId() {
@@ -66,9 +67,16 @@ public class MemberVO { // 일반회원
 	public void setUseyn(char useyn) {
 		this.useyn = useyn;
 	}
+	public int getSave() {
+		return save;
+	}
+	public void setSave(int save) {
+		this.save = save;
+	}
 	@Override
 	public String toString() {
 		return "MemberVO [id=" + id + ", pwd=" + pwd + ", name=" + name + ", birth=" + birth + ", gender=" + gender
-				+ ", phone=" + phone + ", address=" + address + ", email=" + email + ", useyn=" + useyn + "]";
+				+ ", phone=" + phone + ", address=" + address + ", email=" + email + ", save=" + save + ", useyn="
+				+ useyn + "]";
 	}
 }

@@ -1,11 +1,17 @@
 @CHARSET "UTF-8";
 
-.content {border-top: 5px solid #e4e4e4; margin: 10px 0;}
-.content > h2 {margin: 4px 0; padding: 25px 0 0 40px; border-top: 3px solid #e4e4e4; font-family: '한컴 소망 B'; font-size: 28px; font-weight: bold; color: #595959;}
-.content > p {padding: 5px 0 0 45px; font-family: '한컴 소망 B'; font-size: 16px; font-weight: bold; color: #595959;}
-
-.tap_content {display: none; width: 1150px; }
+.tap {margin-top: 30px !important;}
+.tap_content {display: none; width: 1150px;}
 .tap_content.on {display: block;}
+
+#step1 {margin: 40px auto 0;}
+#step1 > div {margin: 0 0 40px; padding: 0 0 10px 0; border-bottom: 1px solid #ddd;}
+#step1 > div > p {padding:12px 0 15px 3px; font-family: '맑은 고딕'; font-size: 15px; font-weight: bold; color: #46474a;}
+#step1 > div .agree textarea {width: 1150px; height: 210px; padding: 15px; font-size: 14px; color: #656565; background: #fbfbfb; border: 1px solid #dddddd; line-height: 140%; resize: none;}
+#step1 > div .check {text-align: right; padding: 16px 0 11px;}
+#step1 > div .check p {display: inline-block; padding: 0 40px 0 0; font-size: 15px;}
+#step1 > div .check label {padding: 0 3px; font-size: 15px;}
+#step1 .btn_agree {display: block; margin: 40px auto 0; width: 250px; height: 70px; line-height: 70px; text-align: center; background: #e2161c; font-family: '한컴 소망 B'; font-size: 25px; font-weight: bold; color: #fff;}
 
 #step2 {width: 1050px; margin: 90px auto;}
 #step2 .form01 {padding: 5px 0; border-top: 1px solid #e6e6e6;}
@@ -14,7 +20,7 @@
 #step2 .form04 {padding: 5px 0;}
 #step2 .form05 {padding: 2px 0; border-top: 1px solid #e6e6e6; border-bottom: 1px solid #e6e6e6;}
 #step2 .row {margin: 13px 0;}
-#step2 label {display: inline-block; width: 150px; padding: 0 0 0 26px; mfont-family: '한컴 소망 B'; font-size: 15px; font-weight: bold; color: #333333;}
+#step2 label {display: inline-block; width: 150px; padding: 0 0 0 26px; font-family: '한컴 소망 B'; font-size: 15px; font-weight: bold; color: #333333;}
 #step2 .input01 {width: 70px;}
 #step2 .input02 {width: 185px;}
 #step2 .input03 {width: 500px;}
@@ -22,3 +28,12 @@
 #step2 .info {display: inline-block; padding: 0 0 0 25px; font-family: '한컴 소망 B'; font-size: 13px; color: #ff0000;}
 #step2 .btn_white {display: inline-block; margin: 0 0 0 15px; padding: 10px 8px; border: 1px solid #dddddd; border-radius: 5px; background: #fff; font-family: '한컴 소망 B'; font-size: 14px; font-weight: bold; color: #000;}
 #step2 .btn_join {display: block; margin: 60px auto; width: 250px; height: 70px; line-height: 70px; text-align: center; background: #e2161c; font-family: '한컴 소망 B'; font-size: 25px; font-weight: bold; color: #fff;}
+
+#step3 {width: 1150px; margin: 40px auto 0;}
+#step3 > div {height: 250px; border: 3px solid #dddddd; border-radius: 10px; text-align: center;}
+#step3 > div h2 {padding: 30px 0 15px; font-size: 31px; font-family: '맑은 고딕';}
+#step3 > div h2 span {color: #e2161c;}
+#step3 > div h3 {padding: 0 0 30px 0; font-size: 20px;}
+#step3 > div h3 span {padding: 0 0 3px; border-bottom: 2px solid #000;}
+#step3 > div p {padding: 5px 0; font-size: 17px; font-family: '맑은 고딕'}
+#step3 .btn_main {display: block; margin: 60px auto; width: 250px; height: 70px; line-height: 70px; text-align: center; background: #e2161c; font-family: '한컴 소망 B'; font-size: 25px; font-weight: bold; color: #fff;}

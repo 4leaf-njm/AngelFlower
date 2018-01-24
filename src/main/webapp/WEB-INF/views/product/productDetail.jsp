@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
 
 <head>
-	<title>근조화환 | 엔젤 플라워</title>
 	<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/product/product.css" />
 </head>
 
@@ -20,7 +19,7 @@
 		</p>
 	</div>
 	<img src="${pageContext.request.contextPath }/resources/images/item/${prod.image}" alt="${prod.name }" class="img_prod"/>
-	<div class="info">
+	<div class="infoTable">
 		<table class="detail">
 			<tr>
 				<th>판매가격</th>
@@ -57,10 +56,17 @@
 				<td colspan="3">${prod.info }</td>
 			</tr>
 		</table>
+		
+		<form method="post" name="frm_prod">
+			<input type="hidden" name="prodNo" value="${prod.prodNo }" />
+			<input type="hidden" name="memId" value="${sessionScope.loginUser.id }" />
+			<input type="hidden" name="quantity" />
+		</form>
+		
 		<div class="btn_box">
-			<a href="#" class="buy">바로구매</a>
-			<a href="#" class="cart">장바구니</a>
-			<a href="#" class="zim">찜하기</a>
+			<a href="javascript:go_order()" class="buy">바로구매</a>
+			<a href="javascript:go_addCart()" class="cart">장바구니</a>
+			<a href="javascript:go_addWish()" class="zim">찜하기</a>
 			<p><a href="#" class="ad">광고</a></p>
 		</div>
 		
@@ -197,3 +203,12 @@
 <!-- container (E) -->
 
 <%@ include file="/WEB-INF/views/include/footer.jsp" %>
+
+<script src="${pageContext.request.contextPath }/resources/js/product.js"></script>
+
+<c:if test="${param.direct eq 'y'}">
+<script>
+	alert('장바구니에 담겨 있는 상품도 함께 주문됩니다.\n원치 않으실 경우 장바구니를 비워주세요.');
+	location.href = getContextPath() + "/order/order.do";
+</script>
+</c:if>

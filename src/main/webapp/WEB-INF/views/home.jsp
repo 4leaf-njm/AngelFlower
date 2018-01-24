@@ -2,6 +2,11 @@
 
 <head>
 	<title>엔젤 플라워</title>
+	<style>
+	select::-ms-expand {
+	    display: none;
+	}  
+	</style>
 </head>
 
 <%@ include file="/WEB-INF/views/include/header.jsp" %>
@@ -103,7 +108,39 @@
 	
 	<div class="review">
 		<h2><img src="${pageContext.request.contextPath }/resources/images/text/txt_delivery.png" alt=""/></h2>
-		<div>
+		
+		<div class="top">
+			<div class="nav">
+				<ul>
+					<li class="on" data-type="0">전체 후기<span class="line"></span></li>
+					<li data-type="1">배송 후기<span class="line"></span></li>
+					<li data-type="2">회원 후기<span class="line"></span></li>
+				</ul>
+				<script>
+					$('.review .nav li').click(function(){
+						$('.review .nav li').removeClass('on');
+						$(this).addClass('on');
+						
+						var menu = $('.reviewTap .menu li.on').data('menu');
+						var type = $(this).data('type');
+					
+						ajaxReviewList(menu, type, 1);
+					});
+				</script>
+			</div>
+			
+			<div class="search">
+				<p>지역별 검색</p>
+				<select name="sel_addr_1" id="sel_addr_1" class="sel_addr">
+					<option value="">시/도</option>
+				</select>
+				<select name="sel_addr_2" id="sel_addr_2" class="sel_addr">
+					<option value="">구/군</option>
+				</select>
+			</div>
+		</div>
+		
+		<div class="reviewTap">
 			<ul class="menu">
 				<li class="on" data-menu="1">근조화환</li>
 				<li data-menu="2">근조바구니</li>
@@ -114,6 +151,10 @@
 			</ul>
 			
 			<ul class="list"></ul>
+			
+			<ul class="paging">
+				
+			</ul>
 		</div>
 	</div>
 	
@@ -133,7 +174,7 @@
 		$(this).parent('div').css('display', 'none');
 	});
 	
-	$('.best .menu > li').hover(function(){
+	$('.best .menu > li').click(function(){
 		$('.best .menu > li').removeClass('on');
 		$(this).addClass('on');
 		
@@ -152,12 +193,14 @@
 	$(document).on('mouseout', '.bestMenu li', function(){
 		$(this).find('h3').removeClass('on');	
 	})
-	$('.review .menu > li').hover(function(){
+	$('.review .menu > li').click(function(){
 		$('.review .menu > li').removeClass('on');
 		$(this).addClass('on');
 		
 		var menu = $(this).data('menu');
-		ajaxReviewList(menu);
+		var type = $('.top .nav li.on').data('type');
+	
+		ajaxReviewList(menu, type, 1);
 	});
-	ajaxReviewList(1);
+	ajaxReviewList(1, 0, 1);
 </script>

@@ -25,6 +25,18 @@
 		p:sqlSession-ref="sqlSession" 
 		/>
 			
+	<bean id="cartDAO" class="com.dawn.angel.dao.impl.CartDAOImpl"
+		p:sqlSession-ref="sqlSession" 
+		/>
+		
+	<bean id="wishDAO" class="com.dawn.angel.dao.impl.WishDAOImpl"
+		p:sqlSession-ref="sqlSession" 
+		/>
+		
+	<bean id="orderDAO" class="com.dawn.angel.dao.impl.OrderDAOImpl"
+		p:sqlSession-ref="sqlSession" 
+		/>
+		
 	<!-- Service -->
 	<bean id="memberService" class="com.dawn.angel.service.impl.MemberServiceImpl"
 		p:memberDAO-ref="memberDAO"
@@ -42,4 +54,15 @@
 		p:commentDAO-ref="commentDAO"
 		p:reviewDAO-ref="reviewDAO"
 		/>	
+
+	<bean id="cartService" class="com.dawn.angel.service.impl.CartServiceImpl"
+		p:cartDAO-ref="cartDAO"
+		p:wishDAO-ref="wishDAO"
+		/>	
+	
+	<bean id="orderService" class="com.dawn.angel.service.impl.OrderServiceImpl"
+		p:orderDAO-ref="orderDAO"
+		p:cartDAO-ref="cartDAO"
+		p:memberDAO-ref="memberDAO"
+		/>		
 </beans>

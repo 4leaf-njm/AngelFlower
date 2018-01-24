@@ -1,6 +1,8 @@
 package com.dawn.angel.dao.impl;
 
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
@@ -33,6 +35,16 @@ public class MemberDAOImpl implements MemberDAO{
 	@Override
 	public MemberVO selectMemberById(String id) throws SQLException {
 		return sqlSession.selectOne(NAMESPACE + ".selectMemberById", id);
+	}
+
+	@Override
+	public void updateSave(String id, int save) throws SQLException {
+		Map<String, Object> params = new HashMap<String, Object>();
+		
+		params.put("memId", id);
+		params.put("memSave", save);
+		
+		sqlSession.update(NAMESPACE + ".updateSave", params);
 	}
 
 }

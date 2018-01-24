@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Wish-Mapper">
+	<resultMap id="wishMap" type="wish">
+		<id property="wishNo" column="wish_no" />
+		<result property="quantity" column="quantity" />
+		<result property="memId" column="mem_id" />
+		<result property="prodNo" column="prod_no" />
+		<result property="prodName" column="prod_name" />
+		<result property="prodPrice1" column="prod_price1" />
+		<result property="prodPrice2" column="prod_price2" />
+		<result property="prodSave" column="prod_save" />
+		<result property="prodImage" column="prod_image" />
+		<result property="useyn" column="use_yn" />
+	</resultMap>
+	
+	<select id="selectWishListById" parameterType="str" resultMap="wishMap">
+		select * from wish_view where mem_id = #{memId} and use_yn = 'y'
+	</select>
+	
+	<update id="insertWish" parameterType="wish">
+		insert into wish(quantity, mem_id, prod_no) 
+		values (#{quantity}, #{memId}, #{prodNo})
+	</update>
+	
+	<update id="deleteWish" parameterType="int">
+		update wish set use_yn = 'n'
+		where wish_no = #{wishNo}
+	</update>
+	
+	<select id="selectWishByNo" parameterType="int" resultMap="wishMap">
+		select * from wish_view 
+		where wish_no = #{wishNo}
+	</select>
+</mapper>
