@@ -18,6 +18,7 @@
 		<result property="busiNo" column="busi_no" />
 		<result property="represent" column="represent" />
 		<result property="useyn" column="use_yn" />
+		<result property="regdate" column="regdate" />
 	</resultMap>
 
 	<update id="insertAdmin" parameterType="admin">
@@ -31,4 +32,52 @@
 	<select id="selectAdminById" parameterType="str" resultMap="adminMap">
 		select * from admin where admin_id=#{id}
 	</select>
+	
+	<select id="selectAdminList" resultMap="adminMap">
+		select * from admin order by regdate desc
+	</select>
+	
+	<select id="selectAdminListForPermit" resultMap="adminMap">
+		select * from admin where use_yn = 'r'
+		order by regdate desc
+	</select>
+	
+	<select id="selectAdminListCountForPermit" resultType="int">
+		select count(*) from admin where use_yn = 'r'
+	</select>
+	
+	<update id="updateAdminPermitYes" parameterType="str">
+		update admin set use_yn = 'y' where admin_id = #{id}
+	</update>
+	
+	<update id="updateAdminPermitNo" parameterType="str">
+		delete from admin where admin_id = #{id}
+	</update>
+	
+	<update id="deleteAdmin" parameterType="str">
+		update admin set use_yn = 'n'
+		where admin_id = #{id}
+	</update>
+	
+	<sql id="search">
+		<if test="cri.searchType != null">
+			<if test="cri.searchType == 'name'.toString()">
+				and admin_name like concat('%',#{cri.keyword},'%')
+			</if>
+			<if test="cri.searchType == 'company'.toString()">
+				and company like concat('%',#{cri.keyword},'%')
+			</if>
+		</if>
+	</sql>
+	
+	<select id="selectAdminListSearch" parameterType="hashmap" resultMap="adminMap">
+		select * from admin where use_yn = 'y' and admin_id != #{adminId}
+		<include refid="search"></include>
+	</select>
+	
+	<select id="selectAdminListSearchCount" parameterType="hashmap" resultType="int">
+		select count(*) from admin where use_yn = 'y' and admin_id != #{adminId}
+		<include refid="search"></include>
+	</select>
+	
 </mapper>

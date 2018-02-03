@@ -26,6 +26,13 @@
 					<li><a href="#">바로주문전화 <span>1588-8282</span></a></li>
 				</ul>
 				<ul class="util_right">
+				<c:if test="${sessionScope.loginUser ne null and sessionScope.loginType eq 'admin'}">
+					<li class="admin">
+						<p>${sessionScope.loginUser.name}<span>님</span></p>
+						<span>(${sessionScope.loginUser.company})</span>
+						<a href='<c:url value="/admin/mb/list.do" />'>관리자</a>
+					</li>
+				</c:if>
 				<c:choose>
 					<c:when test="${empty loginUser}">
 						<li><a href='<c:url value="/commons/login.do" />'>로그인</a></li>

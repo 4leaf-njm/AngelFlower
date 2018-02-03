@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Balju-Mapper">
+	<resultMap id="baljuMap" type="balju">
+		<id property="baljuNo" column="balju_no" />
+		<result property="baljuSerial" column="balju_serial" />
+		<result property="baljuMemName" column="balju_memname" />
+		<result property="baljuMemPhone" column="balju_memphone" />
+		<result property="baljuPrice" column="balju_price" />
+		<result property="baljuDate" column="balju_date" />
+		<result property="baljuSendId" column="balju_sendid" />
+		<result property="baljuSendPrice" column="balju_sendprice" />
+		<result property="baljuSendName" column="balju_sendname" />
+		<result property="baljuSendPhone" column="balju_sendphone" />
+		<result property="baljuSendCompany" column="balju_sendcompany" />
+		<result property="baljuRecId" column="balju_recid" />
+		<result property="baljuRecPrice" column="balju_recprice" />
+		<result property="baljuRecName" column="balju_recname" />
+		<result property="baljuRecPhone" column="balju_recphone" />
+		<result property="baljuRecCompany" column="balju_reccompany" />
+		<result property="bdetailNo" column="bdetail_no" />
+		<result property="prodNo" column="prod_no" />
+		<result property="prodName" column="prod_name" />
+		<result property="prodImage" column="prod_image" />
+		<result property="quentity" column="quentity" />
+		<result property="checkyn" column="check_yn" />
+	</resultMap>
+	
+	<update id="insertBalju" parameterType="balju">
+		insert into balju(balju_serial, balju_memname, balju_memphone, balju_price, balju_sendid, 
+		balju_sendprice, balju_recid, balju_recprice, balju_reccompany, balju_recname, balju_recphone)
+		values(#{baljuSerial}, #{baljuMemName}, #{baljuMemPhone}, #{baljuPrice}, #{baljuSendId}, #{baljuSendPrice}, 
+		#{baljuRecId}, #{baljuRecPrice}, #{baljuRecCompany}, #{baljuRecName}, #{baljuRecPhone})
+	</update>
+	
+	<update id="insertBaljuDetail" parameterType="balju">
+		insert into balju_detail(balju_no, prod_no, quentity)
+		values(#{baljuNo}, #{prodNo}, #{quentity})
+	</update>
+	
+	<select id="selectBaljuMaxNo" resultType="int">
+		select max(balju_no) from balju
+	</select>
+	
+	<select id="selectBaljuRecList" parameterType="str" resultMap="baljuMap">
+		select * from balju_view where balju_recid = #{adminId} 
+		group by balju_no order by balju_no desc
+	</select>
+	
+	<select id="selectBaljuRecListCount" parameterType="str" resultType="int">
+		select count(*) from balju where balju_recid = #{adminId}
+	</select>
+	
+	<select id="selectBaljuSendList" parameterType="str" resultMap="baljuMap">
+		select * from balju_view where balju_sendid = #{adminId}
+		group by balju_no order by balju_no desc
+	</select>
+	
+	<select id="selectBaljuSendListCount" parameterType="str" resultType="int">
+		select count(*) from balju where balju_sendid = #{adminId}
+	</select>
+	
+	<update id="updateBaljuCheck" parameterType="int">
+		update balju set check_yn = 'y' where balju_no = #{baljuNo}
+	</update>
+	
+	<select id="selectBaljuByNo" parameterType="int" resultMap="baljuMap">
+		select * from balju_view where balju_no = #{baljuNo} limit 1
+	</select>
+	
+	<select id="selectBaljuDetail" parameterType="int" resultMap="baljuMap">
+		select * from balju_view where balju_no = #{baljuNo}
+	</select>
+	
+	<select id="selectBaljuTotalList" resultMap="baljuMap">
+		select * from balju_view group by balju_no
+	</select>
+	
+	<select id="selectBaljuListForPay" parameterType="hashmap" resultMap="baljuMap">
+		select * from balju_view where date_format(balju_date, '%Y-%m') = #{date} 
+		and (balju_sendid = #{adminId} or balju_recid = #{adminId}) 
+		group by balju_no
+	</select>
+	
+	<select id="selectBaljuListForPayCount" parameterType="hashmap" resultType="int">
+		select count(*) from balju where date_format(balju_date, '%Y-%m') = #{date} 
+		and (balju_sendid = #{adminId} or balju_recid = #{adminId}) 
+	</select>
+</mapper>

@@ -7,6 +7,7 @@
 <mapper namespace="Order-Mapper">
 	<resultMap id="orderMap" type="order">
 		<id property="orderNo" column="order_no" />
+		<result property="orderSerial" column="order_serial" />
 		<result property="memId" column="mem_id" />
 		<result property="memName" column="mem_name" />
 		<result property="memPhone" column="mem_phone" />
@@ -30,6 +31,12 @@
 		<result property="prodPrice2" column="prod_price2" />
 		<result property="prodSave" column="prod_save" />
 		<result property="prodImage" column="prod_image" />
+		<result property="prodCategory" column="category" />
+		<result property="reviewyn" column="review_yn" />
+		<result property="cancelyn" column="cancel_yn" />
+		<result property="depAccount" column="dep_account" />
+		<result property="type" column="type" />
+		<result property="baljuPrice" column="balju_price" />
 	</resultMap>
 	
 	<select id="selectOrderByNo" parameterType="int" resultMap="orderMap">
@@ -42,8 +49,11 @@
 	</select>
 	
 	<update id="insertOrder" parameterType="hashmap">
-		insert into `order`(mem_id, receive_name, receive_phone, receive_addr, order_msg1, order_msg2, order_request, hope_date, order_way, order_state, use_save)
-		values (#{order.memId}, #{order.receiveName}, #{order.receivePhone}, #{order.receiveAddr}, #{order.orderMsg1}, #{order.orderMsg2}, #{order.orderRequest}, #{order.hopeDate}, #{order.orderWay}, #{orderState}, #{order.useSave})
+		insert into `order`(order_serial, mem_id, receive_name, receive_phone, receive_addr, order_msg1, order_msg2, 
+		order_request, hope_date, order_way, order_state, use_save, mem_name, mem_phone, mem_email, type, balju_price)
+		values (#{order.orderSerial}, #{order.memId}, #{order.receiveName}, #{order.receivePhone}, #{order.receiveAddr},
+		#{order.orderMsg1}, #{order.orderMsg2}, #{order.orderRequest}, #{order.hopeDate}, #{order.orderWay}, #{orderState},
+		#{order.useSave}, #{order.memName}, #{order.memPhone}, #{order.memEmail}, #{order.type}, #{order.baljuPrice})
 	</update>
 	
 	<update id="insertOrderDetail" parameterType="order">
@@ -55,6 +65,11 @@
 		select max(order_no) from `order`
 	</select>
 	
+	<select id="selectOrderCountById" parameterType="str" resultType="int">
+		select count(*) from order_view 
+		where mem_id = #{memId}
+	</select>
+	
 	<select id="selectOrderByNoForGuest" parameterType="int" resultMap="orderMap">
 		select * from order_guest_view where order_no = #{orderNo} limit 1
 	</select>
@@ -62,5 +77,123 @@
 	<select id="selectOrderDetailListForGuest" parameterType="int" resultMap="orderMap">
 		select * from order_guest_view where order_no = #{orderNo}
 		order by odetail_no desc
+	</select>
+	
+	<select id="selectOrderCountByProd" parameterType="int" resultType="int">
+		select count(*) from order_guest_view 
+		where prod_no = #{prodNo}
+		and order_state = 4
+	</select>
+	
+	<select id="selectOrderTotalList" resultMap="orderMap">
+		select * from order_view group by order_no
+		order by order_no desc, order_state asc 
+	</select>
+	
+	<select id="selectOrderTotalCount" resultType="int">
+		select count(*) from `order`
+	</select>
+	
+	<select id="selectOrderDepList" resultMap="orderMap">
+		select * from order_view 
+		where order_state = 1
+		and cancel_yn != 'y'
+		group by order_no 
+		order by order_no desc
+	</select>
+	
+	<select id="selectOrderDepCount" resultType="int">
+		select count(*) from `order` where order_state = 1
+	</select>
+	
+	<update id="updateOrderDep" parameterType="int">
+		update `order` set order_state = 2
+		where order_no = #{orderNo}
+	</update>
+	
+	<select id="selectOrderShipList" resultMap="orderMap">
+		select * from order_view 
+		where order_state != 1
+		and cancel_yn != 'y'
+		group by order_no 
+		order by order_no desc
+	</select>
+	
+	<select id="selectOrderShipCount" resultType="int">
+		select count(*) from `order` where order_state != 1 and cancel_yn != 'y'
+	</select>
+	
+	<update id="updateOrderShip" parameterType="hashmap">
+		update `order` set order_state = #{orderState}
+		where order_no = #{orderNo}
+	</update>
+	
+	<select id="selectOrderCancelList" resultMap="orderMap">
+		select * from order_view 
+		where cancel_yn != 'n'
+		group by order_no 
+		order by order_no desc
+	</select>
+	
+	<select id="selectOrderCancelCount" resultType="int">
+		select count(*) from `order` where cancel_yn != 'n'
+	</select>
+	
+	<update id="updateOrderCancel" parameterType="hashmap">
+		update `order` set cancel_yn = #{cancelyn}
+		where order_no = #{orderNo}
+	</update>
+	
+	<sql id="search">
+		<if test="searchType != null">
+			<if test="searchType == 'name'.toString()">
+				and mem_name = like concat('%',#{keyword},'%')
+			</if>
+			<if test="searchType == 'no'.toString()">
+				and order_serial like concat('%',#{keyword},'%')
+			</if>
+		</if>
+	</sql>
+	
+	<select id="selectOrderListByComplete" resultMap="orderMap">
+		select * from order_view where order_state=4 and cancel_yn != 'y' and review_yn = 'n'
+		<include refid="search"></include>
+		group by order_no order by order_no desc
+	</select>
+	
+	<select id="selectOrderListCountByComplete" resultType="int">
+		select count(*) from `order` where order_state=4 and cancel_yn != 'y' and review_yn = 'n'
+		<include refid="search"></include>
+	</select>
+	
+	<update id="updateReviewyn" parameterType="str">
+		update `order` set review_yn = 'y' where order_serial = #{orderSerial}
+	</update>
+	
+	<select id="selectOrderListForTotSale" parameterType="str" resultMap="orderMap">
+		select * from order_view where date_format(order_date, '%Y-%m') = #{date} 
+		group by order_no
+	</select>
+	
+	<sql id="paySearch">
+		<if test="cri.searchType != null">
+			<if test="cri.searchType == 'name'.toString()">
+				and mem_name like concat('%',#{cri.keyword},'%')
+			</if>
+			<if test="cri.searchType == 'no'.toString()">
+				and order_serial like concat('%',#{cri.keyword},'%')
+			</if>
+		</if>
+	</sql>
+	
+	<select id="selectOrderSearchListForPay" parameterType="hashmap" resultMap="orderMap">
+		select * from order_view where date_format(order_date, '%Y-%m') = #{date} 
+		<include refid="paySearch"></include>
+		group by order_no order by order_state desc
+	</select>
+	
+	<select id="selectOrderSearchListForPayCount" parameterType="hashmap" resultType="int">
+		select count(*) from `order` where date_format(order_date, '%Y-%m') = #{date} 
+		<include refid="paySearch"></include>
 	</select>
 </mapper>

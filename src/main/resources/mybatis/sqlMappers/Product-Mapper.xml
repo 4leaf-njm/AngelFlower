@@ -8,6 +8,7 @@
 	<resultMap id="productMap" type="product">
 		<id property="prodNo" column="prod_no" />
 		<result property="name" column="prod_name" />
+		<result property="realprice" column="prod_realprice" />
 		<result property="price1" column="prod_price1" />
 		<result property="price2" column="prod_price2" />
 		<result property="save" column="prod_save" />
@@ -28,7 +29,57 @@
 	</select>
 	
 	<select id="selectProductBestList" parameterType="int" resultMap="productMap">
-		select * from product where category = #{category}
+		select * from product where category = #{category} and best_yn = 'y'
 		order by prod_no desc;
+	</select>
+	
+	<select id="selectProductTotalList" resultMap="productMap">
+		select * from product 
+		order by category asc, prod_no desc
+	</select>
+	
+	<select id="selectProductTotalCount" resultType="int">
+		select count(*) from product
+	</select>
+	
+	<update id="insertProduct" parameterType="product">
+		insert into product(prod_name, prod_realprice, prod_price1, prod_price2, 
+		prod_save, prod_info, prod_image, category, best_yn, use_yn)
+		values(#{name}, #{realprice}, #{price1}, #{price2}, #{save}, #{info},
+		#{image}, #{category}, #{bestyn}, #{useyn})
+	</update>
+	
+	<update id="updateProduct" parameterType="product">
+		update product set prod_name = #{name}, prod_realprice = #{realprice}, prod_price1 = #{price1},
+		prod_price2 = #{price2}, prod_save = #{save}, prod_info = #{info}, prod_image = #{image},
+		category = #{category}, best_yn = #{bestyn}, use_yn = #{useyn}
+		where prod_no = #{prodNo}
+	</update>
+	
+	<update id="deleteProduct" parameterType="int">
+		delete from product where prod_no = #{prodNo}
+	</update>
+	
+	<sql id="search">
+		<if test="searchType != null">
+			<if test="searchType == 'name'.toString()">
+				and prod_name like concat('%',#{keyword},'%')
+			</if>
+		</if>
+	</sql>
+	
+	<select id="selectProdListSearch" resultMap="productMap">
+		select * from product where use_yn = 'y'
+		<include refid="search"></include>
+		order by category asc, prod_no desc
+	</select>
+	
+	<select id="selectProdListSearchCount" resultType="int">
+		select count(*) from product where use_yn = 'y'
+		<include refid="search"></include>
+	</select>
+	
+	<select id="selectBestCountByCate" parameterType="int" resultType="int">
+		select count(*) from product where category = #{category} and best_yn = 'y'
 	</select>
 </mapper>

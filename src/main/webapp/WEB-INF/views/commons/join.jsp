@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
 
 <head>
-	<title>회원가입 | 엔젤 플라워</title>
 	<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/commons/join.css" />
 </head>
 
@@ -356,8 +355,8 @@ E-mail : webmaster@hanflower.com
 				</div>
 				<div class="row">
 					<input type="hidden" name="busiNo" />
-					<label for="busiNo">* 사업자 등록번호</label>
-					<input type="text" name="busiNo1" id="busiNo" class="input01" maxlength="3"/>
+					<label for="busiNo1">* 사업자 등록번호</label>
+					<input type="text" name="busiNo1" id="busiNo1" class="input01" maxlength="3"/>
 					<span class="space">-</span>
 					<input type="text" name="busiNo2" class="input01" maxlength="2" />
 					<span class="space">-</span>
@@ -475,7 +474,7 @@ E-mail : webmaster@hanflower.com
 	<div id="step3" class="tap_content">
 		<div>
 			<h2><span>엔젤플라워</span> 회원이 되신 것을 축하드립니다.</h2>
-			<h3><span>${name}</span>님의  회원가입이 성공적으로 이루어졌습니다.</h3>
+			<h3>회원가입이 성공적으로 이루어졌습니다.</h3>
 			<p>상품을 보다 싸게, 회원가로 구매하실 수 있습니다.</p>
 			<p>엔젤플라워만의 특별한 할인혜택을 누리세요.</p>
 		</div>
@@ -497,3 +496,7 @@ E-mail : webmaster@hanflower.com
 		$('.tap li').eq(2).addClass('on');
 	</script>
 </c:if>
+
+<script>
+	settingBirth();
+</script>

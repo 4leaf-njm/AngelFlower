@@ -1,5 +1,7 @@
 package com.dawn.angel.domain;
 
+import java.sql.Timestamp;
+
 public class MemberVO { // 일반회원
 	
 	private String id; // 아이디
@@ -12,6 +14,8 @@ public class MemberVO { // 일반회원
 	private String email; // 이메일
 	private int save; // 적립금
 	private char useyn; // 사용여부 (사용가능 : y, 사용 불가능 : n)
+	private Timestamp regdate; // 가입일
+	private int orderCount; // 주문 건수
 	
 	public String getId() {
 		return id;
@@ -73,10 +77,22 @@ public class MemberVO { // 일반회원
 	public void setSave(int save) {
 		this.save = save;
 	}
+	public Timestamp getRegdate() {
+		return regdate;
+	}
+	public void setRegdate(Timestamp regdate) {
+		this.regdate = regdate;
+	}
+	public int getOrderCount() {
+		return orderCount;
+	}
+	public void setOrderCount(int orderCount) {
+		this.orderCount = orderCount;
+	}
 	@Override
 	public String toString() {
 		return "MemberVO [id=" + id + ", pwd=" + pwd + ", name=" + name + ", birth=" + birth + ", gender=" + gender
 				+ ", phone=" + phone + ", address=" + address + ", email=" + email + ", save=" + save + ", useyn="
-				+ useyn + "]";
+				+ useyn + ", regdate=" + regdate + ", orderCount=" + orderCount + "]";
 	}
 }

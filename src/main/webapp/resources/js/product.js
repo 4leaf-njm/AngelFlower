@@ -7,45 +7,58 @@ function ajaxBestList(category) {
 		success: function(data) {
 			var html = '';
 			$.each(data, function(index, value){
-				html += '<li data-no="' + value.prodNo + '">';
-				html += 	'<img src="' + $('#ctx').text() + '/resources/images/item/' + value.image + '" alt="' + value.name + '" width="150" height="210"/>';
+				html += '<li data-no="' + value.prodNo + '" class="active">';
+				html += 	'<img src="' + $('#ctx').text() + '/resources/upload/product/' + value.image + '" alt="' + value.name + '" width="180" height="235"/>';
 				html += 	'<h3>' + value.name + '</h3>';
 				html += 	'<p class="price">판매가 : <span>' + comma(value.price1) + '</span> 원</p>';
-				html += 	'<p class="sale">회원가 : <strong>' + comma(value.price2) + '</strong>원</p>';
+				html += 	'<p class="sale">회원가 : <strong>' + comma(value.price2) + '</strong> 원</p>';
 				html += 	'<p><span class="lbl lbl01">적립금</span>' + comma(value.save) + '</p>';
 				html += '</li>';
 			})
+			if(data.length < 6) {
+				for(var i=data.length; i<6; i++) {
+					html += '<li>';
+					html += 	'<img src="' + $('#ctx').text() + '/resources/images/item/default.jpg" width="180" height="235"/>';
+					html += 	'<h3 style="color: #f67575">상품 준비중</h3>';
+					html += 	'<p class="price">판매가 : <span>0</span> 원</p>';
+					html += 	'<p class="sale">회원가 : <strong>0</strong> 원</p>';
+					html += 	'<p><span class="lbl lbl01">적립금</span>0</p>';
+					html += '</li>';
+				}
+			}
 			$('.bestMenu ul').html(html);
 		},
-		error: function(request,status,error){
-			alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		error: function(){
+			alert('error');
 	    }
 	});
 }
 
-function ajaxReviewList(category, type, page) {
+function ajaxReviewList(category, type, page, sido, gugun) {
 	$.ajax({
 		type: 'post',
 		url: 'ajaxReviewList.do',
 		dataType: 'json',
-		data: {'menu': category, 'type': type, 'page': page},
+		data: {'menu': category, 'type': type, 'page': page, 'sido': sido, 'gugun': gugun},
 		success: function(data) {
 			var html = '';
 			$.each(data.reviewList, function(index, value){
 				html += '<li>';
 				if(value.type == 1) {
-					html += 	'<img src="' + $('#ctx').text() + '/resources/images/item/' + value.image + '" alt="' + value.prodName + '" />';
+					var title = value.revTitle;
+					title = title.replace(title.substr(title.length-1, 1), '*') + ' 님';
+					html += 	'<img src="' + $('#ctx').text() + '/resources/upload/review/' + value.revImage + '" alt="' + value.prodName + '" />';
 					html += 	'<div class="region">';
 					html += 		'<span class="type01">배송지역</span>';
-					html += 		'<h3>'+ value.region +'</h3>';
-					html += 		'<p>'+ value.title +'</p>';
+					html += 		'<h3>'+ value.revRegion +'</h3>';
+					html += 		'<p>'+ title +'</p>';
 					html += 	'</div>';
 					html += 	'<div class="info">';
-					html += 		'<h3>'+ value.prodName +'</h3>';
-					html += 		'<p>'+ comma(value.price2) +'원</p>';
+					html += 		'<h3>'+ value.revProd +'</h3>';
+					html += 		'<p>'+ comma(value.revPrice) +'원</p>';
 					html += 	'</div>';
 				} else {
-					html += 	'<img src="' + $('#ctx').text() + '/resources/images/item/' + value.comImage + '" alt="' + value.prodName + '" />';
+					html += 	'<img src="' + $('#ctx').text() + '/resources/upload/review/' + value.comImage + '" alt="' + value.prodName + '" />';
 					html += 	'<div class="region">';
 					html += 		'<span class="type02">상품후기</span>';
 					html += 		'<h3>'+ value.memId +'</h3><p>';
@@ -54,7 +67,7 @@ function ajaxReviewList(category, type, page) {
 					html += 	'</p></div>';
 					html += 	'<div class="info">';
 					html += 		'<h3>'+ value.prodName +'</h3>';
-					html += 		'<p>'+ comma(value.price2) +'원</p>';
+					html += 		'<p>'+ comma(value.prodPrice2) +'원</p>';
 					html += 	'</div>';
 				}
 				html += '</li>';

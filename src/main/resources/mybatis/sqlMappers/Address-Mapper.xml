@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Address-Mapper">
+	<resultMap id="addressMap" type="address">
+		<id property="addrNo" column="addr_no" />
+		<result property="sido" column="sido" />
+		<result property="gugun" column="gugun" />
+	</resultMap>
+
+	<select id="selectSido" resultType="str">
+		select distinct sido from address
+	</select>
+	
+	<select id="selectGugun" parameterType="str" resultType="str">
+		select gugun from address where sido = #{sido}
+	</select>
+</mapper>

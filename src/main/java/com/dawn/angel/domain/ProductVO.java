@@ -4,6 +4,7 @@ public class ProductVO { // 상품
 	
 	private int prodNo; // 상품번호 
 	private String name; // 상품명
+	private int realprice; // 상품 원가
 	private int price1; // 상품 판매가
 	private int price2; // 상품 회원가
 	private int save; // 상품 적립금
@@ -12,6 +13,7 @@ public class ProductVO { // 상품
 	private int category; // 품명
 	private char bestyn; // 베스트 여부 (베스트 o: y, 베스트 x: n) 
 	private char useyn; // 사용여부 (사용 : y, 미사용 : n)
+	private int orderCount; // 판매량
 	
 	public int getProdNo() {
 		return prodNo;
@@ -73,10 +75,22 @@ public class ProductVO { // 상품
 	public void setBestyn(char bestyn) {
 		this.bestyn = bestyn;
 	}
+	public int getOrderCount() {
+		return orderCount;
+	}
+	public void setOrderCount(int orderCount) {
+		this.orderCount = orderCount;
+	}
+	public int getRealprice() {
+		return realprice;
+	}
+	public void setRealprice(int realprice) {
+		this.realprice = realprice;
+	}
 	@Override
 	public String toString() {
-		return "ProductVO [prodNo=" + prodNo + ", name=" + name + ", price1=" + price1 + ", price2=" + price2
-				+ ", save=" + save + ", info=" + info + ", image=" + image + ", category=" + category + ", bestyn="
-				+ bestyn + ", useyn=" + useyn + "]";
+		return "ProductVO [prodNo=" + prodNo + ", name=" + name + ", realprice=" + realprice + ", price1=" + price1
+				+ ", price2=" + price2 + ", save=" + save + ", info=" + info + ", image=" + image + ", category="
+				+ category + ", bestyn=" + bestyn + ", useyn=" + useyn + ", orderCount=" + orderCount + "]";
 	}
 }

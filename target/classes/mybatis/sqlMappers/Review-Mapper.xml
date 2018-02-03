@@ -7,20 +7,20 @@
 <mapper namespace="Review-Mapper">
 	<resultMap id="reviewMap" type="review">
 		<id property="reviewNo" column="review_no" />
-		<result property="title" column="review_title" />
-		<result property="region" column="review_region" />
-		<result property="image" column="review_image" />
+		<result property="revTitle" column="review_title" />
+		<result property="revRegion" column="review_region" />
+		<result property="revImage" column="review_image" />
+		<result property="revContent" column="review_content" />
+		<result property="revProd" column="review_prod" />
+		<result property="revPrice" column="review_price" />
 		<result property="prodNo" column="prod_no" />
 		<result property="memId" column="mem_id" />
-		<result property="prodName" column="prod_name" />
-		<result property="price1" column="prod_price1" />
-		<result property="price2" column="prod_price2" />
-		<result property="category" column="category" />
 		<result property="comContent" column="com_content" />
 		<result property="comStar" column="com_star" />
 		<result property="comImage" column="com_image" />
 		<result property="comRegdate" column="com_regdate" />
 		<result property="comReply" column="com_reply" />
+		<result property="category" column="category" />
 		<result property="type" column="type" />
 	</resultMap>
 	
@@ -39,5 +39,53 @@
 		<if test="type != 0">
 			and type = #{type}
 		</if>
+	</select>
+	
+	<update id="insertReview" parameterType="review">
+		insert into review(review_title, review_region, review_image, review_content, 
+		review_prod, review_price, category, type)
+		values(#{revTitle}, #{revRegion}, #{revImage}, #{revContent}, #{revProd},
+		#{revPrice}, #{category}, 1)
+	</update>
+	
+	<select id="selectReviewTotalList" resultMap="reviewMap">
+		select * from review_view where type = 1
+		order by review_no desc
+	</select>
+	
+	<select id="selectReviewTotalListCount" resultType="int">
+		select count(*) from review where type = 1
+	</select>
+	
+	<select id="selectReviewByNo" parameterType="int" resultMap="reviewMap">
+		select * from review_view where review_no = #{reviewNo} and type = 1
+	</select>
+	
+	<update id="updateReview" parameterType="review">
+		update review set review_title = #{revTitle}, review_region = #{revRegion},
+		review_image = #{revImage}, review_content = #{revContent}, 
+		review_prod = #{revProd}, review_price = #{revPrice}, category = #{category}
+		where review_no = #{reviewNo}
+	</update>
+	
+	<update id="deleteReview" parameterType="int">
+		delete from review where review_no = #{reviewNo}
+	</update>
+	
+	<select id="selectPrdTotalList" resultMap="reviewMap">
+		select * from review_view where type = 2
+		order by review_no desc
+	</select>
+	
+	<select id="selectPrdTotalListCount" resultType="int">
+		select count(*) from review where type = 2
+	</select>
+	
+	<update id="updatePrdReply" parameterType="review">
+		update review set com_reply = #{comReply} where review_no = #{reviewNo}
+	</update>
+	
+	<select id="selectPrdNoListCount" resultType="int">
+		select count(*) from review where type = 2 and com_reply is null
 	</select>
 </mapper>

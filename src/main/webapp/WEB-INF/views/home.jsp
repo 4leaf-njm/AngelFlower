@@ -131,10 +131,14 @@
 			
 			<div class="search">
 				<p>지역별 검색</p>
-				<select name="sel_addr_1" id="sel_addr_1" class="sel_addr">
+				
+				<select name="sido" id="sido" class="sel_addr">
 					<option value="">시/도</option>
+					<c:forEach var="sido" items="${sidoList }">
+					<option value="${sido }">${sido }</option>
+					</c:forEach>
 				</select>
-				<select name="sel_addr_2" id="sel_addr_2" class="sel_addr">
+				<select name="gugun" id="gugun" class="sel_addr">
 					<option value="">구/군</option>
 				</select>
 			</div>
@@ -183,14 +187,14 @@
 	});
 	ajaxBestList(1);
 
-	$(document).on('click', '.bestMenu li', function(){
+	$(document).on('click', '.bestMenu li.active', function(){
 		var prodNo = $(this).data('no');
 		location.href='<c:url value="/product/detail.do?no=' + prodNo + '"/>';
 	})
-	$(document).on('mouseover', '.bestMenu li', function(){
+	$(document).on('mouseover', '.bestMenu li.active', function(){
 		$(this).find('h3').addClass('on');	
 	})
-	$(document).on('mouseout', '.bestMenu li', function(){
+	$(document).on('mouseout', '.bestMenu li.active', function(){
 		$(this).find('h3').removeClass('on');	
 	})
 	$('.review .menu > li').click(function(){
@@ -199,8 +203,50 @@
 		
 		var menu = $(this).data('menu');
 		var type = $('.top .nav li.on').data('type');
-	
-		ajaxReviewList(menu, type, 1);
+		var sido = $('#sido option:selected').val();
+		ajaxReviewList(menu, type, 1, sido);
 	});
 	ajaxReviewList(1, 0, 1);
+	
+	$('#sido').change(function(){
+		var menu = $('.reviewTap .menu li.on').data('menu');
+		var val = $('#sido option:selected').val();
+		$('.review .nav li').removeClass('on');
+		$('.review .nav li').eq(1).addClass('on');
+		if(val == '') 
+			ajaxReviewList(menu, 1, 1);
+		else 
+			ajaxReviewList(menu, 1, 1, val);
+		
+		$.ajax({
+			type: 'post',
+			url: 'ajaxGugun.do',
+			dataType: 'json',
+			data: {'sido': val},
+			success: function(data) {
+				var html = '';
+				html += '<option value="">구/군</option>';
+				
+				$.each(data, function(index, value) {
+					html += '<option value="' + value + '">' + value + '</option>';
+				});
+				$('#gugun').html(html);
+			}, 
+			error: function() {
+				alert('error');
+			}
+		});
+	})
+	
+	$('#gugun').change(function(){
+		var menu = $('.reviewTap .menu li.on').data('menu');
+		var sido = $('#sido option:selected').val();
+		var gugun = $('#gugun option:selected').val().trim();
+		$('.review .nav li').removeClass('on');
+		$('.review .nav li').eq(1).addClass('on');
+		if(gugun == '') 
+			ajaxReviewList(menu, 1, 1, sido);
+		else 
+			ajaxReviewList(menu, 1, 1, sido, gugun);
+	});
 </script>

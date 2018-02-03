@@ -38,8 +38,8 @@ function join_chk() {
 	
 	if(gubun == '기업') { // 기업회원일 경우
 		frm.busiNo.value = frm.busiNo1.value + '-' + frm.busiNo2.value + '-' + frm.busiNo3.value;
-		frm.action = '/admin/join.do';
-		
+		frm.action = $('#ctx').text() + '/admin/join.do';
+	
 		if(frm.company.value == '') {
 			alert('상호(회사명)을 입력해주세요.');
 			frm.company.focus();
@@ -328,7 +328,3 @@ function settingBirth() {
 		selectDay.add(new Option(i, value), optionIndex++);
 	}
 }
-
-$(document).ready(function(){
-	settingBirth();
-});

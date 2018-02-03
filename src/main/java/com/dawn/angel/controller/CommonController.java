@@ -29,9 +29,8 @@ public class CommonController {
 	private AdminService adminService;
 	
 	@RequestMapping(value="/join.do", method=RequestMethod.GET)
-	public String join(String type, String name, Model model) {
+	public String join(String type, Model model) {
 		model.addAttribute("type", type);
-		model.addAttribute("name", name);
 		return "commons/join";
 	}
 	
@@ -39,7 +38,6 @@ public class CommonController {
 	public String join(MemberVO member, RedirectAttributes rttr) throws SQLException{
 		memberService.createMember(member);
 		rttr.addAttribute("type", "complete");
-		rttr.addFlashAttribute("name", member.getName());
 		return "redirect:join.do";
 	}
 	
@@ -65,6 +63,7 @@ public class CommonController {
 					msg = "비밀번호가 일치하지 않습니다.";
 				} else {
 					session.setAttribute("loginUser", member);
+					session.setAttribute("loginType", "member");
 				}
 			}
 			
@@ -74,6 +73,7 @@ public class CommonController {
 					msg = "비밀번호가 일치하지 않습니다.";
 				} else {
 					session.setAttribute("loginUser", admin);
+					session.setAttribute("loginType", "admin");
 				}
 			}
 		}
@@ -92,13 +92,19 @@ public class CommonController {
 	@RequestMapping(value="ajaxIdCheck.do", method=RequestMethod.POST, produces={"application/json"})
 	public int ajaxIdCheck(String id) throws SQLException {
 		MemberVO member = memberService.getMemberById(id);
+		AdminVO admin = adminService.getAdminById(id);
 		int result;
 		
-		if(member == null) 
+		if(member == null && admin == null) 
 			result = 1;
 		else 
 			result = 0;
 		
 		return result;
+	}
+	
+	@RequestMapping(value="/find.do", method=RequestMethod.GET)
+	public String find() throws SQLException {
+		return "commons/find";
 	}
 }

@@ -37,6 +37,14 @@
 		p:sqlSession-ref="sqlSession" 
 		/>
 		
+	<bean id="baljuDAO" class="com.dawn.angel.dao.impl.BaljuDAOImpl"
+		p:sqlSession-ref="sqlSession" 
+		/>
+		
+	<bean id="addressDAO" class="com.dawn.angel.dao.AddressDAO"
+		p:sqlSession-ref="sqlSession" 
+		/>
+		
 	<!-- Service -->
 	<bean id="memberService" class="com.dawn.angel.service.impl.MemberServiceImpl"
 		p:memberDAO-ref="memberDAO"
@@ -53,6 +61,8 @@
 	<bean id="reviewService" class="com.dawn.angel.service.impl.ReviewServiceImpl"
 		p:commentDAO-ref="commentDAO"
 		p:reviewDAO-ref="reviewDAO"
+		p:orderDAO-ref="orderDAO"
+		p:productDAO-ref="productDAO"
 		/>	
 
 	<bean id="cartService" class="com.dawn.angel.service.impl.CartServiceImpl"
@@ -65,4 +75,9 @@
 		p:cartDAO-ref="cartDAO"
 		p:memberDAO-ref="memberDAO"
 		/>		
+	
+	<bean id="baljuService" class="com.dawn.angel.service.impl.BaljuServiceImpl"
+		p:baljuDAO-ref="baljuDAO"
+		p:orderDAO-ref="orderDAO"
+		/>	
 </beans>

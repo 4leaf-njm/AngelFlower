@@ -2,11 +2,14 @@ package com.dawn.angel.dao.impl;
 
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
 import com.dawn.angel.dao.MemberDAO;
+import com.dawn.angel.domain.Criteria;
 import com.dawn.angel.domain.MemberVO;
 
 public class MemberDAOImpl implements MemberDAO{
@@ -30,6 +33,7 @@ public class MemberDAOImpl implements MemberDAO{
 
 	@Override
 	public void deleteMember(String id) throws SQLException {
+		sqlSession.update(NAMESPACE + ".deleteMember", id);
 	}
 
 	@Override
@@ -45,6 +49,20 @@ public class MemberDAOImpl implements MemberDAO{
 		params.put("memSave", save);
 		
 		sqlSession.update(NAMESPACE + ".updateSave", params);
+	}
+
+	@Override
+	public List<MemberVO> selectMemberList() throws SQLException {
+		return sqlSession.selectList(NAMESPACE + ".selectMemberList");
+	}
+
+	@Override
+	public List<MemberVO> selectMemberListByCri(Criteria cri) throws SQLException {
+		int offset = cri.getPageStart();
+		int limit = cri.getPerPageNum();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return sqlSession.selectList(NAMESPACE + ".selectMemberList", null, rowBounds);
 	}
 
 }

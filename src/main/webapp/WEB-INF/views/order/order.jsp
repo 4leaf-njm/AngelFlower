@@ -12,7 +12,6 @@
 <%@ include file="/WEB-INF/views/include/header.jsp" %>
 
 <head>
-	<title>상품주문 | 엔젤 플라워</title>
 	<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/order/order.css" />
     <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
     <script>

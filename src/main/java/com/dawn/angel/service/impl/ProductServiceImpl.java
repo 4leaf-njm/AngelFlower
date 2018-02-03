@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.dawn.angel.dao.ProductDAO;
+import com.dawn.angel.domain.Criteria;
 import com.dawn.angel.domain.ProductVO;
+import com.dawn.angel.domain.SearchCriteria;
 import com.dawn.angel.service.ProductService;
 
 public class ProductServiceImpl implements ProductService{
@@ -50,6 +52,51 @@ public class ProductServiceImpl implements ProductService{
 	@Override
 	public List<ProductVO> getProductBestList(int category) throws SQLException {
 		return productDAO.selectProductBestList(category);
+	}
+
+	@Override
+	public List<ProductVO> getProductTotalList() throws SQLException {
+		return productDAO.selectProductTotalList();
+	}
+	
+	@Override
+	public List<ProductVO> getProductTotalListCri(Criteria cri) throws SQLException {
+		return productDAO.selectProductTotalListCri(cri);
+	}
+
+	@Override
+	public int getProductTotalCount() throws SQLException {
+		return productDAO.selectProductTotalCount();
+	}
+
+	@Override
+	public void addProduct(ProductVO product) throws SQLException {
+		productDAO.insertProduct(product);
+	}
+
+	@Override
+	public void modifyProduct(ProductVO product) throws SQLException {
+		productDAO.updateProduct(product);
+	}
+
+	@Override
+	public void removeProduct(int prodNo) throws SQLException {
+		productDAO.deleteProduct(prodNo);
+	}
+
+	@Override
+	public List<ProductVO> getProductListSearch(SearchCriteria cri) throws SQLException {
+		return productDAO.selectProdListSearch(cri);
+	}
+
+	@Override
+	public int getProductListSearchCount(SearchCriteria cri) throws SQLException {
+		return productDAO.selectProdListCount(cri);
+	}
+
+	@Override
+	public int getBestCountByCate(int category) throws SQLException {
+		return productDAO.selectBestCountByCate(category);
 	}
 
 }

@@ -1,5 +1,7 @@
 package com.dawn.angel.domain;
 
+import java.sql.Timestamp;
+
 public class AdminVO { // 기업회원 (관리자)
 	
 	private String id; // 아이디
@@ -13,7 +15,9 @@ public class AdminVO { // 기업회원 (관리자)
 	private String company; // 상호 (회사명)
 	private String busiNo; // 사업자등록번호
 	private String represent; // 대표자
-	private char useyn; // 사용여부 (사용가능 : y, 사용 불가능 : n)
+	private char useyn; // 사용여부 (사용가능 : y, 사용 불가능 : n, 가입 승인대기: r)
+	private Timestamp regdate; // 가입일
+	private int baljuCount; // 발주 건수
 	
 	public String getId() {
 		return id;
@@ -87,10 +91,23 @@ public class AdminVO { // 기업회원 (관리자)
 	public void setUseyn(char useyn) {
 		this.useyn = useyn;
 	}
+	public Timestamp getRegdate() {
+		return regdate;
+	}
+	public void setRegdate(Timestamp regdate) {
+		this.regdate = regdate;
+	}
+	public int getBaljuCount() {
+		return baljuCount;
+	}
+	public void setBaljuCount(int baljuCount) {
+		this.baljuCount = baljuCount;
+	}
 	@Override
 	public String toString() {
 		return "AdminVO [id=" + id + ", pwd=" + pwd + ", name=" + name + ", birth=" + birth + ", gender=" + gender
 				+ ", phone=" + phone + ", address=" + address + ", email=" + email + ", company=" + company
-				+ ", busiNo=" + busiNo + ", represent=" + represent + ", useyn=" + useyn + "]";
+				+ ", busiNo=" + busiNo + ", represent=" + represent + ", useyn=" + useyn + ", regdate=" + regdate
+				+ ", baljuCount=" + baljuCount + "]";
 	}
 }

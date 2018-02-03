@@ -14,4 +14,24 @@ public interface ReviewService {
 	List<ReviewVO> getReviewListByCate(Criteria cri, int category, int type) throws SQLException;
 	
 	int getReviewListCount(int category, int type) throws SQLException;
+	
+	void insertReview(ReviewVO review, String orderSerial) throws SQLException;
+	
+	List<ReviewVO> getReviewTotalList(Criteria cri) throws SQLException;
+	
+	int getReviewTotalListCount() throws SQLException;
+	
+	ReviewVO getReviewByNo(int reviewNo) throws SQLException;
+	
+	void modifyReview(ReviewVO review) throws SQLException;
+	
+	void removeReview(int reviewNo) throws SQLException;
+	
+	List<ReviewVO> getPrdTotalList(Criteria cri) throws SQLException;
+	
+	int getPrdTotalListCount() throws SQLException;
+	
+	void modifyPrdReply(ReviewVO review) throws SQLException;
+	
+	int getPrdNoListCount() throws SQLException;
 }
