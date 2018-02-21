@@ -19,6 +19,8 @@
 		<result property="represent" column="represent" />
 		<result property="useyn" column="use_yn" />
 		<result property="regdate" column="regdate" />
+		<result property="roleNo" column="role_no" />
+		<result property="roleName" column="role_name" />
 	</resultMap>
 
 	<update id="insertAdmin" parameterType="admin">
@@ -34,7 +36,7 @@
 	</select>
 	
 	<select id="selectAdminList" resultMap="adminMap">
-		select * from admin order by regdate desc
+		select * from admin where use_yn != 'r' order by regdate desc
 	</select>
 	
 	<select id="selectAdminListForPermit" resultMap="adminMap">
@@ -80,4 +82,38 @@
 		<include refid="search"></include>
 	</select>
 	
+	<select id="selectAdminFindId" parameterType="hashmap" resultMap="adminMap">
+		select * from admin where admin_name = #{name} and admin_email = #{email}
+	</select>
+	
+	<select id="selectAdminFindPw" parameterType="hashmap" resultMap="adminMap">
+		select * from admin where admin_id = #{id} and admin_name = #{name} and admin_email = #{email}
+	</select>
+	
+	<update id="updateAdminPw" parameterType="hashmap">
+		update admin set admin_pwd = #{pwd} where admin_id = #{id}
+	</update>
+	
+	<select id="selectAdminByEmail" parameterType="str" resultMap="adminMap">
+		select * from admin where admin_email = #{email}
+	</select>
+	
+	<update id="updateAdmin" parameterType="admin">
+		update admin set admin_pwd = #{pwd}, admin_name = #{name}, admin_birth = #{birth},
+		admin_gender = #{gender}, admin_phone = #{phone}, admin_address = #{address},
+		admin_email = #{email}, company = #{company}, busi_no = #{busiNo}, represent = #{represent}
+		where admin_id = #{id}
+	</update>
+	
+	<update id="updateAdminRole" parameterType="hashmap">
+		update admin set role_no = #{roleNo} where admin_id = #{adminId}
+	</update>
+	
+	<select id="selectAdminCountThisDay" resultType="int">
+		select count(*) from admin where date_format(regdate, '%Y-%m-%d') = curdate() and use_yn = 'y'
+	</select>
+	
+	<select id="selectAdminCountThisMonth" resultType="int">
+		select count(*) from admin where month(regdate) = month(curdate()) and use_yn = 'y'
+	</select>
 </mapper>

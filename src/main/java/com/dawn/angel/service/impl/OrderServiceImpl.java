@@ -2,7 +2,9 @@ package com.dawn.angel.service.impl;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.dawn.angel.dao.CartDAO;
 import com.dawn.angel.dao.MemberDAO;
@@ -14,6 +16,7 @@ import com.dawn.angel.domain.OrderVO;
 import com.dawn.angel.domain.PayVO;
 import com.dawn.angel.domain.SearchCriteria;
 import com.dawn.angel.service.OrderService;
+import com.dawn.angel.util.AuthUtil;
 import com.dawn.angel.util.SerialUtil;
 
 public class OrderServiceImpl implements OrderService {
@@ -23,6 +26,8 @@ public class OrderServiceImpl implements OrderService {
 	private CartDAO cartDAO;
 	
 	private MemberDAO memberDAO;
+	
+	private AuthUtil authUtil;
 	
 	public void setOrderDAO(OrderDAO orderDAO) {
 		this.orderDAO = orderDAO;
@@ -36,23 +41,29 @@ public class OrderServiceImpl implements OrderService {
 		this.memberDAO = memberDAO;
 	}
 
+	public void setAuthUtil(AuthUtil authUtil) {
+		this.authUtil = authUtil;
+	}
+
 	@Override
 	public void insertOrder(OrderVO order) throws SQLException {
-		int orderNo = orderDAO.selectMaxOrderNo();
-		String serial = SerialUtil.getSerialNumber(orderNo + 1);
-		order.setOrderSerial(serial);
 		order.setType(1);
 		orderDAO.insertOrder(order);
-		
+		int orderNo = orderDAO.selectMaxOrderNo();
+		String serial = SerialUtil.getSerialNumber(orderNo);
+		order.setOrderSerial(serial);
+		order.setOrderNo(orderNo);
+		orderDAO.updateOrderSerial(order);
 		List<CartVO> cartList = cartDAO.selectCartListById(order.getMemId());
 		int totalSave = 0;
 		for(CartVO cart : cartList) {
 			OrderVO o = new OrderVO();
 			o.setProdNo(cart.getProdNo());
 			o.setQuantity(cart.getQuantity());
-			o.setOrderNo(orderNo+1);
+			o.setOrderNo(orderNo);
 			orderDAO.insertOrderDetail(o);
-			totalSave += cart.getProdSave() * cart.getQuantity();
+			if(cart.getMemId() != null && !cart.getMemId().equals(""))
+				totalSave += cart.getProdSave() * cart.getQuantity();
 		}
 		cartDAO.deleteCartAll(order.getMemId());
 		MemberVO member = memberDAO.selectMemberById(order.getMemId());
@@ -63,16 +74,18 @@ public class OrderServiceImpl implements OrderService {
 
 	@Override
 	public void insertOrderForGuest(OrderVO order, List<CartVO> cartList) throws SQLException {
-		int orderNo = orderDAO.selectMaxOrderNo();
-		String serial = SerialUtil.getSerialNumber(orderNo + 1);
-		order.setOrderSerial(serial);
+		order.setType(1);
 		orderDAO.insertOrder(order);
-		
+		int orderNo = orderDAO.selectMaxOrderNo();
+		String serial = SerialUtil.getSerialNumber(orderNo);
+		order.setOrderSerial(serial);
+		order.setOrderNo(orderNo);
+		orderDAO.updateOrderSerial(order);
 		for(CartVO cart : cartList) {
 			OrderVO o = new OrderVO();
 			o.setProdNo(cart.getProdNo());
 			o.setQuantity(cart.getQuantity());
-			o.setOrderNo(orderNo+1);
+			o.setOrderNo(orderNo);
 			orderDAO.insertOrderDetail(o);
 		}
 	}
@@ -93,16 +106,6 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public OrderVO getOrderByNoForGuest(int orderNo) throws SQLException {
-		return orderDAO.selectOrderByNoForGuest(orderNo);
-	}
-
-	@Override
-	public List<OrderVO> getOrderDetailListForGuest(int orderNo) throws SQLException {
-		return orderDAO.selectOrderDetailListForGuest(orderNo);
-	}
-
-	@Override
 	public int getOrderCountById(String memId) throws SQLException {
 		return orderDAO.selectOrderCountById(memId);
 	}
@@ -113,8 +116,12 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public List<OrderVO> getOrderTotalListCri(Criteria cri) throws SQLException {
-		List<OrderVO> orderList = orderDAO.selectOrderTotalListCri(cri);
+	public List<OrderVO> getOrderTotalListCri(Criteria cri, String adminId) throws SQLException {
+		List<OrderVO> orderList = null;
+		if(authUtil.isAdmin(adminId))
+			orderList = orderDAO.selectOrderTotalListCri(cri);
+		else
+			orderList = orderDAO.selectOrderTotalListForBalju(cri, adminId);
 		for(OrderVO order : orderList) {
 			List<OrderVO> odList = orderDAO.selectOrderDetailList(order.getOrderNo());
 			int totalPrice = 0;
@@ -143,8 +150,12 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public List<OrderVO> getOrderDepList(Criteria cri) throws SQLException {
-		List<OrderVO> orderList = orderDAO.selectOrderDepList(cri);
+	public List<OrderVO> getOrderDepList(Criteria cri, String adminId) throws SQLException {
+		List<OrderVO> orderList = null;
+		if(authUtil.isAdmin(adminId))
+			orderList = orderDAO.selectOrderDepList(cri);
+		else
+			orderList = orderDAO.selectOrderDepListForBalju(cri, adminId);
 		for(OrderVO order : orderList) {
 			List<OrderVO> odList = orderDAO.selectOrderDetailList(order.getOrderNo());
 			int totalPrice = 0;
@@ -172,8 +183,12 @@ public class OrderServiceImpl implements OrderService {
 	}
 
 	@Override
-	public List<OrderVO> getOrderShipList(Criteria cri) throws SQLException {
-		List<OrderVO> orderList = orderDAO.selectOrderShipList(cri);
+	public List<OrderVO> getOrderShipList(Criteria cri, String adminId) throws SQLException {
+		List<OrderVO> orderList = null;
+		if(authUtil.isAdmin(adminId))
+			orderList = orderDAO.selectOrderShipList(cri);
+		else
+			orderList = orderDAO.selectOrderShipListForBalju(cri, adminId);
 		for(OrderVO order : orderList) {
 			List<OrderVO> odList = orderDAO.selectOrderDetailList(order.getOrderNo());
 			int totalPrice = 0;
@@ -265,6 +280,7 @@ public class OrderServiceImpl implements OrderService {
 			int compleCount = 0;
 			int totalMoney = 0;
 			for(OrderVO order : orderList) {
+				if(i==2) System.out.println(order);
 				if(order.getType() == 2) {
 					orderMoney += order.getBaljuPrice();
 					if(order.getOrderState() == 4 && order.getCancelyn() != 'y') {
@@ -299,6 +315,7 @@ public class OrderServiceImpl implements OrderService {
 			pay.setOrderMoney(orderMoney);
 			pay.setCompleCount(compleCount);
 			pay.setTotalMoney(totalMoney);
+			if(i==2) System.out.println(pay);
 			payList.add(pay);
 		}
 		return payList;
@@ -318,6 +335,7 @@ public class OrderServiceImpl implements OrderService {
 				else
 					totalPrice += o.getProdPrice2() * o.getQuantity();
 			} 
+			totalPrice -= order.getUseSave();
 			if(order.getType() == 2) totalPrice = order.getBaljuPrice();
 			order.setRealPrice(totalPrice);
 			totalPrice = 0;
@@ -328,6 +346,91 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public int getOrderSearchListForPayCount(int year, int month, SearchCriteria cri) throws SQLException {
 		return orderDAO.selectOrderSearchListForPayCount(year, month, cri);
+	}
+
+	@Override
+	public List<OrderVO> getMyOrderList(String memId) throws SQLException {
+		List<OrderVO> orderList = orderDAO.selectMyOrderList(memId);
+		int totalPrice = 0; 
+		for(OrderVO order : orderList) {
+			List<OrderVO> oList = orderDAO.selectOrderDetailList(order.getOrderNo());
+			if(oList.size() > 1) 
+				order.setProdName(order.getProdName() + " 외 " + (oList.size()-1) + " 개");
+			for(OrderVO o : oList) {
+				if(o.getMemId() == null)
+					totalPrice += o.getProdPrice1() * o.getQuantity();
+				else
+					totalPrice += o.getProdPrice2() * o.getQuantity();
+			} 
+			if(order.getType() == 2) totalPrice = order.getBaljuPrice();
+			order.setRealPrice(totalPrice);
+			totalPrice = 0;
+		}
+		return orderList;
+	}
+
+	@Override
+	public int getOrderTotalCountForBalju(String adminId) throws SQLException {
+		return orderDAO.selectOrderTotalCountForBalju(adminId);
+	}
+
+	@Override
+	public int getOrderDepCountForBalju(String adminId) throws SQLException {
+		return orderDAO.selectOrderDepCountForBalju(adminId);
+	}
+
+	@Override
+	public int getOrderShipCountForBalju(String adminId) throws SQLException {
+		return orderDAO.selectOrderShipCountForBalju(adminId);
+	}
+
+	@Override
+	public List<OrderVO> getOrderTotalListForBalju(String adminId) throws SQLException {
+		return orderDAO.selectOrderTotalListForBalju(adminId);
+	}
+
+	@Override
+	public Map<String, Object> getOrderListThisMonth() throws SQLException {
+		Map<String, Object> params = new HashMap<String, Object>();
+		List<OrderVO> orderList = orderDAO.selectOrderListThisMonth();
+		int totalPrice = 0;
+		for(OrderVO order : orderList) {
+			List<OrderVO> oList = orderDAO.selectOrderDetailList(order.getOrderNo());
+			for(OrderVO o : oList) {
+				if(o.getType() == 2)
+					totalPrice += order.getBaljuPrice();
+				else if(o.getMemId() == null)
+					totalPrice += o.getProdPrice1() * o.getQuantity();
+				else
+					totalPrice += o.getProdPrice2() * o.getQuantity();
+			}
+			totalPrice -= order.getUseSave();
+		}
+		params.put("monthTotalCount", orderList.size());
+		params.put("monthTotalPrice", totalPrice);
+		return params;
+	}
+
+	@Override
+	public Map<String, Object> getOrderListThisDay() throws SQLException {
+		Map<String, Object> params = new HashMap<String, Object>();
+		List<OrderVO> orderList = orderDAO.selectOrderListThisDay();
+		int totalPrice = 0;
+		for(OrderVO order : orderList) {
+			List<OrderVO> oList = orderDAO.selectOrderDetailList(order.getOrderNo());
+			for(OrderVO o : oList) {
+				if(o.getType() == 2)
+					totalPrice += order.getBaljuPrice();
+				else if(o.getMemId() == null)
+					totalPrice += o.getProdPrice1() * o.getQuantity();
+				else
+					totalPrice += o.getProdPrice2() * o.getQuantity();
+			}
+			totalPrice -= order.getUseSave();
+		}
+		params.put("dayTotalCount", orderList.size());
+		params.put("dayTotalPrice", totalPrice);
+		return params;
 	}
 
 }

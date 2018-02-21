@@ -8,12 +8,17 @@
     	<typeAlias type="com.dawn.angel.domain.MemberVO" alias="member"/>
     	<typeAlias type="com.dawn.angel.domain.AdminVO" alias="admin"/>
     	<typeAlias type="com.dawn.angel.domain.ProductVO" alias="product"/>
-    	<typeAlias type="com.dawn.angel.domain.CommentVO" alias="comment"/>
     	<typeAlias type="com.dawn.angel.domain.ReviewVO" alias="review"/>
     	<typeAlias type="com.dawn.angel.domain.CartVO" alias="cart"/>
     	<typeAlias type="com.dawn.angel.domain.WishVO" alias="wish"/>
     	<typeAlias type="com.dawn.angel.domain.OrderVO" alias="order"/>
     	<typeAlias type="com.dawn.angel.domain.BaljuVO" alias="balju"/>
     	<typeAlias type="com.dawn.angel.domain.AddressVO" alias="address"/>
+    	<typeAlias type="com.dawn.angel.domain.RoleVO" alias="role"/>
+    	<typeAlias type="com.dawn.angel.domain.BannerVO" alias="banner"/>
+    	<typeAlias type="com.dawn.angel.domain.AccountVO" alias="account"/>
+    	<typeAlias type="com.dawn.angel.domain.NoticeVO" alias="notice"/>
+    	<typeAlias type="com.dawn.angel.domain.VisitVO" alias="visit"/>
+    	<typeAlias type="com.dawn.angel.domain.ProductRequest" alias="prodreq"/>
     </typeAliases>
 </configuration>

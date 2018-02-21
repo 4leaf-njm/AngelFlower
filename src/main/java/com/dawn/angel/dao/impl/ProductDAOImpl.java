@@ -1,13 +1,16 @@
 package com.dawn.angel.dao.impl;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 
 import com.dawn.angel.dao.ProductDAO;
 import com.dawn.angel.domain.Criteria;
+import com.dawn.angel.domain.ProductRequest;
 import com.dawn.angel.domain.ProductVO;
 import com.dawn.angel.domain.SearchCriteria;
 
@@ -28,7 +31,9 @@ public class ProductDAOImpl implements ProductDAO {
 
 	@Override
 	public List<ProductVO> selectProductList(int category) throws SQLException {
-		return sqlSession.selectList(NAMESPACE + ".selectProductList", category);
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("category", category);
+		return sqlSession.selectList(NAMESPACE + ".selectProductList", params);
 	}
 
 	@Override
@@ -87,6 +92,27 @@ public class ProductDAOImpl implements ProductDAO {
 	@Override
 	public int selectBestCountByCate(int category) throws SQLException {
 		return sqlSession.selectOne(NAMESPACE + ".selectBestCountByCate", category);
+	}
+
+	@Override
+	public List<ProductVO> selectProductListCri(int category, Criteria cri, Integer sort) throws SQLException {
+		Map<String, Object> params = new HashMap<String, Object>();
+		int offset = cri.getPageStart();
+		int limit = cri.getPerPageNum();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		params.put("category", category);
+		params.put("sort", sort);
+		return sqlSession.selectList(NAMESPACE + ".selectProductList", params, rowBounds);
+	}
+
+	@Override
+	public int selectProductListCriCount(int category) throws SQLException {
+		return sqlSession.selectOne(NAMESPACE + ".selectProductListCount", category);
+	}
+
+	@Override
+	public List<ProductVO> selectProductSearch(ProductRequest req) throws SQLException {
+		return sqlSession.selectList(NAMESPACE + ".selectProductSearch", req);
 	}
 	
 }

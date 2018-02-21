@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Notice-Mapper">
+	<resultMap id="noticeMap" type="notice">
+		<id property="noticeNo" column="notice_no" />
+		<result property="noticeTitle" column="notice_title" />
+		<result property="noticeContent" column="notice_content" />
+		<result property="noticeDate" column="notice_date" />
+	</resultMap>
+	
+	<select id="selectNoticeList" resultMap="noticeMap">
+		select * from notice order by notice_no desc
+	</select>
+	
+	<select id="selectNoticeByNo" parameterType="int" resultMap="noticeMap">
+		select * from notice where notice_no = #{noticeNo}
+	</select>
+	
+	<update id="insertNotice" parameterType="notice">
+		insert into notice(notice_title, notice_content) 
+		values(#{noticeTitle}, #{noticeContent})
+	</update>
+	
+	<update id="updateNotice" parameterType="notice">
+		update notice set notice_title = #{noticeTitle}, notice_content = #{noticeContent}
+		where notice_no = #{noticeNo}
+	</update>
+	
+	<update id="deleteNotice" parameterType="int">
+		delete from notice where notice_no = #{noticeNo}
+	</update>
+	
+	<select id="selectNoticeListCount" resultType="int">
+		select count(*) from notice
+	</select>
+</mapper>

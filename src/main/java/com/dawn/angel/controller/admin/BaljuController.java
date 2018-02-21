@@ -26,6 +26,7 @@ import com.dawn.angel.domain.SearchCriteria;
 import com.dawn.angel.service.AdminService;
 import com.dawn.angel.service.BaljuService;
 import com.dawn.angel.service.ProductService;
+import com.dawn.angel.util.AuthUtil;
 
 @Controller
 @RequestMapping("/admin/bj")
@@ -40,45 +41,70 @@ public class BaljuController {
 	@Autowired
 	private BaljuService baljuService;
 	
+	@Autowired
+	private AuthUtil authUtil;
+	
 	@RequestMapping(value="/reclist.do", method=RequestMethod.GET)
 	public String reclist(@ModelAttribute("m") String m, @ModelAttribute("s") String s, @ModelAttribute("cri") Criteria cri,
-			              Model model, HttpSession session) throws SQLException {
+			              Model model, HttpSession session, RedirectAttributes rttr) throws SQLException {
+		String url = "admin/balju/reclist";
 		AdminVO admin = (AdminVO) session.getAttribute("loginUser");
-		if(admin != null) {
-			List<BaljuVO> baljuList = baljuService.getBaljuRecList(cri, admin.getId());
-			
-			PageMaker pageMaker = new PageMaker();
-			pageMaker.setDisplayPageNum(5);
-			pageMaker.setCri(cri);
-			pageMaker.setTotalCount(baljuService.getBaljuRecListCount(admin.getId()));
-			
-			model.addAttribute("baljuList", baljuList);
-			model.addAttribute("pageMaker", pageMaker);
+		if(!authUtil.hasRole(admin.getId(), "RIGHT_BJ_VIEW")) {
+			url = "redirect:/admin/home.do";
+			rttr.addFlashAttribute("msg", "권한이 없습니다.");
+		} else {
+			if(admin != null) {
+				List<BaljuVO> baljuList = baljuService.getBaljuRecList(cri, admin.getId());
+				
+				PageMaker pageMaker = new PageMaker();
+				pageMaker.setDisplayPageNum(5);
+				pageMaker.setCri(cri);
+				pageMaker.setTotalCount(baljuService.getBaljuRecListCount(admin.getId()));
+				
+				model.addAttribute("baljuList", baljuList);
+				model.addAttribute("pageMaker", pageMaker);
+			}
 		}
-		return "admin/balju/reclist";
+		return url;
 	}
 	
 	@RequestMapping(value="/sendlist.do", method=RequestMethod.GET)
 	public String sendlist(@ModelAttribute("m") String m, @ModelAttribute("s") String s, @ModelAttribute("cri") Criteria cri,
-                           Model model, HttpSession session) throws SQLException {
+                           Model model, HttpSession session, RedirectAttributes rttr) throws SQLException {
+		String url = "admin/balju/sendlist";
 		AdminVO admin = (AdminVO) session.getAttribute("loginUser");
-		if(admin != null) {
-			List<BaljuVO> baljuList = baljuService.getBaljuSendList(cri, admin.getId());
-			
-			PageMaker pageMaker = new PageMaker();
-			pageMaker.setDisplayPageNum(5);
-			pageMaker.setCri(cri);
-			pageMaker.setTotalCount(baljuService.getBaljuSendListCount(admin.getId()));
-			
-			model.addAttribute("baljuList", baljuList);
-			model.addAttribute("pageMaker", pageMaker);
+		if(!authUtil.hasRole(admin.getId(), "RIGHT_BJ_VIEW")) {
+			url = "redirect:/admin/home.do";
+			rttr.addFlashAttribute("msg", "권한이 없습니다.");
+		} else {
+			if(admin != null) {
+				List<BaljuVO> baljuList = baljuService.getBaljuSendList(cri, admin.getId());
+				
+				PageMaker pageMaker = new PageMaker();
+				pageMaker.setDisplayPageNum(5);
+				pageMaker.setCri(cri);
+				pageMaker.setTotalCount(baljuService.getBaljuSendListCount(admin.getId()));
+				
+				model.addAttribute("baljuList", baljuList);
+				model.addAttribute("pageMaker", pageMaker);
+			}
 		}
-		return "admin/balju/sendlist";
+		return url;
 	}
 	
 	@RequestMapping(value="/reg.do", method=RequestMethod.GET)
-	public String register(@ModelAttribute("m") String m, @ModelAttribute("s") String s) throws SQLException {
-		return "admin/balju/register";
+	public String register(@ModelAttribute("m") String m, @ModelAttribute("s") String s,
+						   HttpSession session, RedirectAttributes rttr) throws SQLException {
+		String url =  "admin/balju/register";
+		AdminVO admin = (AdminVO) session.getAttribute("loginUser");
+		if(!authUtil.hasRole(admin.getId(), "RIGHT_BJ_VIEW")) {
+			url = "redirect:/admin/home.do";
+			rttr.addFlashAttribute("msg", "권한이 없습니다.");
+		} else if(!authUtil.hasRole(admin.getId(), "RIGHT_BJ_INSERT")) {
+			url = "redirect:reclist.do?m=" + m;
+			rttr.addFlashAttribute("msg", "권한이 없습니다.");
+		}
+		return url;
 	}
 	
 	@RequestMapping(value="/reg.do", method=RequestMethod.POST)
@@ -135,5 +161,16 @@ public class BaljuController {
 		params.put("pageMaker", pageMaker);
 		
 		return params;
+	}
+	
+	@RequestMapping(value="/detail.do", method=RequestMethod.GET)
+	public String detail(@ModelAttribute("m") String m, @ModelAttribute("s") String s, @RequestParam("no") int baljuNo,
+			             Model model) throws SQLException {
+		List<BaljuVO> baljuList = baljuService.getBaljuDetail(baljuNo);
+		BaljuVO balju = baljuService.getBaljuByNo(baljuNo);
+		
+		model.addAttribute("baljuList", baljuList);
+		model.addAttribute("balju", balju);
+		return "admin/balju/detail";
 	}
 }

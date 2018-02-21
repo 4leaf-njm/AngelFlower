@@ -30,6 +30,7 @@ public class AdminDAOImpl implements AdminDAO{
 
 	@Override
 	public void updateAdmin(AdminVO admin) throws SQLException {
+		sqlSession.update(NAMESPACE + ".updateAdmin", admin);
 	}
 
 	@Override
@@ -106,6 +107,44 @@ public class AdminDAOImpl implements AdminDAO{
 		params.put("adminId", adminId);
 		
 		return sqlSession.selectOne(NAMESPACE + ".selectAdminListSearchCount", params);
+	}
+
+	@Override
+	public AdminVO selectAdminFindId(Map<String, Object> params) throws SQLException {
+		return sqlSession.selectOne(NAMESPACE + ".selectAdminFindId", params);
+	}
+
+	@Override
+	public AdminVO selectAdminFindPw(Map<String, Object> params) throws SQLException {
+		return sqlSession.selectOne(NAMESPACE + ".selectAdminFindPw", params);
+	}
+
+	@Override
+	public void updateAdminPw(Map<String, Object> params) throws SQLException {
+		sqlSession.update(NAMESPACE + ".updateAdminPw", params);
+	}
+
+	@Override
+	public AdminVO selectAdminByEmail(String email) throws SQLException {
+		return sqlSession.selectOne(NAMESPACE + ".selectAdminByEmail", email);
+	}
+
+	@Override
+	public void updateAdminRole(String adminId, int roleNo) throws SQLException {
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("adminId", adminId);
+		params.put("roleNo", roleNo);
+		sqlSession.update(NAMESPACE + ".updateAdminRole", params);
+	}
+
+	@Override
+	public int selectAdminCountThisDay() throws SQLException {
+		return sqlSession.selectOne(NAMESPACE + ".selectAdminCountThisDay");
+	}
+
+	@Override
+	public int selectAdminCountThisMonth() throws SQLException {
+		return sqlSession.selectOne(NAMESPACE + ".selectAdminCountThisMonth");
 	}
 
 }

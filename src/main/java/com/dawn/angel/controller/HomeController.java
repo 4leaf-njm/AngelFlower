@@ -1,10 +1,13 @@
 package com.dawn.angel.controller;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,12 +20,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dawn.angel.dao.AddressDAO;
 import com.dawn.angel.domain.AddressVO;
+import com.dawn.angel.domain.BannerVO;
 import com.dawn.angel.domain.Criteria;
 import com.dawn.angel.domain.PageMaker;
 import com.dawn.angel.domain.ProductVO;
 import com.dawn.angel.domain.ReviewVO;
 import com.dawn.angel.service.ProductService;
 import com.dawn.angel.service.ReviewService;
+import com.dawn.angel.service.StoreService;
 
 @Controller
 public class HomeController {
@@ -36,10 +41,15 @@ public class HomeController {
 	@Autowired
 	private AddressDAO addressDAO;
 	
+	@Autowired
+	private StoreService storeService;
+	
 	@RequestMapping(value="/home.do", method=RequestMethod.GET)
-	public String home(Model model) throws SQLException {
+	public String home(Model model, HttpServletRequest request, HttpServletResponse response) throws SQLException {
 		List<String> sidoList = addressDAO.selectSido();
+		List<BannerVO> bannerList = storeService.getBannerList();
 		model.addAttribute("sidoList", sidoList);
+		model.addAttribute("bannerList", bannerList);
 		return "home";
 	}
 
@@ -80,6 +90,16 @@ public class HomeController {
 				}
 			}
 		}
+		for(ReviewVO review : reviewList) {
+			if(review.getType() == 1) {
+				String title = review.getRevTitle();
+				title = title.replace(title.substring(title.length()-1, title.length()), "*") + " 님";
+				review.setRevTitle(title);
+			} else {
+				if(review.getMemId() == null || review.getMemId() == "")
+					review.setMemId("비회원");
+			}
+		}
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setDisplayPageNum(5);
 		pageMaker.setCri(cri);
@@ -96,4 +116,20 @@ public class HomeController {
 	public List<String> ajaxGugun(@RequestParam("sido") String sido) throws SQLException {
 		return  addressDAO.selectGugun(sido);
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="/ajaxQuickList.do", method=RequestMethod.POST)
+	public List<ProductVO> ajaxQuickList(String strno) throws SQLException {
+		List<ProductVO> prodList = new ArrayList<ProductVO>();
+		if(!strno.equals("")) {
+			String[] list = strno.split(",");
+			for(String prodNo : list) {
+				ProductVO product = productService.getProductByNo(Integer.parseInt(prodNo));
+				if(product != null)
+					prodList.add(product);
+			}
+		}
+		return prodList;
+	}
+	
 }

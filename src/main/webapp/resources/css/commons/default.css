@@ -29,7 +29,7 @@ input[type="text"] {text-indent: 4px; border: 1px solid #ccc; outline: none;}
 select:focus, textarea:focus,
 input[type="password"]:focus,
 input[type="file"]:focus,
-input[type="text"]:focus {border: 1px solid #555;}
+input[type="text"]:focus {outline: none;}
 
 textarea[readonly="readonly"],
 button[readonly="readonly"],

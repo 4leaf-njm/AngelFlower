@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.dawn.angel.dao.ProductDAO;
 import com.dawn.angel.domain.Criteria;
+import com.dawn.angel.domain.ProductRequest;
 import com.dawn.angel.domain.ProductVO;
 import com.dawn.angel.domain.SearchCriteria;
 import com.dawn.angel.service.ProductService;
@@ -97,6 +98,21 @@ public class ProductServiceImpl implements ProductService{
 	@Override
 	public int getBestCountByCate(int category) throws SQLException {
 		return productDAO.selectBestCountByCate(category);
+	}
+
+	@Override
+	public List<ProductVO> getProductListCri(int category, Criteria cri, Integer sort) throws SQLException {
+		return productDAO.selectProductListCri(category, cri, sort);
+	}
+
+	@Override
+	public int getProductListCriCount(int category) throws SQLException {
+		return productDAO.selectProductListCriCount(category);
+	}
+
+	@Override
+	public List<ProductVO> getProductSearch(ProductRequest req) throws SQLException {
+		return productDAO.selectProductSearch(req);
 	}
 
 }

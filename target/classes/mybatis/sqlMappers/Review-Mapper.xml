@@ -88,4 +88,14 @@
 	<select id="selectPrdNoListCount" resultType="int">
 		select count(*) from review where type = 2 and com_reply is null
 	</select>
+	
+	<select id="selectPrdListByNo" parameterType="int" resultMap="reviewMap">
+		select * from review_view where prod_no = #{prodNo} and type = 2
+		order by review_no desc
+	</select>
+	
+	<update id="insertPrdReview" parameterType="review">
+		insert into review(mem_id, prod_no, com_content, com_star, com_image, category, type)
+		values (#{memId}, #{prodNo}, #{comContent}, #{comStar}, #{comImage}, #{category}, #{type})
+	</update>
 </mapper>

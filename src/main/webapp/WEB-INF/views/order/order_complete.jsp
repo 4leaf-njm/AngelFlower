@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
 
 <head>
-	<title>엔젤 플라워</title>
 	<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/order/order_complete.css" />
 </head>
 

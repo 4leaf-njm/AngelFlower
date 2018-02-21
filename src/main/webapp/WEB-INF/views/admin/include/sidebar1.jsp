@@ -10,7 +10,7 @@
 		<li><a href="permit.do?m=${m}&s=2">가입승인
 			<i class="fa fa-caret-right" aria-hidden="true"></i>
 		</a></li>
-		<li><a href="reg.do?m=${m}&s=3">권한생성
+		<li><a href="auth.do?m=${m}&s=3">권한생성
 			<i class="fa fa-caret-right" aria-hidden="true"></i>
 		</a></li>
 	</ul>

@@ -88,3 +88,7 @@
 	<%@ include file="/WEB-INF/views/admin/include/sidebar3.jsp" %>
 </div>
 <!-- container (E) -->
+<script>
+	if('${msg}' != '')
+		alert('${msg}');
+</script>

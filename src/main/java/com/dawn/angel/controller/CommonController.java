@@ -1,13 +1,14 @@
 package com.dawn.angel.controller;
 
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -61,6 +62,9 @@ public class CommonController {
 				if(!member.getPwd().equals(pw)) { 
 					url = "commons/login";
 					msg = "비밀번호가 일치하지 않습니다.";
+				} else if(member.getUseyn() == 'n') {
+					url = "commons/login";
+					msg = "탈퇴된 회원입니다.";
 				} else {
 					session.setAttribute("loginUser", member);
 					session.setAttribute("loginType", "member");
@@ -71,6 +75,12 @@ public class CommonController {
 				if(!admin.getPwd().equals(pw)) { 
 					url = "commons/login";
 					msg = "비밀번호가 일치하지 않습니다.";
+				} else if (admin.getUseyn() == 'n') {
+					url = "commons/login";
+					msg = "탈퇴된 회원입니다.";
+				} else if (admin.getUseyn() == 'r') {
+					url = "commons/login";
+					msg = "승인되지 않은 회원입니다.";
 				} else {
 					session.setAttribute("loginUser", admin);
 					session.setAttribute("loginType", "admin");
@@ -84,7 +94,8 @@ public class CommonController {
 	
 	@RequestMapping("/logout.do")
 	public String logout(HttpSession session) {
-		session.invalidate();
+		session.removeAttribute("loginUser");
+		session.removeAttribute("loginType");
 		return "redirect:/home.do";
 	}
 	
@@ -106,5 +117,73 @@ public class CommonController {
 	@RequestMapping(value="/find.do", method=RequestMethod.GET)
 	public String find() throws SQLException {
 		return "commons/find";
+	}
+	
+	@RequestMapping(value="/findId.do", method=RequestMethod.POST)
+	public String findId(String name, String email, Model model) throws SQLException {
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("name", name);
+		params.put("email", email);
+		MemberVO member = memberService.getMemberFindId(params);
+		AdminVO admin = adminService.getAdminFindId(params);
+		if(member != null) {
+			model.addAttribute("user", member);
+			model.addAttribute("msg", "success");
+		}
+		else if(admin != null) {
+			model.addAttribute("user", admin);
+			model.addAttribute("msg", "success");
+		} else {
+			model.addAttribute("msg", "fail");
+		}
+		model.addAttribute("type", "id");
+		return "commons/find";
+	}
+	
+	@RequestMapping(value="/findPw.do", method=RequestMethod.POST)
+	public String findPw(String id, String name, String email, Model model) throws SQLException {
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("id", id);
+		params.put("name", name);
+		params.put("email", email);
+		MemberVO member = memberService.getMemberFindPw(params);
+		AdminVO admin = adminService.getAdminFindPw(params);
+		if(member != null) {
+			model.addAttribute("user", member);
+			model.addAttribute("msg", "success");
+		}
+		else if(admin != null) {
+			model.addAttribute("user", admin);
+			model.addAttribute("msg", "success");
+		} else {
+			model.addAttribute("msg", "fail");
+		}
+		model.addAttribute("type", "pw");
+		return "commons/find";
+	}
+	
+	@RequestMapping(value="/modifyPw.do", method=RequestMethod.POST)
+	public String modifyPw(String id, String pwd, RedirectAttributes rttr) throws SQLException {
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("id", id);
+		params.put("pwd", pwd);
+		memberService.modifyMemberPw(params);
+		adminService.modifyAdminPw(params);
+		
+		rttr.addFlashAttribute("msg", "비밀번호가 변경되었습니다.");
+		return "redirect:login.do";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/emailCheck.do", method=RequestMethod.POST)
+	public Map<String, Object> emailCheck(String email) throws SQLException {
+		Map<String, Object> param = new HashMap<String, Object>();
+		int member = memberService.getMemberByEmail(email);
+		int admin = adminService.getAdminByEmail(email);
+		if(member == 1 && admin == 1) 
+			param.put("msg", "success");
+		else
+			param.put("msg", "fail");
+		return param;
 	}
 }

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Role-Mapper">
+	<resultMap id="roleMap" type="role">
+		<id property="roleNo" column="role_no" />
+		<result property="roleName" column="role_name" />
+		<result property="authNo" column="auth_no" />
+		<result property="authName" column="auth_name" />
+		<result property="adminyn" column="admin_yn" />
+	</resultMap>
+
+	<update id="insertRole" parameterType="role">
+		insert into role(role_name, admin_yn) values(#{roleName}, #{adminyn})
+	</update>
+	
+	<update id="insertAuth" parameterType="role">
+		insert into authority(auth_name, role_no) values(#{authName}, #{roleNo})
+	</update>
+	
+	<select id="selectRoleMaxNo" resultType="int">
+		select max(role_no) from role
+	</select>
+	
+	<select id="selectRoleList" resultMap="roleMap">
+		select * from role order by role_no desc
+	</select>
+	
+	<select id="selectRoleListCount" resultType="int">
+		select count(*) from role
+	</select>
+	
+	<update id="deleteRole" parameterType="int">
+		delete from role where role_no = #{roleNo}
+	</update>
+	
+	<update id="deleteAuth" parameterType="int">
+		delete from authority where role_no = #{roleNo}
+	</update>
+	
+	<select id="selectAuthListByRole" parameterType="int" resultMap="roleMap">
+		select * from authority where role_no = #{roleNo}
+	</select>
+	
+	<select id="updateRole" parameterType="role">
+		update role set role_name = #{roleName}, admin_yn = #{adminyn} where role_no = #{roleNo}
+	</select>
+	
+	<select id="selectRoleByNo" parameterType="int" resultMap="roleMap">
+		select * from role where role_no = #{roleNo}
+	</select>
+</mapper>

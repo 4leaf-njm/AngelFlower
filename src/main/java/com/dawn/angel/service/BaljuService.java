@@ -24,9 +24,17 @@ public interface BaljuService {
 	
 	List<BaljuVO> getBaljuTotalList() throws SQLException;
 	
+	List<BaljuVO> getBaljuTotalListForPay(Criteria cri) throws SQLException;
+	
+	int getBaljuTotalListCount() throws SQLException;
+	
 	List<PayVO> getBaljuListForPay(String adminId, int year) throws SQLException;
 	
 	List<BaljuVO> getBaljuListCriForPay(Criteria cri, String adminId, int year, int month) throws SQLException;
 	
 	int getBaljuListCriForPayCount(String adminId, int year, int month) throws SQLException;
+	
+	List<BaljuVO> getBaljuDetail(int baljuNo) throws SQLException;
+	
+	BaljuVO getBaljuByNo(int baljuNo) throws SQLException;
 }

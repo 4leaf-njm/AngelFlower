@@ -118,6 +118,10 @@
 <script>
 	$('.btn_reply').click(function(event) {
 		event.preventDefault();
+		if(!hasRole('RIGHT_REV_PRD_REPLY')) {
+			alert('권한이 없습니다.');
+			return;
+		}
 		var no = $(this).parents('tr').data('no');
 		var idx = $(this).parents('tr').data('idx');
 		var text = $(this).text();

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Account-Mapper">
+	<resultMap id="accountMap" type="account">
+		<id property="accNo" column="acc_no" />
+		<result property="accBank" column="acc_bank" />
+		<result property="accNumber" column="acc_number" />
+		<result property="accName" column="acc_name" />
+	</resultMap>
+	
+	<select id="selectAccountList" resultMap="accountMap">
+		select * from account order by acc_no desc
+	</select>
+	
+	<select id="selectAccountByNo" parameterType="int" resultMap="accountMap">
+		select * from account where acc_no = #{accNo}
+	</select>
+	
+	<update id="insertAccount" parameterType="account">
+		insert into account(acc_bank, acc_number, acc_name) 
+		values(#{accBank}, #{accNumber}, #{accName})
+	</update>
+	
+	<update id="updateAccount" parameterType="account">
+		update account set acc_bank = #{accBank}, acc_number = #{accNumber},
+		acc_name = #{accName} where acc_no = #{accNo}
+	</update>
+	
+	<update id="deleteAccount" parameterType="int">
+		delete from account where acc_no = #{accNo}
+	</update>
+</mapper>

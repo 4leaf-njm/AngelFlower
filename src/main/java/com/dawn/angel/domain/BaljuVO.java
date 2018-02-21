@@ -23,8 +23,10 @@ public class BaljuVO { // 발주
 	private int prodNo; // 발주 상품번호
 	private String prodName; // 발주 상품명
 	private String prodImage; // 발주 상품이미지
-	private int quentity; // 발주 상품수량
+	private int quantity; // 발주 상품수량
+	private int category; // 발주 상품 분류
 	private char checkyn; // 발주 확인여부 (확인: y, 미확인: n);
+	private int orderState; // 배송상태
 	
 	public int getBaljuNo() {
 		return baljuNo;
@@ -128,12 +130,6 @@ public class BaljuVO { // 발주
 	public void setProdImage(String prodImage) {
 		this.prodImage = prodImage;
 	}
-	public int getQuentity() {
-		return quentity;
-	}
-	public void setQuentity(int quentity) {
-		this.quentity = quentity;
-	}
 	public char getCheckyn() {
 		return checkyn;
 	}
@@ -158,6 +154,24 @@ public class BaljuVO { // 발주
 	public void setBaljuMemPhone(String baljuMemPhone) {
 		this.baljuMemPhone = baljuMemPhone;
 	}
+	public int getOrderState() {
+		return orderState;
+	}
+	public void setOrderState(int orderState) {
+		this.orderState = orderState;
+	}
+	public int getCategory() {
+		return category;
+	}
+	public void setCategory(int category) {
+		this.category = category;
+	}
+	public int getQuantity() {
+		return quantity;
+	}
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
 	@Override
 	public String toString() {
 		return "BaljuVO [baljuNo=" + baljuNo + ", baljuSerial=" + baljuSerial + ", baljuMemName=" + baljuMemName
@@ -167,6 +181,7 @@ public class BaljuVO { // 발주
 				+ ", baljuRecId=" + baljuRecId + ", baljuRecPrice=" + baljuRecPrice + ", baljuRecName=" + baljuRecName
 				+ ", baljuRecPhone=" + baljuRecPhone + ", baljuRecCompany=" + baljuRecCompany + ", bdetailNo="
 				+ bdetailNo + ", prodNo=" + prodNo + ", prodName=" + prodName + ", prodImage=" + prodImage
-				+ ", quentity=" + quentity + ", checkyn=" + checkyn + "]";
+				+ ", quantity=" + quantity + ", category=" + category + ", checkyn=" + checkyn + ", orderState="
+				+ orderState + "]";
 	}
 }

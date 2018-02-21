@@ -39,7 +39,7 @@ public class BaljuServiceImpl implements BaljuService {
 		for(int i=0; i<prodArr.length; i++) {
 			balju.setBaljuNo(baljuNo + 1);
 			balju.setProdNo(prodArr[i]);
-			balju.setQuentity(quentArr[i]);
+			balju.setQuantity(quentArr[i]);
 			baljuDAO.insertBaljuDetail(balju);
 		}
 	}
@@ -69,21 +69,23 @@ public class BaljuServiceImpl implements BaljuService {
 		List<BaljuVO> baljuList = baljuDAO.selectBaljuDetail(baljuNo);
 		BaljuVO balju = baljuDAO.selectBaljuByNo(baljuNo);
 		OrderVO order = new OrderVO();
-		int orderMax = orderDAO.selectMaxOrderNo();
-		String orderSerial = SerialUtil.getSerialNumber(orderMax + 1);
-		order.setOrderSerial(orderSerial);
 		order.setMemName(balju.getBaljuMemName());
 		order.setMemPhone(balju.getBaljuMemPhone());
 		order.setBaljuPrice(balju.getBaljuPrice());
+		order.setBaljuNo(baljuNo);
 		order.setOrderWay("발주");
 		order.setType(2);
 		orderDAO.insertOrder(order);
-		
+		int orderMax = orderDAO.selectMaxOrderNo();
+		String orderSerial = SerialUtil.getSerialNumber(orderMax);
+		order.setOrderSerial(orderSerial);
+		order.setOrderNo(orderMax);
+		orderDAO.updateOrderSerial(order);
 		for(BaljuVO bj : baljuList) {
 			OrderVO o = new OrderVO();
-			o.setOrderNo(orderMax + 1);
+			o.setOrderNo(orderMax);
 			o.setProdNo(bj.getProdNo());
-			o.setQuantity(bj.getQuentity());
+			o.setQuantity(bj.getQuantity());
 			orderDAO.insertOrderDetail(o);
 		}
 		baljuDAO.updateBaljuCheck(baljuNo);
@@ -92,6 +94,16 @@ public class BaljuServiceImpl implements BaljuService {
 	@Override
 	public List<BaljuVO> getBaljuTotalList() throws SQLException { 
 		return baljuDAO.selectBaljuTotalList();
+	}
+
+	@Override
+	public List<BaljuVO> getBaljuTotalListForPay(Criteria cri) throws SQLException {
+		return baljuDAO.selectBaljuTotalListForPay(cri);
+	}
+
+	@Override
+	public int getBaljuTotalListCount() throws SQLException { 
+		return baljuDAO.selectBaljuTotalListCount();
 	}
 
 	@Override
@@ -136,6 +148,16 @@ public class BaljuServiceImpl implements BaljuService {
 	@Override
 	public int getBaljuListCriForPayCount(String adminId, int year, int month) throws SQLException {
 		return baljuDAO.selectBaljuListCriForPayCount(adminId, year, month);
+	}
+
+	@Override
+	public List<BaljuVO> getBaljuDetail(int baljuNo) throws SQLException {
+		return baljuDAO.selectBaljuDetail(baljuNo);
+	}
+
+	@Override
+	public BaljuVO getBaljuByNo(int baljuNo) throws SQLException {
+		return baljuDAO.selectBaljuByNo(baljuNo);
 	}
 
 }

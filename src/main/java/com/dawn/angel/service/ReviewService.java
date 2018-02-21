@@ -3,13 +3,12 @@ package com.dawn.angel.service;
 import java.sql.SQLException;
 import java.util.List;
 
-import com.dawn.angel.domain.CommentVO;
 import com.dawn.angel.domain.Criteria;
 import com.dawn.angel.domain.ReviewVO;
 
 public interface ReviewService {
 	
-	List<CommentVO> getCommentListByProd(int prodNo) throws SQLException;
+	List<ReviewVO> getPrdListByNo(int prodNo) throws SQLException;
 	
 	List<ReviewVO> getReviewListByCate(Criteria cri, int category, int type) throws SQLException;
 	
@@ -34,4 +33,6 @@ public interface ReviewService {
 	void modifyPrdReply(ReviewVO review) throws SQLException;
 	
 	int getPrdNoListCount() throws SQLException;
+	
+	void insertPrdReview(ReviewVO review) throws SQLException;
 }

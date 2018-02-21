@@ -2,6 +2,7 @@ package com.dawn.angel.service;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import com.dawn.angel.domain.CartVO;
 import com.dawn.angel.domain.Criteria;
@@ -19,29 +20,25 @@ public interface OrderService {
 	
 	List<OrderVO> getOrderDetailList(int orderNo) throws SQLException;
 	
-	OrderVO getOrderByNoForGuest(int orderNo) throws SQLException;
-	
-	List<OrderVO> getOrderDetailListForGuest(int orderNo) throws SQLException;
-	
 	int getMaxOrderNo() throws SQLException;
 	
 	int getOrderCountById(String memId) throws SQLException;
 	
 	int getOrderCountByProd(int prodNo) throws SQLException;
 	
-	List<OrderVO> getOrderTotalListCri(Criteria cri) throws SQLException;
+	List<OrderVO> getOrderTotalListCri(Criteria cri, String adminId) throws SQLException;
 	
 	List<OrderVO> getOrderTotalList() throws SQLException;
 	
 	int getOrderTotalCount() throws SQLException;
 	
-	List<OrderVO> getOrderDepList(Criteria cri) throws SQLException;
+	List<OrderVO> getOrderDepList(Criteria cri, String adminId) throws SQLException;
 	
 	int getOrderDepCount() throws SQLException;
 	
 	void modifyOrderDep(int orderNo) throws SQLException;
 	
-	List<OrderVO> getOrderShipList(Criteria cri) throws SQLException;
+	List<OrderVO> getOrderShipList(Criteria cri, String adminId) throws SQLException;
 	
 	int getOrderShipCount() throws SQLException;
 	
@@ -62,4 +59,18 @@ public interface OrderService {
 	List<OrderVO> getOrderListForPay(int year, int month, SearchCriteria cri) throws SQLException;
 	
 	int getOrderSearchListForPayCount(int year, int month, SearchCriteria cri) throws SQLException;
+	
+	List<OrderVO> getMyOrderList(String memId) throws SQLException;
+	
+	int getOrderTotalCountForBalju(String adminId) throws SQLException;
+	
+	int getOrderDepCountForBalju(String adminId) throws SQLException;
+	
+	int getOrderShipCountForBalju(String adminId) throws SQLException;
+	
+	List<OrderVO> getOrderTotalListForBalju(String adminId) throws SQLException;
+	
+	Map<String, Object> getOrderListThisMonth() throws SQLException;
+	
+	Map<String, Object> getOrderListThisDay() throws SQLException;
 }

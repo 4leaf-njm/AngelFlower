@@ -2,7 +2,6 @@ package com.dawn.angel.controller.admin;
 
 import java.io.File;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.dawn.angel.dao.AddressDAO;
+import com.dawn.angel.domain.AdminVO;
 import com.dawn.angel.domain.Criteria;
 import com.dawn.angel.domain.OrderVO;
 import com.dawn.angel.domain.PageMaker;
@@ -30,6 +30,7 @@ import com.dawn.angel.domain.ReviewVO;
 import com.dawn.angel.domain.SearchCriteria;
 import com.dawn.angel.service.OrderService;
 import com.dawn.angel.service.ReviewService;
+import com.dawn.angel.util.AuthUtil;
 
 @Controller
 @RequestMapping("/admin/rev")
@@ -44,36 +45,57 @@ public class ReviewController {
 	@Autowired
 	private ReviewService reviewService;
 	
+	@Autowired
+	private AuthUtil authUtil;
+	
 	@RequestMapping(value="/shiplist.do", method=RequestMethod.GET)
-	public String shiplist(@ModelAttribute("m") String m, @ModelAttribute("cri") Criteria cri, Model model) throws SQLException {
-		cri.setPerPageNum(6);
-		List<ReviewVO> reviewList = reviewService.getReviewTotalList(cri);
-		if(reviewList.size() == 0) {
-			cri.setPage(cri.getPage() - 1);
-			reviewList = reviewService.getReviewTotalList(cri);
+	public String shiplist(@ModelAttribute("m") String m, @ModelAttribute("cri") Criteria cri, Model model,	
+						   HttpSession session, RedirectAttributes rttr) throws SQLException {
+		String url = "admin/review/shiplist";
+		AdminVO loginUser = (AdminVO) session.getAttribute("loginUser");
+		if(!authUtil.hasRole(loginUser.getId(), "RIGHT_REV_VIEW")) {
+			url = "redirect:/admin/home.do";
+			rttr.addFlashAttribute("msg", "권한이 없습니다.");
+		} else {
+			cri.setPerPageNum(6);
+			List<ReviewVO> reviewList = reviewService.getReviewTotalList(cri);
+			if(reviewList.size() == 0) {
+				cri.setPage(cri.getPage() - 1);
+				reviewList = reviewService.getReviewTotalList(cri);
+			}
+			int totalRevCount = reviewService.getReviewTotalListCount();
+			int totalPrdCount = reviewService.getPrdTotalListCount();
+			PageMaker pageMaker = new PageMaker();
+			pageMaker.setDisplayPageNum(5);
+			pageMaker.setCri(cri);
+			pageMaker.setTotalCount(totalRevCount);
+			
+			model.addAttribute("reviewList", reviewList);
+			model.addAttribute("pageMaker", pageMaker);
+			model.addAttribute("totalRevCount", totalRevCount);
+			model.addAttribute("noRevCount", orderService.getOrderListCountByComplete(null));
+			model.addAttribute("totalPrdCount", totalPrdCount);
+			model.addAttribute("noPrdCount", reviewService.getPrdNoListCount());
 		}
-		int totalRevCount = reviewService.getReviewTotalListCount();
-		int totalPrdCount = reviewService.getPrdTotalListCount();
-		PageMaker pageMaker = new PageMaker();
-		pageMaker.setDisplayPageNum(5);
-		pageMaker.setCri(cri);
-		pageMaker.setTotalCount(totalRevCount);
-		
-		model.addAttribute("reviewList", reviewList);
-		model.addAttribute("pageMaker", pageMaker);
-		model.addAttribute("totalRevCount", totalRevCount);
-		model.addAttribute("noRevCount", orderService.getOrderListCountByComplete(null));
-		model.addAttribute("totalPrdCount", totalPrdCount);
-		model.addAttribute("noPrdCount", reviewService.getPrdNoListCount());
-		
-		return "admin/review/shiplist";
+		return url;
 	}
 	
 	@RequestMapping(value="/shipreg.do", method=RequestMethod.GET)
-	public String shipreg(@ModelAttribute("m") String m, @ModelAttribute("s") String s, Model model) throws SQLException {
-		List<String> sidoList = addressDAO.selectSido();
-		model.addAttribute("sidoList", sidoList);
-		return "admin/review/shipreg";
+	public String shipreg(@ModelAttribute("m") String m, @ModelAttribute("s") String s, Model model,
+			              HttpSession session, RedirectAttributes rttr) throws SQLException {
+		String url = "admin/review/shipreg";
+		AdminVO loginUser = (AdminVO) session.getAttribute("loginUser");
+		if(!authUtil.hasRole(loginUser.getId(), "RIGHT_REV_VIEW")) {
+			url = "redirect:/admin/home.do";
+			rttr.addFlashAttribute("msg", "권한이 없습니다.");
+		} else if(!authUtil.hasRole(loginUser.getId(), "RIGHT_REV_SHIP_INSERT")) {
+			url = "redirect:shiplist.do?m=" + m;
+			rttr.addFlashAttribute("msg", "권한이 없습니다.");
+		} else {
+			List<String> sidoList = addressDAO.selectSido();
+			model.addAttribute("sidoList", sidoList);
+		}
+		return url;
 	}
 	
 	@RequestMapping(value="/shipreg.do", method=RequestMethod.POST)
@@ -162,24 +184,30 @@ public class ReviewController {
 	}
 	
 	@RequestMapping(value="/prdlist.do", method=RequestMethod.GET)
-	public String prdlist(@ModelAttribute("m") String m, @ModelAttribute("s") String s, 
-			              @ModelAttribute("cri") Criteria cri, Model model) throws SQLException {
-		cri.setPerPageNum(7);
-		
-		List<ReviewVO> reviewList = reviewService.getPrdTotalList(cri);
-		if(reviewList.size() == 0) {
-			cri.setPage(cri.getPage() - 1);
-			reviewList = reviewService.getPrdTotalList(cri);
+	public String prdlist(@ModelAttribute("m") String m, @ModelAttribute("s") String s, @ModelAttribute("cri") Criteria cri,
+			              Model model, HttpSession session, RedirectAttributes rttr) throws SQLException {
+		String url = "admin/review/prdlist";
+		AdminVO loginUser = (AdminVO) session.getAttribute("loginUser");
+		if(!authUtil.hasRole(loginUser.getId(), "RIGHT_REV_VIEW")) {
+			url = "redirect:/admin/home.do";
+			rttr.addFlashAttribute("msg", "권한이 없습니다.");
+		} else {
+			cri.setPerPageNum(7);
+			
+			List<ReviewVO> reviewList = reviewService.getPrdTotalList(cri);
+			if(reviewList.size() == 0) {
+				cri.setPage(cri.getPage() - 1);
+				reviewList = reviewService.getPrdTotalList(cri);
+			}
+			PageMaker pageMaker = new PageMaker();
+			pageMaker.setDisplayPageNum(5);
+			pageMaker.setCri(cri);
+			pageMaker.setTotalCount(reviewService.getPrdTotalListCount());
+			
+			model.addAttribute("reviewList", reviewList);
+			model.addAttribute("pageMaker", pageMaker);
 		}
-		PageMaker pageMaker = new PageMaker();
-		pageMaker.setDisplayPageNum(5);
-		pageMaker.setCri(cri);
-		pageMaker.setTotalCount(reviewService.getPrdTotalListCount());
-		
-		model.addAttribute("reviewList", reviewList);
-		model.addAttribute("pageMaker", pageMaker);
-		
-		return "admin/review/prdlist";
+		return url;
 	}
 	
 	@RequestMapping(value="/prdreply.do", method=RequestMethod.POST)

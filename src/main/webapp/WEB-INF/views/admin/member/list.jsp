@@ -39,10 +39,72 @@
 	
 	<%@ include file="/WEB-INF/views/admin/include/sidebar1.jsp" %>
 	
+	<div id="dialog" class="regmodal" title="권한 목록">
+		<table style="margin-top: 12px; border-top: 2px solid #959393;"></table>
+		<ul class="paging"></ul>
+	</div>
 </div>
 <!-- container (E) -->
 <script src="${pageContext.request.contextPath }/resources/js/admin.js"></script>
 <script>
 	ajaxMemberPaging(1);
 	ajaxAdminPaging(1);
+	
+	$('#dialog').dialog({
+		autoOpen: false,
+		width: 450,
+		modal: false,
+	});
+	
+	function go_authDialog(id, page){
+		if(hasRole('RIGHT_MB_AUTH_GIVE') == false) {
+			alert('권한이 없습니다.');
+			return;
+		}
+		$.ajax({
+			type: 'post',
+			url: 'ajaxRoleList.do',
+			dataType: 'json',
+			success: function(data) {
+				var html = '';
+				html += '<tr><th style="width:100px;">번호</th><th>권한명</th><th style="width:100px;">비고</th>';
+				$.each(data, function(index, value) {
+					html += '<tr data-no=' + value.roleNo + ' data-name=' + value.roleName + '>';
+					html += '<td>' + (index+1) + '</td>';
+					html += '<td>' + value.roleName + '</td>';
+					html += '<td><a href="#" class="btn btn01 btn_sel">선택</a></td>';
+					html += '</tr>';
+				});
+				$('#dialog table').html(html);
+				$('#dialog').dialog('open');
+				auth_click(id, page);
+			},
+			error: function() {
+				alert('error');
+			}
+		});
+	}
+	
+	function auth_click(id, page) {
+		$('.btn_sel').click(function(event){
+			event.preventDefault();
+			var no = $(this).parents('tr').data('no');
+			var name = $(this).parents('tr').data('name');
+			var result = confirm('[' + name + '] 권한을 부여하시겠습니까 ?');
+			if(result) {
+				$.ajax({
+					type: 'post',
+					url: 'giveAdminRole.do',
+					data: {'id': id, 'no': no},
+					success: function() {
+						ajaxAdminPaging(page);
+						$('#dialog').dialog('close');
+					},
+					error: function() {
+						alert('error');
+					}
+				});
+			}
+		});
+	}
 </script>

@@ -36,6 +36,7 @@ public class OrderVO {
 	private String depAccount; // 무통장입금 입금계좌
 	private int type; // 주문 : 1, 발주 : 2
 	private int baljuPrice; // 발주가격
+	private int baljuNo; // 발주번호
 	
 	public int getOrderNo() {
 		return orderNo;
@@ -235,6 +236,12 @@ public class OrderVO {
 	public void setBaljuPrice(int baljuPrice) {
 		this.baljuPrice = baljuPrice;
 	}
+	public int getBaljuNo() {
+		return baljuNo;
+	}
+	public void setBaljuNo(int baljuNo) {
+		this.baljuNo = baljuNo;
+	}
 	@Override
 	public String toString() {
 		return "OrderVO [orderNo=" + orderNo + ", orderSerial=" + orderSerial + ", memId=" + memId + ", memName="
@@ -246,6 +253,6 @@ public class OrderVO {
 				+ prodName + ", prodPrice1=" + prodPrice1 + ", prodPrice2=" + prodPrice2 + ", prodSave=" + prodSave
 				+ ", prodImage=" + prodImage + ", prodCategory=" + prodCategory + ", totalPrice=" + totalPrice
 				+ ", realPrice=" + realPrice + ", reviewyn=" + reviewyn + ", cancelyn=" + cancelyn + ", depAccount="
-				+ depAccount + ", type=" + type + ", baljuPrice=" + baljuPrice + "]";
+				+ depAccount + ", type=" + type + ", baljuPrice=" + baljuPrice + ", baljuNo=" + baljuNo + "]";
 	}
 }

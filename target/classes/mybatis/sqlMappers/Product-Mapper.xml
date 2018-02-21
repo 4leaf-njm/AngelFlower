@@ -23,13 +23,36 @@
 		select * from product where prod_no = #{prodNo}
 	</select>
 	
-	<select id="selectProductList" parameterType="int" resultMap="productMap">
-		select * from product where category = #{category}
-		order by prod_no desc;
+	<sql id="sort">
+		<if test="sort != null">
+			<if test="sort == 1">
+				(select sum(quantity) from order_view where cancel_yn != 'y' and order_state = 4 and prod_no = product.prod_no) desc,
+			</if>
+			<if test="sort == 2">
+				(select count(*) from review where type = 2 and prod_no = product.prod_no) desc,
+			</if>
+			<if test="sort == 3">
+				prod_price2 desc,
+			</if>
+			<if test="sort == 4">
+				prod_price2 asc,
+			</if>
+		</if>
+	</sql>
+	
+	<select id="selectProductList" parameterType="hashmap" resultMap="productMap">
+		select * from product where category = #{category} and use_yn = 'y'
+		order by 
+		<include refid="sort"></include>		
+		prod_no desc;
+	</select>
+	
+	<select id="selectProductListCount" parameterType="int" resultType="int">
+		select count(*) from product where category = #{category} and use_yn = 'y'
 	</select>
 	
 	<select id="selectProductBestList" parameterType="int" resultMap="productMap">
-		select * from product where category = #{category} and best_yn = 'y'
+		select * from product where category = #{category} and best_yn = 'y' and use_yn = 'y'
 		order by prod_no desc;
 	</select>
 	
@@ -81,5 +104,18 @@
 	
 	<select id="selectBestCountByCate" parameterType="int" resultType="int">
 		select count(*) from product where category = #{category} and best_yn = 'y'
+	</select>
+	
+	<select id="selectProductSearch" parameterType="prodreq" resultMap="productMap">
+		select * from product where (prod_name like concat('%',#{pname},'%') || prod_info like concat('%',#{pname},'%')) 
+		<if test="p1 != null and p1 != '' and p2 != null and p2 != ''">
+			and prod_price2 between #{p1} and #{p2}
+		</if>
+		<if test="p1 != null and p1 != ''">
+			<![CDATA[and prod_price2 >= #{p1}]]>
+		</if>
+		<if test="p2 != null and p2 != ''">
+			<![CDATA[and prod_price2 <= #{p2}]]>
+		</if>
 	</select>
 </mapper>

@@ -2,6 +2,7 @@ package com.dawn.angel.service;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import com.dawn.angel.domain.AdminVO;
 import com.dawn.angel.domain.Criteria;
@@ -28,4 +29,18 @@ public interface AdminService {
 	List<AdminVO> getAdminListSearch(SearchCriteria cri, String adminId) throws SQLException;
 	
 	int getAdminListSearchCount(SearchCriteria cri, String adminId) throws SQLException;
+	
+	AdminVO getAdminFindId(Map<String, Object> params) throws SQLException;
+	
+	AdminVO getAdminFindPw(Map<String, Object> params) throws SQLException;
+	
+	void modifyAdminPw(Map<String, Object> params) throws SQLException;
+	
+	int getAdminByEmail(String email) throws SQLException;
+	
+	void modifyAdminRole(String adminId, int roleNo) throws SQLException;
+	
+	int getAdminCountThisDay() throws SQLException;
+	
+	int getAdminCountThisMonth() throws SQLException;
 }

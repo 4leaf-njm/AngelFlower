@@ -236,19 +236,19 @@
 			var no = $(this).parents('tr').data('no');
 			var image = $(this).parent('td').siblings('td').eq(1).data('info');
 			var name = $(this).parent('td').siblings('td').eq(2).data('info');	
-			var quentity = $(this).parent('td').siblings('td').eq(3).find('.spinner').val();
-			if(quentity < 1) {
+			var quantity = $(this).parent('td').siblings('td').eq(3).find('.spinner').val();
+			if(quantity < 1) {
 				alert('수량은 1 이상이여야 합니다.')
 				return;
 			}
 			var html = '';
 			html += '<div class="prodbox">';
 			html +=		'<input type="hidden" name="prodArr" value="' + no + '" />';
-			html +=		'<input type="hidden" name="quentArr" value="' + quentity + '" />';
+			html +=		'<input type="hidden" name="quentArr" value="' + quantity + '" />';
 			html += 	'<div class="image">';
 			html += 		'<img src="' + $('#ctx').text() + '/resources/upload/product/' + image + '" />';
 			html += 	'</div>';
-			html += 	'<div class="prodname">' + name + ' (' + quentity + '개)';
+			html += 	'<div class="prodname">' + name + ' (' + quantity + '개)';
 			html +=     '<a href="#" class="btn_prodRemove" style="margin-left: 5px;"><i class="fa fa-times" aria-hidden="true"></i></a></div>';
 			
 			html += '</div>';

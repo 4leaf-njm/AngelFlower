@@ -121,9 +121,69 @@ function go_orderProd() {
 	frm.receivePhone.value = frm.deli_phone1.value + '-' + frm.deli_phone2.value + '-' + frm.deli_phone3.value;
 	frm.receiveAddr.value = '(' + frm.deli_zipcode.value + ') ' + frm.deli_addr1.value + ' ' + frm.deli_addr2.value;
 	
-	if(type == '무통장입금') {
-		frm.submit();
+	var phone_reg = /^\d{3}-\d{3,4}-\d{4}$/;
+	
+	if(frm.memName.value == '') {
+		alert('주문자 이름을 입력해주세요.');
+		frm.memName.focus();
+		return;
+	} else if (frm.user_phone1.value == '') {
+		alert('주문자 휴대폰 번호를 입력해주세요.');
+		frm.user_phone1.focus();
+		return;
+	} else if (frm.user_phone2.value == '') {
+		alert('주문자 휴대폰 번호를 입력해주세요.');
+		frm.user_phone2.focus();
+		return;
+	} else if (frm.user_phone3.value == '') {
+		alert('주문자 휴대폰 번호를 입력해주세요.');
+		frm.user_phone3.focus();
+		return;
+	} else if (!phone_reg.test(frm.memPhone.value)){
+		alert('주문자 휴대폰 번호가 올바르지 않습니다.');
+		frm.user_phone2.focus();
+		return;
+	} else if(frm.receiveName.value == '') {
+		alert('받는분 이름을 입력해주세요.');
+		frm.receiveName.focus();
+		return;
+	} else if (frm.deli_phone1.value == '') {
+		alert('받는분 휴대폰 번호를 입력해주세요.');
+		frm.deli_phone1.focus();
+		return;
+	} else if (frm.deli_phone2.value == '') {
+		alert('받는분 휴대폰 번호를 입력해주세요.');
+		frm.deli_phone2.focus();
+		return;
+	} else if (frm.deli_phone3.value == '') {
+		alert('받는분 휴대폰 번호를 입력해주세요.');
+		frm.deli_phone3.focus();
+		return;
+	} else if (!phone_reg.test(frm.receivePhone.value)){
+		alert('받는분 휴대폰 번호가 올바르지 않습니다.');
+		frm.deli_phone2.focus();
+		return;
+	} else if (frm.deli_addr1.value == '') {
+		alert('받는분 주소를 입력해주세요.');
+		frm.deli_addr1.focus();
+		return;
+	} else if (frm.deli_addr2.value == '') {
+		alert('받는분 주소를 입력해주세요.');
+		frm.deli_addr2.focus();
+		return;
+	} else if (!$('#agree').is(':checked')) {
+		alert('주문 동의에 체크해주세요.');
+		frm.agree.focus();
+		return;
+	}
 		
+	if(type == '무통장입금') {
+		if(frm.account.value == '') {
+			alert('입금 계좌번호를 선택해주세요.');
+			frm.account.focus();
+			return;
+		}
+		frm.submit();
 	} else if(type == '신용카드') {
 	      IMP.request_pay({
 	          pg : 'html5_inicis', 

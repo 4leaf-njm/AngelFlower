@@ -2,6 +2,7 @@ package com.dawn.angel.service.impl;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import com.dawn.angel.dao.MemberDAO;
 import com.dawn.angel.domain.Criteria;
@@ -23,6 +24,7 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public void modifyMember(MemberVO member) throws SQLException {
+		memberDAO.updateMember(member);
 	}
 
 	@Override
@@ -45,4 +47,38 @@ public class MemberServiceImpl implements MemberService {
 		return memberDAO.selectMemberListByCri(cri);
 	}
 
+	@Override
+	public MemberVO getMemberFindId(Map<String, Object> params) throws SQLException {
+		return memberDAO.selectMemberFindId(params);
+	}
+
+	@Override
+	public MemberVO getMemberFindPw(Map<String, Object> params) throws SQLException {
+		return memberDAO.selectMemberFindPw(params);
+	}
+
+	@Override
+	public void modifyMemberPw(Map<String, Object> params) throws SQLException {
+		memberDAO.updateMemberPw(params);
+	}
+
+	@Override
+	public int getMemberByEmail(String email) throws SQLException {
+		MemberVO member = memberDAO.selectMemberByEmail(email);
+		if(member == null)
+			return 1;
+		else
+			return 0;
+	}
+
+	@Override
+	public int getMemberCountThisDay() throws SQLException {
+		return memberDAO.selectMemberCountThisDay();
+	}
+
+	@Override
+	public int getMemberCountThisMonth() throws SQLException {
+		return memberDAO.selectMemberCountThisMonth();
+	}
+	
 }

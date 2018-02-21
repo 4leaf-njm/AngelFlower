@@ -14,49 +14,18 @@
 <!-- container (S) -->
 <div id="container">
 	<div class="visual">
-		<div class="info on">
-			<a href="#">
-				<img src="${pageContext.request.contextPath }/resources/images/main/v_img01.jpg" alt="가을시즌"/>
-			</a>
+		<c:forEach var="banner" items="${bannerList}" varStatus="status">
+		<div class="info <c:out value="${status.count eq 1 ? 'on' : ''}" />">
+			<img src="${pageContext.request.contextPath }/resources/upload/banner/${banner.bannerImage}"/>
 		</div>
-		<div class="info">
-			<a href="#">
-				<img src="${pageContext.request.contextPath }/resources/images/main/v_img02.jpg" alt="가을시즌"/>
-			</a>
-		</div>
-		<div class="info">
-			<a href="#">
-				<img src="${pageContext.request.contextPath }/resources/images/main/v_img03.jpg" alt="가을시즌"/>
-			</a>
-		</div>
-		<div class="info">
-			<a href="#">
-				<img src="${pageContext.request.contextPath }/resources/images/main/v_img04.jpg" alt="가을시즌"/>
-			</a>
-		</div>
-		<div class="info">
-			<a href="#">
-				<img src="${pageContext.request.contextPath }/resources/images/main/v_img05.jpg" alt="가을시즌"/>
-			</a>
-		</div>
-		<div class="info">
-			<a href="#">
-				<img src="${pageContext.request.contextPath }/resources/images/main/v_img06.jpg" alt="가을시즌"/>
-			</a>
-		</div>
-		<div class="info">
-			<a href="#">
-				<img src="${pageContext.request.contextPath }/resources/images/main/v_img07.jpg" alt="가을시즌"/>
-			</a>
-		</div>
+		</c:forEach>
 		<div class="cate">
 			<ul>
-				<li class="on" data-no="0"><a href="#">겨울시즌</a></li>
-				<li data-no="1"><a href="#" >승진/영전 특가</a></li>
-				<li data-no="2"><a href="#" >미니블룸</a></li>
-				<li data-no="3"><a href="#" >정관장 기획전</a></li>
-				<li data-no="4"><a href="#" >오설록 티세트</a></li>
-				<li data-no="5"><a href="#" >꽃&amp;선물</a></li>
+				<c:forEach var="banner" items="${bannerList}" varStatus="status">
+				<li class="<c:out value="${status.count eq 1 ? 'on' : ''}" />" data-no="${status.index}">
+					<a href="#">${banner.bannerTitle}</a>
+				</li>
+				</c:forEach>
 			</ul>
 		</div>
 		<script>
@@ -134,6 +103,7 @@
 				
 				<select name="sido" id="sido" class="sel_addr">
 					<option value="">시/도</option>
+					<option value="">전체</option>
 					<c:forEach var="sido" items="${sidoList }">
 					<option value="${sido }">${sido }</option>
 					</c:forEach>
@@ -170,6 +140,9 @@
 
 <script src="${pageContext.request.contextPath }/resources/js/product.js"></script>
 <script>
+	if('${msg}' != '')
+		alert('${msg}');
+
 	$('.category_area .cate a').hover(function(){
 		$(this).addClass('on');
 		$(this).closest('div').css('display', 'block');
@@ -189,7 +162,8 @@
 
 	$(document).on('click', '.bestMenu li.active', function(){
 		var prodNo = $(this).data('no');
-		location.href='<c:url value="/product/detail.do?no=' + prodNo + '"/>';
+		var menu = $('.best .menu > li.on').data('menu');
+		location.href='<c:url value="/product/detail.do?menu=' + menu + '&no=' + prodNo + '"/>';
 	})
 	$(document).on('mouseover', '.bestMenu li.active', function(){
 		$(this).find('h3').addClass('on');	
@@ -226,7 +200,7 @@
 			success: function(data) {
 				var html = '';
 				html += '<option value="">구/군</option>';
-				
+				html += '<option value="">전체</option>';
 				$.each(data, function(index, value) {
 					html += '<option value="' + value + '">' + value + '</option>';
 				});

@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
 
 <head>
-	<title>근조화환 | 엔젤 플라워</title>
 	<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/product/product.css" />
 </head>
 
@@ -14,11 +13,11 @@
 		<div class="top">
 			<h2>${menu}</h2>
 			<!-- <span>총 121개의 상품이 검색되었습니다.</span> -->
-			<ul>
-				<li class="on"><a href="#">인기순</a></li>
-				<li><a href="#">상품후기많은순</a></li>
-				<li><a href="#">높은가격순</a></li>
-				<li><a href="#">낮은가격순</a></li>
+			<ul class="sort">
+				<li><a href="list.do?menu=${param.menu}&sort=1">인기순</a></li>
+				<li><a href="list.do?menu=${param.menu}&sort=2">상품후기많은순</a></li>
+				<li><a href="list.do?menu=${param.menu}&sort=3">높은가격순</a></li>
+				<li><a href="list.do?menu=${param.menu}&sort=4">낮은가격순</a></li>
 			</ul>
 			
 			<table>
@@ -27,7 +26,7 @@
 					<td data-no="${prod.prodNo }" 
 					   <c:if test="${status.first}">rowspan="2"</c:if> 
 					   class="<c:if test="${status.first}">one </c:if>go_detail">
-						<img src="${pageContext.request.contextPath }/resources/images/item/${prod.image}" alt="${prod.name }" />
+						<img src="${pageContext.request.contextPath }/resources/upload/product/${prod.image}" alt="${prod.name }" />
 						<div>
 							<h3>${prod.name }</h3>
 							<p class="price"><span><fmt:formatNumber value="${prod.price1}" pattern="#,##0"/></span><fmt:formatNumber value="${prod.price2}" pattern="#,##0"/>원</p>
@@ -36,30 +35,43 @@
 					</td>
 				<c:if test="${status.index eq 2 || status.index eq 4 }"></tr></c:if>
 			</c:forEach>
+			<c:if test="${fn:length(prodList) < 5}">
+			<c:forEach begin="${fn:length(prodList)}" end="4" varStatus="status">
+				<c:if test="${status.index eq 0 || status.index eq 3 }"><tr></c:if>
+					<td <c:if test="${status.index eq 0}">rowspan="2"</c:if> 
+					   class="<c:if test="${status.index eq 0}">one</c:if>" style="padding:5px 30px;; text-align: center;">
+						<img src="${pageContext.request.contextPath }/resources/images/item/default.jpg" style="width:210px; height: 240px;"/>
+					</td>
+				<c:if test="${status.index eq 2 || status.index eq 4 }"></tr></c:if>
+			</c:forEach>
+			</c:if>
 			</table>
 		</div>
+		
+		<ul class="paging">
+			<c:if test="${pageMaker.prev}">
+				<li><a href="javascript:go_prodList('${category}', '${pageMaker.startPage - 1}', '${sort}')">&laquo;</a></li>
+			</c:if>
 
-		<%-- <div class="item_list">
-			<ul class="list">
-				<li class="go_detail">
-					<img src="${pageContext.request.contextPath }/resources/images/item/sample_01.jpg" alt="근조화환 3단" width="150" height="210"/>
-					<div>
-						<h3>[ST-FB141] 근조3단</h3>
-						<p class="price">판매가 : 77,000 원</p>
-						<p class="sale">회원가 : <strong>74,700</strong>원</p>
-						<p><span class="lbl lbl01">적립금</span>5,400</p>
-					</div>
+			<c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
+				<li
+					<c:out value="${pageMaker.cri.page == idx?'class=on':''}"/>>
+					<a href="javascript:go_prodList('${category}', '${idx}', '${sort}')">${idx}</a>
 				</li>
-			</ul>
-			<ul class="paging">
-				<li class="on"><a href="#">1</a></li>
-				<li><a href="#">2</a></li>
-			</ul>
-		</div> --%>
+			</c:forEach>
+
+			<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+				<li><a href="javascript:go_prodList('${category}', '${pageMaker.endPage +1}', '${sort}')">&raquo;</a></li>
+			</c:if>
+		</ul>
+		
 		<script>
 			$('.go_detail').click(function(){
 				var prodNo = $(this).data('no');
-				location.href='<c:url value="detail.do?no=' + prodNo + '"/>';
+				var menu = '${param.menu}';
+				var sort = '${sort}';
+				var page = '${pageMaker.cri.page}';
+				location.href='<c:url value="detail.do?menu=' + menu + '&sort=' + sort + '&page=' + page + '&no=' + prodNo + '"/>';
 			})
 			$('.go_detail').hover(function(){
 				$(this).find('h3').addClass('on');
@@ -94,10 +106,14 @@
 			
 			<div class="search">
 				<p>지역별 검색</p>
-				<select name="sel_addr_1" id="sel_addr_1" class="sel_addr">
+				<select name="sido" id="sido" class="sel_addr">
 					<option value="">시/도</option>
+					<option value="">전체</option>
+					<c:forEach var="sido" items="${sidoList }">
+					<option value="${sido }">${sido }</option>
+					</c:forEach>
 				</select>
-				<select name="sel_addr_2" id="sel_addr_2" class="sel_addr">
+				<select name="gugun" id="gugun" class="sel_addr">
 					<option value="">구/군</option>
 				</select>
 			</div>
@@ -113,61 +129,9 @@
 				<li data-menu="6">동·서양란</li>
 			</ul>
 			
-			<ul class="list">
-				<c:forEach var="review" items="${reviewList}">
-				<c:choose>
-				<c:when test="${review.type eq 1 }">
-				<li>
-					<img src="${pageContext.request.contextPath }/resources/images/item/${review.image}" alt="${review.prodName}" />
-					<div class="region">
-						<span class="type01">배송지역</span>
-						<h3>${review.region}</h3>
-						<p>${review.title}</p>
-					</div>
-					<div class="info">
-						<h3>${review.prodName}</h3>
-						<p><fmt:formatNumber value="${review.price2}" pattern="#,##0" />원</p>
-					</div>
-				</li>
-				</c:when>
-				<c:otherwise>
-				<li>
-					<img src="${pageContext.request.contextPath }/resources/images/item/${review.comImage}" alt="${review.prodName}" />
-					<div class="region">
-						<span class="type02">상품후기</span>
-						<h3>${review.memId}</h3>
-						<p>
-						<c:forEach begin="1" end="${review.comStar}">
-							<img src="${pageContext.request.contextPath }/resources/images/icon/ico_star.gif" />
-						</c:forEach>
-						</p>
-					</div>
-					<div class="info">
-						<h3>${review.prodName}</h3>
-						<p><fmt:formatNumber value="${review.price2}" pattern="#,##0" />원</p>
-					</div>
-				</li>
-				</c:otherwise>
-				</c:choose>
-				</c:forEach>
-			</ul>
+			<ul class="list"></ul>
 			
-			<ul class="paging">
-				<c:if test="${pageMaker.prev}">
-					<li><a href="javascript:ajaxReviewList(1, 0, '${pageMaker.startPage - 1}')">&laquo;</a></li>
-				</c:if>
-
-				<c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="idx">
-					<li
-						<c:out value="${pageMaker.cri.page == idx?'class=active':''}"/>>
-						<a href="javascript:ajaxReviewList(1, 0, '${idx}')">${idx}</a>
-					</li>
-				</c:forEach>
-
-				<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-					<li><a href="javascript:ajaxReviewList(1, 0, '${pageMaker.endPage +1}')">&raquo;</a></li>
-				</c:if>
-			</ul>
+			<ul class="paging"></ul>
 		</div>
 	</div>
 		
@@ -179,13 +143,65 @@
 <script src="${pageContext.request.contextPath }/resources/js/product.js"></script>
 
 <script>
+	ajaxReviewList(1, 0, 1);
 	$('.review .menu > li').click(function(){
 		$('.review .menu > li').removeClass('on');
 		$(this).addClass('on');
 		
 		var menu = $(this).data('menu');
 		var type = $('.top .nav li.on').data('type');
-	
-		ajaxReviewList(menu, type, 1);
+		var sido = $('#sido option:selected').val();
+		ajaxReviewList(menu, type, 1, sido);
 	});
+	
+	$('#sido').change(function(){
+		var menu = $('.reviewTap .menu li.on').data('menu');
+		var val = $('#sido option:selected').val();
+		$('.review .nav li').removeClass('on');
+		$('.review .nav li').eq(1).addClass('on');
+		if(val == '') 
+			ajaxReviewList(menu, 1, 1);
+		else 
+			ajaxReviewList(menu, 1, 1, val);
+		
+		$.ajax({
+			type: 'post',
+			url: 'ajaxGugun.do',
+			dataType: 'json',
+			data: {'sido': val},
+			success: function(data) {
+				var html = '';
+				html += '<option value="">구/군</option>';
+				html += '<option value="">전체</option>';
+				$.each(data, function(index, value) {
+					html += '<option value="' + value + '">' + value + '</option>';
+				});
+				$('#gugun').html(html);
+			}, 
+			error: function() {
+				alert('error');
+			}
+		});
+	})
+	
+	$('#gugun').change(function(){
+		var menu = $('.reviewTap .menu li.on').data('menu');
+		var sido = $('#sido option:selected').val();
+		var gugun = $('#gugun option:selected').val().trim();
+		$('.review .nav li').removeClass('on');
+		$('.review .nav li').eq(1).addClass('on');
+		if(gugun == '') 
+			ajaxReviewList(menu, 1, 1, sido);
+		else 
+			ajaxReviewList(menu, 1, 1, sido, gugun);
+	});
+	
+	var sort = '${sort}';
+	if(!sort) {
+		$('.sort li').removeClass('on');
+		$('.sort li').eq(0).addClass('on');
+	} else {
+		$('.sort li').removeClass('on');
+		$('.sort li').eq(sort-1).addClass('on');					
+	}
 </script>

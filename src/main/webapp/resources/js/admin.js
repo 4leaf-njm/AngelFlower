@@ -67,7 +67,7 @@ function ajaxAdminPaging(page) {
 			
 			html += '<tr><th>상호명</th><th>대표자</th><th>사업자등록번호</th>';
 			html += '<th>아이디</th><th>성명</th><th>핸드폰</th>';
-			html += '<th>발주건수</th><th>권한</th><th>탈퇴여부</th><th>비고</th></tr>';
+			html += '<th>발주건수</th><th style="width:80px;">권한</th><th>탈퇴여부</th><th>비고</th></tr>';
 			
 			if(data.adminList == null) {
 				html += '<tr class="empty">';
@@ -75,7 +75,6 @@ function ajaxAdminPaging(page) {
 				html +=	'</tr>';
 			} else {
 				$.each(data.adminList, function(index, value) {
-					console.log(value.baljuCount);
 					html += '<tr>';
 					html +=	'<td>' + value.company + '</td>';
 					html +=	'<td>' + value.represent + '</td>';
@@ -84,12 +83,12 @@ function ajaxAdminPaging(page) {
 					html +=	'<td>' + value.name + '</td>';
 					html +=	'<td>' + value.phone + '</td>';
 					html +=	'<td>' + value.baljuCount + ' 건</td>';
-					html +=	'<td>관리자</td><td>';
+					html +=	'<td>' + value.roleName + '</td><td>';
 					if(value.useyn == 'y') html += '미탈퇴';
 					else html += '<span class="red">탈퇴</span>';
 					html +=	'</td><td>';
-					html +=		'<a href="#" class="btn btn01">권한</a>';
-					html +=		'<a href="javascript:ajaxLeave(2, \'a\', \'' + value.id + '\', \'' + value.useyn + '\', ' + page + ')" class="btn btn01">탈퇴</a>';
+					html +=		'<a href="javascript:go_authDialog(\'' + value.id + '\', \'' + page + '\')" class="btn btn01">권한</a>';
+					html +=		'<a href="javascript:ajaxLeave(2, \'a\', \'' + value.id + '\', \'' + value.useyn + '\', ' + page + ')" class="btn btn01" style="margin: 0 0 0 4px;">탈퇴</a>';
 					html +=	'</td>';
 					html +='</tr>';
 				});
@@ -117,6 +116,10 @@ function ajaxAdminPaging(page) {
 }
 
 function ajaxLeave(m, type, id, useyn, page) {
+	if(hasRole('RIGHT_MB_DELETE') == false) {
+		alert('권한이 없습니다.');
+		return;
+	}
 	if(useyn == 'n') {
 		alert('이미 탈퇴된 회원입니다.');
 		return;
@@ -142,15 +145,23 @@ function ajaxLeave(m, type, id, useyn, page) {
 }
 
 function permitYes(m, s, id, page) {
+	if(hasRole('RIGHT_MB_PERMIT') == false) {
+		alert('권한이 없습니다.');
+		return;
+	}
 	var result = confirm('가입을 승인하시겠습니까 ?');
 	if(result)
 		location.href = $('#ctx').text() + '/admin/mb/permitYes.do?m=' + m + '&s=' + s + '&page=' + page + '&id=' + id;
 }
 
 function permitNo(m, s, id, page) {
+	if(hasRole('RIGHT_MB_PERMIT') == false) {
+		alert('권한이 없습니다.');
+		return;
+	}
 	var result = confirm('가입을 거부하시겠습니까 ?');
 	if(result)
-		location.href = $('#ctx').text() + '/admin/mb/permitYes.do?m=' + m + '&s=' + s + '&page=' + page + '&id=' + id;
+		location.href = $('#ctx').text() + '/admin/mb/permitNo.do?m=' + m + '&s=' + s + '&page=' + page + '&id=' + id;
 }
 
 function getPrice1() {
@@ -256,7 +267,19 @@ function go_addProduct() {
 	frm.submit();
 }
 
+function go_modifyProd(m, no, page) {
+	if(!hasRole('RIGHT_PRD_UPDATE')) {
+		alert('권한이 없습니다.');
+		return;
+	}
+	location.href= "modify.do?m=" + m + "&no=" + no + "&page=" + page;
+}
+
 function go_removeProd(m, no, page) {
+	if(hasRole('RIGHT_PRD_DELETE') == false) {
+		alert('권한이 없습니다.');
+		return;
+	}
 	var result = confirm('삭제하시겠습니까 ?');
 	if(result)
 		location.href = 'remove.do?m=' + m + '&no=' + no + '&page=' + page;
@@ -292,20 +315,35 @@ function go_cancel(m, s, no, page, cancel) {
 		location.href = $('#ctx').text() + '/admin/ord/modifyCancel.do?m=' + m + '&s=' + s + '&no=' + no + '&page=' + page + '&cancel=' + cancel;
 }
 
-function go_permitBalju(m, s, no, page) {
+function go_permitBalju(m, s, no, page, checkyn) {
+	if(checkyn == 'y') {
+		alert('이미 승인되었습니다.');
+		return;
+	}
 	var result = confirm('승인하시겠습니까 ?');
 	
 	if(result)
 		location.href = 'permit.do?m=' + m + '&s=' + s + '&no=' + no + '&page=' + page;
 }
 
+function go_baljuDetail(m, s, no) {
+	location.href = 'detail.do?m=' + m + '&s=' + s + '&no=' + no;
+}
+
 function go_modifyShip(m, no, page) {
-		location.href = 'modifyShip.do?m=' + m + '&no=' + no + '&page=' + page;
+	if(!hasRole('RIGHT_REV_SHIP_UPDATE')) {
+		alert('권한이 없습니다.');
+		return;
+	}
+	location.href = 'modifyShip.do?m=' + m + '&no=' + no + '&page=' + page;
 }
 
 function go_removeShip(m, no, page) {
+	if(!hasRole('RIGHT_REV_SHIP_DELETE')) {
+		alert('권한이 없습니다.');
+		return;
+	}
 	var result = confirm('삭제하시겠습니까 ?');
-	
 	if(result) 
 		location.href = 'removeShip.do?m=' + m + '&no=' + no + '&page=' + page;
 }
@@ -324,7 +362,116 @@ function go_replyPrd(no, idx) {
 }
 
 function go_removePrd(m, s, no, page) {
+	if(!hasRole('RIGHT_REV_PRD_DELETE')) {
+		alert('권한이 없습니다.');
+		return;
+	}
 	var result = confirm('삭제하시겠습니까 ?');
-	if(result) 
-		location.href= "prdremove.do?m=" + m + "&s=" + s + "&no=" + no + "&page=" + page;
+	if(result)
+		location.href = 'prdremove.do?m=' + m + '&s=' + s + '&no=' + no + '&page=' + page;
+}
+
+function go_authreg() {
+	if(hasRole('RIGHT_MB_AUTH_INSERT') == false) {
+		alert('권한이 없습니다.');
+		return;
+	}
+	var frm = document.frm_auth;
+	$('#adminyn').val($('#adminyn').is(':checked') ? 'y' : 'n');
+	if($('#btnAuth').text() == '권한 수정') {
+		if($('#roleName').val() == '') {
+			alert('권한명을 입력해주세요.');
+			$('#roleName').focus();
+			return;
+		}
+		var result = confirm('권한을 수정하시겠습니까 ?');
+		if(result) {
+			frm.action = "authModify.do";
+			var authList = [];
+			$('input[name="auth"]:checked').each(function(){
+				authList.push($(this).val());
+			});
+			frm.authList.value = authList;
+			frm.submit();
+		}
+	} else {
+		if($('.auth').hasClass('on')) {
+			if($('#roleName').val() == '') {
+				alert('권한명을 입력해주세요.');
+				$('#roleName').focus();
+				return;
+			}
+			var result = confirm('[' + $('#roleName').val() + '] 권한을 생성하시겠습니까 ?');
+			if(result) {
+				var authList = [];
+				$('input[name="auth"]:checked').each(function(){
+					authList.push($(this).val());
+				});
+				frm.authList.value = authList;
+				frm.submit();
+			}
+		}
+		$('.auth').addClass('on');
+	}
+}
+
+function go_authRemove(m, s, page, no, name) {
+	if(hasRole('RIGHT_MB_AUTH_INSERT') == false) {
+		alert('권한이 없습니다.');
+		return;
+	}
+	var result = confirm('[' + name + '] 권한을 삭제하시겠습니까 ?');
+	if(result) {
+		location.href = $('#ctx').text() + '/admin/mb/authRemove.do?m=' + m + '&s=' + s + '&page=' + page + '&no=' + no;
+	}
+}
+
+function ajaxAuth(no, name) {
+	if(hasRole('RIGHT_MB_AUTH_INSERT') == false) {
+		alert('권한이 없습니다.');
+		return;
+	}
+	document.frm_auth.roleNo.value = no;
+	$('.auth').addClass('on');
+	$('#btnAuth').text('권한 수정');
+	$.ajax({
+		type: 'post',
+		url: 'ajaxAuth.do',
+		data: {'no': no},
+		dataType: 'json',
+		success: function(data) {
+			$('#roleName').val(name);
+			$('input:checkbox[name=auth]').prop('checked', false);
+			if(data.role.adminyn == 'y') {
+				$('#adminyn').prop('checked', true);
+			} else {
+				$('#adminyn').prop('checked', false);
+			}
+			$.each(data.authList, function(index, value) {
+				$('input:checkbox[name=auth][value=' + value.authName + ']').prop('checked', true);
+			});
+		}, 
+		error: function() {
+			alert('error');
+		}
+	});
+}
+
+function hasRole(role) {
+	var url = $('#ctx').text() + '/admin/hasRole.do';
+	var result = false;
+	$.ajax({
+		type: 'post',
+		url: url,
+		dataType: 'json',
+		data: {'role': role},
+		async: false,
+		success: function(data) {
+			result = data;
+		},
+		error: function() {
+			alert('error');
+		}
+	});
+	return result;
 }

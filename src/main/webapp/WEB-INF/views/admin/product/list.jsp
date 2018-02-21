@@ -73,8 +73,8 @@
 				</c:choose></td>
 				<td>${prod.orderCount } 개</td>
 				<td>
-					<a href="modify.do?m=${m}&no=${prod.prodNo}&page=${pageMaker.cri.page}" class="btn btn01">변경</a>
-					<a href="javascript:go_removeProd('2', '${prod.prodNo}', '${pageMaker.cri.page}')" class="btn btn01">삭제</a>
+					<a href="javascript:go_modifyProd('${m}', '${prod.prodNo}', '${pageMaker.cri.page}')" class="btn btn01">변경</a>
+					<a href="javascript:go_removeProd('${m}', '${prod.prodNo}', '${pageMaker.cri.page}')" class="btn btn01">삭제</a>
 				</td>
 			</tr>
 			</c:forEach>

@@ -3,11 +3,9 @@ package com.dawn.angel.service.impl;
 import java.sql.SQLException;
 import java.util.List;
 
-import com.dawn.angel.dao.CommentDAO;
 import com.dawn.angel.dao.OrderDAO;
 import com.dawn.angel.dao.ProductDAO;
 import com.dawn.angel.dao.ReviewDAO;
-import com.dawn.angel.domain.CommentVO;
 import com.dawn.angel.domain.Criteria;
 import com.dawn.angel.domain.ProductVO;
 import com.dawn.angel.domain.ReviewVO;
@@ -15,18 +13,12 @@ import com.dawn.angel.service.ReviewService;
 
 public class ReviewServiceImpl implements ReviewService{
 	
-	private CommentDAO commentDAO;
-	
 	private ReviewDAO reviewDAO;
 	
 	private OrderDAO orderDAO;
 	
 	private ProductDAO productDAO;
 	
-	public void setCommentDAO(CommentDAO commentDAO) {
-		this.commentDAO = commentDAO;
-	}
-
 	public void setReviewDAO(ReviewDAO reviewDAO) {
 		this.reviewDAO = reviewDAO;
 	}
@@ -40,8 +32,8 @@ public class ReviewServiceImpl implements ReviewService{
 	}
 
 	@Override
-	public List<CommentVO> getCommentListByProd(int prodNo) throws SQLException {
-		return commentDAO.selectCommentListByProd(prodNo);
+	public List<ReviewVO> getPrdListByNo(int prodNo) throws SQLException {
+		return reviewDAO.selectPrdListByNo(prodNo);
 	}
 
 	@Override
@@ -120,5 +112,10 @@ public class ReviewServiceImpl implements ReviewService{
 	@Override
 	public int getPrdNoListCount() throws SQLException {
 		return reviewDAO.selectPrdNoListCount();
+	}
+
+	@Override
+	public void insertPrdReview(ReviewVO review) throws SQLException {
+		reviewDAO.insertPrdReview(review);
 	}
 }

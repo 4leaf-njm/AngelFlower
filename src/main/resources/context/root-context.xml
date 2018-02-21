@@ -16,10 +16,6 @@
 	<bean id="productDAO" class="com.dawn.angel.dao.impl.ProductDAOImpl"
 		p:sqlSession-ref="sqlSession" 
 		/>
-		
-	<bean id="commentDAO" class="com.dawn.angel.dao.impl.CommentDAOImpl"
-		p:sqlSession-ref="sqlSession" 
-		/>
 	
 	<bean id="reviewDAO" class="com.dawn.angel.dao.impl.ReviewDAOImpl"
 		p:sqlSession-ref="sqlSession" 
@@ -45,6 +41,26 @@
 		p:sqlSession-ref="sqlSession" 
 		/>
 		
+	<bean id="roleDAO" class="com.dawn.angel.dao.impl.RoleDAOImpl"
+		p:sqlSession-ref="sqlSession" 
+		/>
+		
+	<bean id="bannerDAO" class="com.dawn.angel.dao.impl.BannerDAOImpl"
+		p:sqlSession-ref="sqlSession" 
+		/>
+		
+	<bean id="accountDAO" class="com.dawn.angel.dao.impl.AccountDAOImpl"
+		p:sqlSession-ref="sqlSession" 
+		/>
+		
+	<bean id="noticeDAO" class="com.dawn.angel.dao.impl.NoticeDAOImpl"
+		p:sqlSession-ref="sqlSession" 
+		/>
+	
+	<bean id="visitDAO" class="com.dawn.angel.dao.impl.VisitDAOImpl"
+		p:sqlSession-ref="sqlSession" 
+		/>
+		
 	<!-- Service -->
 	<bean id="memberService" class="com.dawn.angel.service.impl.MemberServiceImpl"
 		p:memberDAO-ref="memberDAO"
@@ -59,7 +75,6 @@
 		/>
 		
 	<bean id="reviewService" class="com.dawn.angel.service.impl.ReviewServiceImpl"
-		p:commentDAO-ref="commentDAO"
 		p:reviewDAO-ref="reviewDAO"
 		p:orderDAO-ref="orderDAO"
 		p:productDAO-ref="productDAO"
@@ -74,10 +89,30 @@
 		p:orderDAO-ref="orderDAO"
 		p:cartDAO-ref="cartDAO"
 		p:memberDAO-ref="memberDAO"
+		p:authUtil-ref="authUtil"
 		/>		
 	
 	<bean id="baljuService" class="com.dawn.angel.service.impl.BaljuServiceImpl"
 		p:baljuDAO-ref="baljuDAO"
 		p:orderDAO-ref="orderDAO"
 		/>	
+		
+	<bean id="roleService" class="com.dawn.angel.service.impl.RoleServiceImpl"
+		p:roleDAO-ref="roleDAO"
+		/>	
+	
+	<bean id="storeService" class="com.dawn.angel.service.impl.StoreServiceImpl"
+		p:bannerDAO-ref="bannerDAO"
+		p:accountDAO-ref="accountDAO"
+		/>	
+	
+	<bean id="noticeService" class="com.dawn.angel.service.impl.NoticeServiceImpl"
+		p:noticeDAO-ref="noticeDAO"
+		/>	
+		
+	<bean id="authUtil" class="com.dawn.angel.util.AuthUtil"
+		p:adminService-ref="adminService"
+		p:roleService-ref="roleService"
+		/>	
+	
 </beans>

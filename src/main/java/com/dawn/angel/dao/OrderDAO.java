@@ -13,10 +13,6 @@ public interface OrderDAO {
 	
 	List<OrderVO> selectOrderDetailList(int orderNo) throws SQLException;
 	
-	OrderVO selectOrderByNoForGuest(int orderNo) throws SQLException;
-	
-	List<OrderVO> selectOrderDetailListForGuest(int orderNo) throws SQLException;
-	
 	void insertOrder(OrderVO order) throws SQLException;
 	
 	void insertOrderDetail(OrderVO order) throws SQLException;
@@ -62,4 +58,26 @@ public interface OrderDAO {
 	List<OrderVO> selectOrderSearchListForPay(int year, int month, SearchCriteria cri) throws SQLException;
 	
 	int selectOrderSearchListForPayCount(int year, int month, SearchCriteria cri) throws SQLException;
+	
+	List<OrderVO> selectMyOrderList(String memId) throws SQLException;
+
+	List<OrderVO> selectOrderTotalListForBalju(String adminId) throws SQLException;
+	
+	List<OrderVO> selectOrderTotalListForBalju(Criteria cri, String adminId) throws SQLException;
+	
+	int selectOrderTotalCountForBalju(String adminId) throws SQLException;
+	
+	List<OrderVO> selectOrderDepListForBalju(Criteria cri, String adminId) throws SQLException;
+	
+	int selectOrderDepCountForBalju(String adminId) throws SQLException;
+	
+	List<OrderVO> selectOrderShipListForBalju(Criteria cri, String adminId) throws SQLException;
+	
+	int selectOrderShipCountForBalju(String adminId) throws SQLException;
+	
+	void updateOrderSerial(OrderVO order) throws SQLException;
+	
+	List<OrderVO> selectOrderListThisMonth() throws SQLException;
+	
+	List<OrderVO> selectOrderListThisDay() throws SQLException;
 }

@@ -1,0 +1,67 @@
+@CHARSET "UTF-8";
+
+.lnb {display: inline-block; width: 230px; border: 1px solid #e5e5e5;}
+.lnb > h2 {margin: 10px; padding: 10px 20px; height: 40px; line-height: 40px; color: #fff; font-family: '맑은 고딕'; font-size: 21px; font-weight: bold; background: #3f3e3e;}
+.lnb > div {margin: 0 10px 10px; padding: 10px; font-family: '맑은 고딕'; font-size: 13px; border: 1px solid #eaeaea; background: #fafafa;}
+.lnb > div span {font-weight: bold; color: #339900;}
+.lnb > div p {font-family: '맑은 고딕'; font-size: 13px;}
+.lnb > ul {height: 380px;}
+.lnb > ul li {position: relative; border-bottom: 1px solid #e5e5e5;}
+.lnb > ul li:first-child {border-top: 1px solid #e5e5e5;}
+.lnb > ul li a {display: inline-block; padding: 10px 22px; width: 185px; font-family: '맑은 고딕'; font-size: 13px; font-weight: bold; color: #333333;}
+.lnb > ul li a i {position: absolute; top: 16px; right: 13px;}
+
+.content {display: inline-block; width: 925px; margin: 0 0 0 30px; vertical-align: top;}
+.content > h2 {display: inline-block; margin: 0 0 10px; font-family: '맑은 고딕'; font-size: 21px;}
+.content > p {display: inline-block; padding: 0 0 0 5px; font-weight: bold; font-size: 13px; color: #666666;}
+.content > .info {margin: 0 0 33px; padding: 25px 35px; border: 1px solid #dddddd; background: #fafafa;}
+.content > .info p {font-family: '맑은 고딕'; font-size: 13px; color: #333333; line-height: 165%;}
+.content > .info p span {color: #ec0000}
+.content > .msg {margin: 30px 0 20px; text-align: center;}
+.content > .msg h3 {font-family: '맑은 고딕'; font-size: 20px;}
+.content > .msg p {font-family: '맑은 고딕'; font-size: 13px; font-weight: bold; padding: 4px 0 0;}
+.content > .reason h3 {margin: 0 0 20px 0; font-family: '맑은 고딕'; font-size: 20px; text-align: center; color: #e30202;}
+.content > .reason textarea {resize: none; font-size: 15px;}
+.content > .update {margin: 10px auto;}
+.content > .update .form01 {padding: 5px 0; background: #fafafa; border-top: 1px solid #e6e6e6; border-bottom: 1px solid #e6e6e6;}
+.content > .update .form02 {padding: 5px 0;}
+.content > .update .form03 {padding: 2px 0; border-top: 1px solid #e6e6e6; border-bottom: 1px solid #e6e6e6;}
+.content > .update .form04 {padding: 5px 0; border-top: 1px solid #e6e6e6; background: #fafafa;}
+.content > .update .row {margin: 13px 0;}
+.content > .update label {display: inline-block; width: 150px; padding: 0 0 0 26px; font-family: '맑은 고딕'; font-size: 15px; font-weight: bold; color: #333333;}
+.content > .update .input01 {width: 70px; font-size: 15px;}
+.content > .update .input02 {width: 185px; font-size: 15px;}
+.content > .update .input03 {width: 500px; font-size: 15px;}
+.content > .update .space {padding: 0 4px;}
+.content > .update .info {display: inline-block; padding: 0 0 0 25px; font-family: '맑은 고딕'; font-size: 13px; color: #ff0000;}
+.content > .update .userid {display: inline-block; font-size: 15px;}
+.content > .update .btn_white {display: inline-block; margin: 0 0 0 15px; padding: 10px 8px; border: 1px solid #dddddd; border-radius: 5px; background: #fff; font-family: '맑은 고딕'; font-size: 14px; font-weight: bold; color: #000;}
+.content .btn_box {margin: 20px 0 0; text-align: center;}
+.content .btn_box a {display: inline-block; padding: 18px 30px; font-family: '맑은 고딕'; font-size: 13px; font-weight: bold; border: 1px solid #a90000; background: #e40909; color: #fff;}
+
+.detail {padding: 12px 10px;}
+.detail > h2 {padding: 0 0 4px; font-size: 21px; font-family: '맑은 고딕'; border-bottom: 1px solid #ddd;}
+.detail > h2 > span {padding: 0 0 0 30px; font-weight: normal; font-size: 13px; color: #9a9a9a;}
+.detail > h2 > span > span {color: #fb2a2a;}
+.detail > div {margin: 10px 0 15px; height: 50px; line-height: 50px; border: 1px solid #d0d0d0; background: #fffdf0;}
+.detail > div > p {padding: 0 0 0 20px; font-size: 12px; font-family: '맑은 고딕'; color: #3a3939;}
+.detail > div > p span {font-weight: bold; color: #0178d3;}
+.detail > .total {float: right; margin: 7px 0; font-size: 13px; color: #777777;}
+
+.tbl {width:100%; border-top: 2px solid #bcbcbc; border-bottom: 2px solid #e3e3e3;}
+.tbl tr {border-top: 1px solid #e3e3e3;}
+.tbl tr:first-child {border-top: none;}
+.tbl th {padding: 11px 0; font-family: '맑은 고딕'; font-size: 13px; color: #333; background: #fafafa;}
+.tbl td {padding: 13px 0; font-family: '맑은 고딕'; font-size: 13px; color: #333; text-align: center;}
+.tbl td a.link {padding: 13px 0px; font-family: "맑은 고딕"; font-size: 13px; color: #333;}
+.tbl tr.empty td {font-weight: bold;}
+.tbl td img {width: 30px; height: 40px;}
+
+.tbl02 {width: 100%; border: 1px solid #cdcdcd; border-bottom: none;}
+.tbl02 tr {border-bottom: 1px solid #cdcdcd;}
+.tbl02 th {padding: 6px 0; width: 150px; font-family: '맑은 고딕'; font-size: 13px; background: #ededed;}
+.tbl02 th span {display:block;}
+.tbl02 td {padding: 10px 20px; font-family: '맑은 고딕'; font-size: 12px; color: #777777;}
+.tbl02 td p {margin: 7px 0; font-family: '맑은 고딕'; font-size: 12px; color: #777777;}
+
+.btn {padding: 3px 4px; font-family: '맑은 고딕'; font-size: 11px; font-weight: bold; color: #333; border: 1px solid #cccccc; border-radius: 3px;}

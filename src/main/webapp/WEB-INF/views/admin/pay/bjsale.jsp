@@ -78,9 +78,13 @@
 </div>
 <!-- container (E) -->
 <script>
+	if('${msg}' != '')
+		alert('${msg}');
+</script>
+<script>
 	$('#payDialog').dialog({
 		autoOpen: false,
-		width: 1000,
+		width: 1020,
 		modal: false,
 	});
 	
@@ -109,7 +113,7 @@
 			success: function(data) {
 				var html = '';
 				
-				html += '<tr><th>발주일자</th><th>발주자</th><th>발주금</th><th>가진금액</th><th>받는자</th><th>받은금액</th></tr>';
+				html += '<tr><th>발주일자</th><th>고객명</th><th>발주자</th><th>발주금</th><th>가진금액</th><th>받는자</th><th>받은금액</th></tr>';
 				$.each(data.payList, function(index, value) {
 					var date = new Date(value.baljuDate);
 					var m = (date.getMonth()+1+'').length == 1 ? ('0' + (date.getMonth()+1)) : (date.getMonth()+1);
@@ -117,6 +121,7 @@
 					var baljuDate = date.getFullYear() + '-' + m + '-' + d;
 					html += '<tr>';
 					html += '<td>' + baljuDate + '</td>';
+					html += '<td>' + value.baljuMemName + '</td>';
 					html += '<td>' + value.baljuSendName + '(' + value.baljuSendCompany + ')</td>';
 					html += '<td>' + comma(value.baljuPrice) + ' 원</td>';
 					html += '<td>' + comma(value.baljuSendPrice) + ' 원</td>';

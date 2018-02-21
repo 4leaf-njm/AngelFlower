@@ -18,6 +18,8 @@ public class AdminVO { // 기업회원 (관리자)
 	private char useyn; // 사용여부 (사용가능 : y, 사용 불가능 : n, 가입 승인대기: r)
 	private Timestamp regdate; // 가입일
 	private int baljuCount; // 발주 건수
+	private int roleNo; // 권한 번호
+	private String roleName; // 권한명
 	
 	public String getId() {
 		return id;
@@ -103,11 +105,23 @@ public class AdminVO { // 기업회원 (관리자)
 	public void setBaljuCount(int baljuCount) {
 		this.baljuCount = baljuCount;
 	}
+	public int getRoleNo() {
+		return roleNo;
+	}
+	public void setRoleNo(int roleNo) {
+		this.roleNo = roleNo;
+	}
+	public String getRoleName() {
+		return roleName;
+	}
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
+	}
 	@Override
 	public String toString() {
 		return "AdminVO [id=" + id + ", pwd=" + pwd + ", name=" + name + ", birth=" + birth + ", gender=" + gender
 				+ ", phone=" + phone + ", address=" + address + ", email=" + email + ", company=" + company
 				+ ", busiNo=" + busiNo + ", represent=" + represent + ", useyn=" + useyn + ", regdate=" + regdate
-				+ ", baljuCount=" + baljuCount + "]";
+				+ ", baljuCount=" + baljuCount + ", roleNo=" + roleNo + ", roleName=" + roleName + "]";
 	}
 }

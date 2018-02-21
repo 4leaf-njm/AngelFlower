@@ -41,11 +41,27 @@
 			</tr>
 			<c:forEach var="cart" items="${cartList}">
 			<tr>
-				<td class="image"><img src="${pageContext.request.contextPath }/resources/images/item/${cart.prodImage}" /></td>
+				<td class="image"><img src="${pageContext.request.contextPath }/resources/upload/product/${cart.prodImage}" /></td>
 				<td class="name">${cart.prodName }</td>
 				<td>${cart.quantity } 개</td>
-				<td><b><fmt:formatNumber value="${cart.prodPrice2 * cart.quantity}" pattern="#,##0"/>원</b></td>
-				<td><fmt:formatNumber value="${cart.prodSave * cart.quantity}" pattern="#,##0"/>원</td>
+				<td><b>
+				<c:choose>
+				<c:when test="${!cart.memId}">
+					<fmt:formatNumber value="${cart.prodPrice1 * cart.quantity}" pattern="#,##0"/>원
+				</c:when>
+				<c:otherwise>
+					<fmt:formatNumber value="${cart.prodPrice2 * cart.quantity}" pattern="#,##0"/>원
+				</c:otherwise>
+				</c:choose>
+				</b></td>
+				<td>
+				<c:choose>
+				<c:when test="${!cart.memId}">0원</c:when>
+				<c:otherwise>
+					<fmt:formatNumber value="${cart.prodSave * cart.quantity}" pattern="#,##0"/>원
+				</c:otherwise>
+				</c:choose>
+				</td>
 				<td><a href="javascript:go_removeOrderCart('${cart.cartNo}')" class="btn">삭제</a></td>
 			</tr>
 			</c:forEach>
@@ -92,6 +108,11 @@
 					<select name="user_phone1" class="input01" id="userPhone1">
 						<option value="">선택</option>
 						<option value="010">010</option>
+						<option value="011">011</option>
+						<option value="016">016</option>
+						<option value="017">017</option>
+						<option value="018">018</option>
+						<option value="019">019</option>
 					</select>
 					<span class="space">-</span>
 					<input type="text" name="user_phone2" class="input01" id="userPhone2" maxlength="4"/>
@@ -119,6 +140,11 @@
 					<select name="deli_phone1" class="input01" id="deliPhone1">
 						<option value="">선택</option>
 						<option value="010">010</option>
+						<option value="011">011</option>
+						<option value="016">016</option>
+						<option value="017">017</option>
+						<option value="018">018</option>
+						<option value="019">019</option>
 					</select>
 					<span class="space">-</span>
 					<input type="text" name="deli_phone2" class="input01" id="deliPhone2" maxlength="4" />
@@ -149,7 +175,7 @@
 				</td>
 			</tr>
 			<tr>
-				<th>* 희망배송일</th>
+				<th>희망배송일</th>
 				<td>
 					<input type="text" name="hope_date" class="input02" id="datePicker" style="margin: 0 10px 0 0;"/>
 				</td>
@@ -205,7 +231,7 @@
 			<tr>
 				<th>주문동의</th>
 				<td>
-					<label><input type="checkbox" name="agree" />
+					<label><input type="checkbox" name="agree" id="agree"/>
 					상기 결제정보를 확인하였으며, 구매진행에 동의합니다.</label>
 				</td>
 			</tr>
@@ -219,7 +245,7 @@
 				<td>
 					<p class="save"></p><span>원</span>
 					<button type="button" onclick="javascript:go_selectSave('${user.id}')" class="btn"
-						<c:if test="${empty user}"> disabled="disabled"</c:if>
+						<c:if test="${empty user}"> disabled="disabled" style="background: #f3f3f3;"</c:if>
 					>조회</button>
 				</td>
 			</tr>

@@ -16,6 +16,7 @@
 				<th>핸드폰</th>
 				<th>총 발주 금액</th>
 				<th>가질 금액</th>
+				<th>보기</th>
 				<th>상태</th>
 			</tr>
 			<c:choose>
@@ -34,6 +35,7 @@
 				<td>${balju.baljuRecPhone }</td>
 				<td><fmt:formatNumber value="${balju.baljuPrice }" pattern="#,##0" /> 원</td>
 				<td><fmt:formatNumber value="${balju.baljuSendPrice }" pattern="#,##0" /> 원</td>
+				<td><a href="javascript:go_baljuDetail('${m}', '${s}', '${balju.baljuNo}')" class="btn btn01">상세</a></td>
 				<td>
 				<c:choose>
 				<c:when test="${balju.checkyn eq 'y'.charAt(0)}">승인</c:when>

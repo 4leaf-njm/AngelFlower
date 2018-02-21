@@ -7,8 +7,12 @@
 			classpath:context/root-context.xml
 		</param-value>
   </context-param>
+  
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+  <listener>
+    <listener-class>com.dawn.angel.listener.SessionListener</listener-class>
   </listener>
   
   <servlet>
@@ -44,4 +48,8 @@
   	<welcome-file>index.jsp</welcome-file>
   </welcome-file-list>
   
+  <error-page>
+  	<error-code>404</error-code>
+  	<location>/WEB-INF/views/error/error.jsp</location>
+  </error-page>
 </web-app>

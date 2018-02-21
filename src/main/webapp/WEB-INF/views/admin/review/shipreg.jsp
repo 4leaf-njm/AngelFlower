@@ -94,7 +94,6 @@
 	<%@ include file="/WEB-INF/views/admin/include/sidebar6.jsp" %>
 </div>
 <!-- container (E) -->
-
 <script>
 	$('.tbl04 td .lblradio').click(function(){
 		$(this).parents('td').find('.lblradio').removeClass('on');

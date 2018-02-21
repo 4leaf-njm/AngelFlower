@@ -35,7 +35,6 @@ div > table td {padding: 15px 0; text-align: left; font-family: '맑은 고딕';
 .cost tr.check td .btn {display: inline-block; margin: 0 0 0 5px; padding: 5px 9px; text-align: center; color: #333; font-size: 14px; border: 1px solid #ccc; border-radius: 3px; background: #fff; outline: 0}
 .cost tr.use td input[type="text"] {width: 70px; height: 29px;}
 .cost tr.use td .btn {display: inline-block; margin: 0 0 0 5px; padding: 5px 9px; text-align: center; color: #333; font-size: 14px; border: 1px solid #ccc; border-radius: 3px;}
-.cost tr.use td .btn[disabled="disabled"] {background: #e9e9e9;}
 .cost tr.use td label {display: inline-block; padding: 0 2px 0 5px; color: #222;}
 .cost tr.use td p {padding: 13px 0 0 0; font-family: '맑은 고딕'; font-size: 14px; font-weight: bold; color: #e8282e}
 .cost tr.final {background: #fafafaa1;}

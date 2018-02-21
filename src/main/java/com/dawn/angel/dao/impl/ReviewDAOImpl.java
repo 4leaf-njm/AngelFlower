@@ -101,4 +101,14 @@ public class ReviewDAOImpl implements ReviewDAO{
 	public int selectPrdNoListCount() throws SQLException {
 		return sqlSession.selectOne(NAMESPACE + ".selectPrdNoListCount");
 	}
+
+	@Override
+	public List<ReviewVO> selectPrdListByNo(int prodNo) throws SQLException {
+		return sqlSession.selectList(NAMESPACE + ".selectPrdListByNo", prodNo);
+	}
+
+	@Override
+	public void insertPrdReview(ReviewVO review) throws SQLException {
+		sqlSession.update(NAMESPACE + ".insertPrdReview", review);
+	}
 }

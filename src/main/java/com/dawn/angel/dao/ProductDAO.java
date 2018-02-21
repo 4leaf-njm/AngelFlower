@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import com.dawn.angel.domain.Criteria;
+import com.dawn.angel.domain.ProductRequest;
 import com.dawn.angel.domain.ProductVO;
 import com.dawn.angel.domain.SearchCriteria;
 
@@ -13,11 +14,15 @@ public interface ProductDAO {
 	
 	List<ProductVO> selectProductList(int category) throws SQLException;
 	
+	List<ProductVO> selectProductListCri(int category, Criteria cri, Integer sort) throws SQLException;
+	
 	List<ProductVO> selectProductBestList(int category) throws SQLException;
 	
 	List<ProductVO> selectProductTotalList() throws SQLException;
 	
 	List<ProductVO> selectProductTotalListCri(Criteria cri) throws SQLException;
+	
+	List<ProductVO> selectProductSearch(ProductRequest req) throws SQLException;
 	
 	int selectProductTotalCount() throws SQLException;
 	
@@ -32,4 +37,6 @@ public interface ProductDAO {
 	int selectProdListCount(SearchCriteria cri) throws SQLException;
 	
 	int selectBestCountByCate(int category) throws SQLException;
+	
+	int selectProductListCriCount(int category) throws SQLException;
 }

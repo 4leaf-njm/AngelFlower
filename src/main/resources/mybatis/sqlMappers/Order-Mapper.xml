@@ -37,6 +37,7 @@
 		<result property="depAccount" column="dep_account" />
 		<result property="type" column="type" />
 		<result property="baljuPrice" column="balju_price" />
+		<result property="baljuNo" column="balju_no" />
 	</resultMap>
 	
 	<select id="selectOrderByNo" parameterType="int" resultMap="orderMap">
@@ -50,10 +51,10 @@
 	
 	<update id="insertOrder" parameterType="hashmap">
 		insert into `order`(order_serial, mem_id, receive_name, receive_phone, receive_addr, order_msg1, order_msg2, 
-		order_request, hope_date, order_way, order_state, use_save, mem_name, mem_phone, mem_email, type, balju_price)
+		order_request, hope_date, order_way, order_state, use_save, mem_name, mem_phone, mem_email, type, balju_price, balju_no)
 		values (#{order.orderSerial}, #{order.memId}, #{order.receiveName}, #{order.receivePhone}, #{order.receiveAddr},
 		#{order.orderMsg1}, #{order.orderMsg2}, #{order.orderRequest}, #{order.hopeDate}, #{order.orderWay}, #{orderState},
-		#{order.useSave}, #{order.memName}, #{order.memPhone}, #{order.memEmail}, #{order.type}, #{order.baljuPrice})
+		#{order.useSave}, #{order.memName}, #{order.memPhone}, #{order.memEmail}, #{order.type}, #{order.baljuPrice}, #{order.baljuNo})
 	</update>
 	
 	<update id="insertOrderDetail" parameterType="order">
@@ -70,19 +71,8 @@
 		where mem_id = #{memId}
 	</select>
 	
-	<select id="selectOrderByNoForGuest" parameterType="int" resultMap="orderMap">
-		select * from order_guest_view where order_no = #{orderNo} limit 1
-	</select>
-	
-	<select id="selectOrderDetailListForGuest" parameterType="int" resultMap="orderMap">
-		select * from order_guest_view where order_no = #{orderNo}
-		order by odetail_no desc
-	</select>
-	
 	<select id="selectOrderCountByProd" parameterType="int" resultType="int">
-		select count(*) from order_guest_view 
-		where prod_no = #{prodNo}
-		and order_state = 4
+		select sum(quantity) from order_view where prod_no = #{prodNo} and order_state = 4
 	</select>
 	
 	<select id="selectOrderTotalList" resultMap="orderMap">
@@ -103,7 +93,7 @@
 	</select>
 	
 	<select id="selectOrderDepCount" resultType="int">
-		select count(*) from `order` where order_state = 1
+		select count(*) from `order` where order_state = 1 and cancel_yn != 'y'
 	</select>
 	
 	<update id="updateOrderDep" parameterType="int">
@@ -195,5 +185,62 @@
 	<select id="selectOrderSearchListForPayCount" parameterType="hashmap" resultType="int">
 		select count(*) from `order` where date_format(order_date, '%Y-%m') = #{date} 
 		<include refid="paySearch"></include>
+	</select>
+	
+	<select id="selectMyOrderList" parameterType="str" resultMap="orderMap">
+		select * from order_view where mem_id = #{memId}
+		group by order_no order by order_no desc
+	</select>
+	
+	<select id="selectOrderTotalListForBalju" parameterType="str" resultMap="orderMap">
+		select a.* from order_view a, balju b where type = 2 and a.balju_no = b.balju_no 
+		and (balju_sendid = #{adminId} or balju_recid = #{adminId}) 
+		group by order_no
+		order by order_no desc, order_state asc
+	</select>
+	
+	<select id="selectOrderTotalCountForBalju" parameterType="str" resultType="int">
+		select count(*) from `order` a, balju b where type = 2 and a.balju_no = b.balju_no 
+		and (balju_sendid = #{adminId} or balju_recid = #{adminId}) 
+	</select>
+	
+	<select id="selectOrderDepListForBalju" parameterType="str" resultMap="orderMap">
+		select a.* from order_view a, balju b where type = 2 and a.balju_no = b.balju_no 
+		and (balju_sendid = #{adminId} or balju_recid = #{adminId}) 
+		and order_state = 1 and cancel_yn != 'y'
+		group by order_no order by order_no desc
+	</select>
+	
+	<select id="selectOrderDepCountForBalju" parameterType="str" resultType="int">
+		select count(*) from `order` a, balju b where type = 2 and a.balju_no = b.balju_no 
+		and (balju_sendid = #{adminId} or balju_recid = #{adminId}) 
+		and order_state = 1 and cancel_yn != 'y'
+	</select>
+	
+	<select id="selectOrderShipListForBalju" parameterType="str" resultMap="orderMap">
+		select a.* from order_view a, balju b where type = 2 and a.balju_no = b.balju_no 
+		and (balju_sendid = #{adminId} or balju_recid = #{adminId}) 
+		and order_state != 1 and cancel_yn != 'y'
+		group by order_no order by order_no desc
+	</select>
+	
+	<select id="selectOrderShipCountForBalju" parameterType="str" resultType="int">
+		select count(*) from `order` a, balju b where type = 2 and a.balju_no = b.balju_no 
+		and (balju_sendid = #{adminId} or balju_recid = #{adminId}) 
+		and order_state != 1 and cancel_yn != 'y'
+	</select>
+	
+	<update id="updateOrderSerial" parameterType="order">
+		update `order` set order_serial = #{orderSerial} where order_no = #{orderNo}
+	</update>
+	
+	<select id="selectOrderListThisMonth" resultMap="orderMap">
+		select * from `order` where month(order_date) = month(curdate())
+		order by order_no desc
+	</select>
+	
+	<select id="selectOrderListThisDay" resultMap="orderMap">
+		select * from `order` where date_format(order_date, '%Y-%m-%d') = curdate()
+		order by order_no desc
 	</select>
 </mapper>

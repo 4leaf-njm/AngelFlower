@@ -31,4 +31,8 @@ public interface ReviewDAO {
 	void updatePrdReply(ReviewVO review) throws SQLException;
 	
 	int selectPrdNoListCount() throws SQLException;
+	
+	List<ReviewVO> selectPrdListByNo(int prodNo) throws SQLException;
+	
+	void insertPrdReview(ReviewVO review) throws SQLException;
 }

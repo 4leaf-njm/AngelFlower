@@ -29,6 +29,7 @@
 				</div>		
 			</div>
 			<div class="board">
+				<!--
 				<div class="revi">
 					<h3><img src="${pageContext.request.contextPath }/resources/images/text/txt_review.png" alt="후기 게시판" width="100" height="40"/></h3>
 					<p><a href="#"><img src="${pageContext.request.contextPath }/resources/images/text/txt_more.png" alt="더보기" width="66" height="32"/></a></p>
@@ -38,15 +39,22 @@
 						<li><a href="#">11월 부분 무이자 할부이벤트를 제공합니다.</a><span> 2017-11-01</span></li>
 						<li><a href="#">10월 부분 무이자 할부이벤트를 제공합니다.</a><span>2017-10-12</span></li>
 					</ul>
-				</div>
+				</div> 
+				-->
 				<div class="notice">
 					<h3><img src="${pageContext.request.contextPath }/resources/images/text/txt_notice.png" alt="공지사항" width="90" height="40"/></h3>
-					<p><a href="#"><img src="${pageContext.request.contextPath }/resources/images/text/txt_more.png" alt="더보기" width="66" height="32"/></a></p>
+					<!-- <p><a href="#"><img src="${pageContext.request.contextPath }/resources/images/text/txt_more.png" alt="더보기" width="66" height="32"/></a></p> -->
 					<ul>
 						<li><a href="#">엔젤플라워 배송후기 이벤트</a><span>2016-09-23</span></li>
 						<li><a href="#">해외결제서비스 Paypal 이용안내</a><span>2012-03-12</span></li>
 						<li><a href="#">11월 부분 무이자 할부이벤트를 제공합니다.</a><span> 2017-11-01</span></li>
 						<li><a href="#">10월 부분 무이자 할부이벤트를 제공합니다.</a><span>2017-10-12</span></li>
+						<li><a href="#">엔젤플라워 배송후기 이벤트</a><span>2016-09-23</span></li>
+						<li><a href="#">해외결제서비스 Paypal 이용안내</a><span>2012-03-12</span></li>
+						<li><a href="#">11월 부분 무이자 할부이벤트를 제공합니다.</a><span> 2017-11-01</span></li>
+						<li><a href="#">10월 부분 무이자 할부이벤트를 제공합니다.</a><span>2017-10-12</span></li>
+						<li><a href="#">엔젤플라워 배송후기 이벤트</a><span>2016-09-23</span></li>
+						<li><a href="#">해외결제서비스 Paypal 이용안내</a><span>2012-03-12</span></li>
 					</ul>
 				</div>
 			</div>
@@ -55,21 +63,21 @@
 		<div id="footer">
 			<div>
 				<ul>
-					<li><a href="#">회사소개</a></li>
-					<li><a href="#">이용약관</a></li>
-					<li><a href="#"><b>개인정보처리방침</b></a></li>
-					<li><a href="#">오시는길</a></li>
-					<li><a href="#">채용정보</a></li>
-					<li><a href="#">제휴문의</a></li>
-					<li><a href="#">고객센터</a></li>
-					<li><a href="#">회원사 인트라넷</a></li>
+					<li><a href='<c:url value="/etc/company.do" />'>회사소개</a></li>
+					<li><a href='<c:url value="/etc/agreement.do" />'>이용약관</a></li>
+					<li><a href='<c:url value="/etc/policy.do" />'><b>개인정보처리방침</b></a></li>
+					<li><a href='<c:url value="/etc/location.do" />'>오시는길</a></li>
+					<li><a href="javascript:go_email()">이메일무단수집거부</a></li>
+					<li><a href="javascript:go_raw()">이미지책임법적고지</a></li>
 				</ul>
-				<select name="site_select" onchange="go_site(this)">
-					<option value="#">제휴사이트</option>
-					<option value="#">사이트명</option>
-					<option value="#">사이트명</option>
-					<option value="#">사이트명</option>
-				</select>
+				<script>
+					function go_email() {
+						window.open($('#ctx').text() + "/etc/email.do", "이메일무단수집거부", "width=490, height=400, toolbar=no, menubar=no, scrollbar=yes, resizable=yes" );
+					}
+					function go_raw() {
+						window.open($('#ctx').text() + "/etc/raw.do", "이미지책임법적고지", "width=490, height=260, toolbar=no, menubar=no, scrollbar=yes, resizable=yes" );
+					}
+				</script>
 			</div>
 			<address class="clear">
 				법인명 : (주)엔젤플라워 | 대표이사 : OOO <br />

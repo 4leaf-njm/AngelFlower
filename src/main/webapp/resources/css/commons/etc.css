@@ -1,0 +1,22 @@
+@CHARSET "UTF-8";
+.content > h2 {margin: 0 50px 30px 0; padding: 0 0 10px 5px; border-bottom: 1px solid #333;}
+.content .agree textarea{width: 1150px; height: 800px; padding: 15px; font-size: 14px; color: #656565; background: #fbfbfb; border: 1px solid #dddddd; line-height: 140%; resize: none;}
+
+.content .location {width: 1100px; margin: 0 auto; border: 1px solid #f4f4f4; text-align: center;}
+.content .location > h3 {margin: 50px 0 10px; font-family: '맑은 고딕'; font-size: 24px; color: #333;}
+.content .location > p {font-family: '맑은 고딕'; font-size: 15px; font-weight: bold; color: #8f8f8f;}
+
+.content .company {width: 1100px; margin: 0 auto; text-align: center;}
+.content .company > h3 {margin: 50px 0 10px; font-family: '맑은 고딕'; font-size: 24px; color: #333;}
+.content .company > h4 {padding: 25px 0 17px; font-family: '맑은 고딕'; font-size: 15px; color: #1150d4;}
+.content .company > p {margin: 0 auto 15px; width: 600px; text-align: left; font-size: 12px; color: #1b1a1a;}
+
+.pop {}
+.pop > h1 {padding: 13px 20px; font-family: '맑은 고딕'; font-size: 18px; color: #fff; background: #e21b11;}
+.pop > p {padding: 13px 0 0 20px; font-family: '맑은 고딕'; font-size: 13px; font-weight: bold; color: #8e8e8e;}
+.pop > div {width: 390px; margin: 20px auto; padding: 0 7px 20px; text-align: center; border: 4px solid #fbbdc7;}
+.pop > div h2 {padding: 7px 0 14px; font-size: 12px; color: #e40101;}
+.pop > div p {color: #444; font-family: '맑은 고딕'; font-size: 11px; font-weight: bold; line-height: 150%; text-align: left;}
+.pop > div span.blue {color: #0066ff;}
+.pop > div span.red {color: #ff0000;}
+.pop > .btn {display: block; margin: 0 auto; width: 120px; height: 36px; line-height: 36px; font-family: '맑은 고딕'; font-size: 15px; font-weight: bold; color: #e5e2e2; background: #d50c0c; text-align: center;}

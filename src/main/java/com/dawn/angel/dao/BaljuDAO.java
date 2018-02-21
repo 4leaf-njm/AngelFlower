@@ -30,6 +30,10 @@ public interface BaljuDAO {
 	
 	List<BaljuVO> selectBaljuTotalList() throws SQLException;
 	
+	List<BaljuVO> selectBaljuTotalListForPay(Criteria cri) throws SQLException;
+	
+	int selectBaljuTotalListCount() throws SQLException;
+	
 	List<BaljuVO> selectBaljuListForPay(String adminId, int year, int month) throws SQLException;
 	
 	List<BaljuVO> selectBaljuListCriForPay(Criteria cri, String adminId, int year, int month) throws SQLException;

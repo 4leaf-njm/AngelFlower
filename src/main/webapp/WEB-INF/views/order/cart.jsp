@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
 
 <head>
-	<title>장바구니 | 엔젤 플라워</title>
 	<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/order/cart.css" />
 </head>
 
@@ -37,9 +36,18 @@
 					<c:forEach var="cart" items="${cartList}">
 					<tr>
 						<td><input type="checkbox" name="remove" value="${cart.cartNo }" class="remove"/></td>
-						<td class="image"><img src="${pageContext.request.contextPath }/resources/images/item/${cart.prodImage}" /></td>
+						<td class="image"><img src="${pageContext.request.contextPath }/resources/upload/product/${cart.prodImage}" /></td>
 						<td class="name">${cart.prodName }</td>
-						<td><fmt:formatNumber value="${cart.prodPrice2 }" pattern="#,##0"/>원</td>
+						<td>
+						<c:choose>
+						<c:when test="${!cart.memId}">
+							<fmt:formatNumber value="${cart.prodPrice1 }" pattern="#,##0"/>원
+						</c:when>
+						<c:otherwise>
+							<fmt:formatNumber value="${cart.prodPrice2 }" pattern="#,##0"/>원
+						</c:otherwise>
+						</c:choose>
+						</td>
 						<td class="quantity">
 							<p class="num">${cart.quantity}</p>
 							<span>
@@ -48,8 +56,24 @@
 							</span>
 							<p class="modify"><a href="#" data-no="${cart.cartNo}">수정</a></p>
 						</td>
-						<td><fmt:formatNumber value="${cart.prodSave }" pattern="#,##0"/>원</td>
-						<td><b><fmt:formatNumber value="${cart.quantity * cart.prodPrice2 }" pattern="#,##0"/>원</b></td>
+						<td>
+						<c:choose>
+						<c:when test="${!cart.memId}">0원</c:when>
+						<c:otherwise>
+							<fmt:formatNumber value="${cart.prodSave }" pattern="#,##0"/>원
+						</c:otherwise>
+						</c:choose>
+						</td>
+						<td><b>
+						<c:choose>
+						<c:when test="${!cart.memId}">
+							<fmt:formatNumber value="${cart.quantity * cart.prodPrice1 }" pattern="#,##0"/>원
+						</c:when>
+						<c:otherwise>
+							<fmt:formatNumber value="${cart.quantity * cart.prodPrice2 }" pattern="#,##0"/>원
+						</c:otherwise>
+						</c:choose>
+						</b></td>
 					</tr>
 					</c:forEach>
 					<tr>
@@ -119,11 +143,27 @@
 			<c:otherwise>
 			<c:forEach var="wish" items="${wishList }">
 			<tr>
-				<td class="image"><img src="${pageContext.request.contextPath }/resources/images/item/${wish.prodImage}" /></td>
+				<td class="image"><img src="${pageContext.request.contextPath }/resources/upload/product/${wish.prodImage}" /></td>
 				<td class="name">${wish.prodName }</td>
-				<td><fmt:formatNumber value="${wish.prodPrice2 }" pattern="#,##0"/>원</td>
+				<td>
+				<c:choose>
+				<c:when test="${!wish.memId}">
+					<fmt:formatNumber value="${wish.prodPrice1 }" pattern="#,##0"/>원
+				</c:when>
+				<c:otherwise>
+					<fmt:formatNumber value="${wish.prodPrice2 }" pattern="#,##0"/>원
+				</c:otherwise>
+				</c:choose>
+				</td>
 				<td>${wish.quantity } 개</td>
-				<td><fmt:formatNumber value="${wish.prodSave }" pattern="#,##0"/>원</td>
+				<td>
+				<c:choose>
+				<c:when test="${!wish.memId}">0원</c:when>
+				<c:otherwise>
+					<fmt:formatNumber value="${wish.prodSave }" pattern="#,##0"/>원
+				</c:otherwise>
+				</c:choose>
+				</td>
 				<td><a href="javascript:go_addCartFromWish('${wish.wishNo}')" class="btn">담기</a></td>
 				<td><a href="javascript:go_removeWish('${wish.wishNo}')" class="btn">삭제</a></td>
 			</tr>

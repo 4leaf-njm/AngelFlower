@@ -361,7 +361,6 @@ E-mail : webmaster@hanflower.com
 					<input type="text" name="busiNo2" class="input01" maxlength="2" />
 					<span class="space">-</span>
 					<input type="text" name="busiNo3" class="input01" maxlength="5" />
-					<a href="#" class="btn_white">인증하기</a>
 				</div>
 				<div class="row">
 					<label for="represent">* 대표자</label>
@@ -448,7 +447,7 @@ E-mail : webmaster@hanflower.com
 					<input type="text" name="email1" id="mem_email" class="input02" />
 					<span class="space">@</span>
 					<input type="text" name="email2" class="input02" id="selEmail" style="margin: 0 7px 0 0; display: none;"/>
-					<select name="email3" class="input02" onchange="changeEmail()">
+					<select name="email3" class="input02" onchange="changeEmail()" >
 						<option value="">선택</option>
 						<option value="naver.com">naver.com</option>
 						<option value="hanmail.net">hanmail.net</option>
@@ -463,20 +462,18 @@ E-mail : webmaster@hanflower.com
 						<option value="yahoo.com">yahoo.com</option>
 						<option value="0">직접입력</option>
 					</select>
+					<a href="javascript:go_emailchk()" class="btn_white" id="emailChk">중복 확인</a> 
 				</div>
 			</div>
 			<a href="javascript:join_chk()" class="btn_join">가입하기</a>
 		</form>
-		<script>
-			
-		</script>
 	</div>
 	<div id="step3" class="tap_content">
 		<div>
 			<h2><span>엔젤플라워</span> 회원이 되신 것을 축하드립니다.</h2>
 			<h3>회원가입이 성공적으로 이루어졌습니다.</h3>
-			<p>상품을 보다 싸게, 회원가로 구매하실 수 있습니다.</p>
-			<p>엔젤플라워만의 특별한 할인혜택을 누리세요.</p>
+			<p id="message1">상품을 보다 싸게, 회원가로 구매하실 수 있습니다.</p>
+			<p id="message2">엔젤플라워만의 특별한 할인혜택을 누리세요.</p>
 		</div>
 		<a href="javascript:location.href='${pageContext.request.contextPath }/home.do'" class="btn_main">메인으로</a>
 	</div>
@@ -489,6 +486,12 @@ E-mail : webmaster@hanflower.com
 <script src="${pageContext.request.contextPath }/resources/js/commons.js"></script>
 
 <c:if test="${!empty type}">
+	<c:if test="${!empty param.user}">
+	<script>
+		$('#message1').text('관리자 승인 후 로그인 가능합니다.');
+		$('#message2').text('잠시만 기다려주세요.');
+	</script>
+	</c:if>
 	<script>
 		$('#step1').hide();
 		$('#step3').show();

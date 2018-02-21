@@ -26,8 +26,10 @@
 		<result property="prodNo" column="prod_no" />
 		<result property="prodName" column="prod_name" />
 		<result property="prodImage" column="prod_image" />
-		<result property="quentity" column="quentity" />
+		<result property="quantity" column="quantity" />
+		<result property="category" column="category" />
 		<result property="checkyn" column="check_yn" />
+		<result property="orderState" column="order_state" />
 	</resultMap>
 	
 	<update id="insertBalju" parameterType="balju">
@@ -38,8 +40,8 @@
 	</update>
 	
 	<update id="insertBaljuDetail" parameterType="balju">
-		insert into balju_detail(balju_no, prod_no, quentity)
-		values(#{baljuNo}, #{prodNo}, #{quentity})
+		insert into balju_detail(balju_no, prod_no, quantity)
+		values(#{baljuNo}, #{prodNo}, #{quantity})
 	</update>
 	
 	<select id="selectBaljuMaxNo" resultType="int">
@@ -77,17 +79,32 @@
 	</select>
 	
 	<select id="selectBaljuTotalList" resultMap="baljuMap">
-		select * from balju_view group by balju_no
+		select * from balju_view group by balju_no order by balju_no desc
+	</select>
+	
+	<select id="selectBaljuTotalListForPay" resultMap="baljuMap">
+		select *, b.order_state from balju_view a left join `order` b
+		on a.balju_no = b.balju_no
+		group by a.balju_no order by a.balju_no desc		
+	</select>
+	
+	<select id="selectBaljuTotalListCount" resultType="int">
+		select count(*) from balju a left join `order` b
+		on a.balju_no = b.balju_no
 	</select>
 	
 	<select id="selectBaljuListForPay" parameterType="hashmap" resultMap="baljuMap">
-		select * from balju_view where date_format(balju_date, '%Y-%m') = #{date} 
-		and (balju_sendid = #{adminId} or balju_recid = #{adminId}) 
+		select * from balju_view a where date_format(balju_date, '%Y-%m') = #{date} 
+		and (balju_sendid = #{adminId} or balju_recid = #{adminId})
+		and (select order_state from `order` b where a.balju_no = b.balju_no) = 4
+		and  (select cancel_yn from `order` b where a.balju_no = b.balju_no) != 'y'
 		group by balju_no
 	</select>
 	
 	<select id="selectBaljuListForPayCount" parameterType="hashmap" resultType="int">
-		select count(*) from balju where date_format(balju_date, '%Y-%m') = #{date} 
+		select count(*) from balju a where date_format(balju_date, '%Y-%m') = #{date} 
 		and (balju_sendid = #{adminId} or balju_recid = #{adminId}) 
+		and (select order_state from `order` b where a.balju_no = b.balju_no) = 4
+		and  (select cancel_yn from `order` b where a.balju_no = b.balju_no) != 'y'
 	</select>
 </mapper>

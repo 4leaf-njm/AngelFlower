@@ -29,6 +29,7 @@ public class MemberDAOImpl implements MemberDAO{
 
 	@Override
 	public void updateMember(MemberVO member) throws SQLException {
+		sqlSession.update(NAMESPACE + ".updateMember", member);
 	}
 
 	@Override
@@ -63,6 +64,36 @@ public class MemberDAOImpl implements MemberDAO{
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
 		return sqlSession.selectList(NAMESPACE + ".selectMemberList", null, rowBounds);
+	}
+
+	@Override
+	public MemberVO selectMemberFindId(Map<String, Object> params) throws SQLException {
+		return sqlSession.selectOne(NAMESPACE + ".selectMemberFindId", params);
+	}
+
+	@Override
+	public MemberVO selectMemberFindPw(Map<String, Object> params) throws SQLException {
+		return sqlSession.selectOne(NAMESPACE + ".selectMemberFindPw", params);
+	}
+
+	@Override
+	public void updateMemberPw(Map<String, Object> params) throws SQLException {
+		sqlSession.update(NAMESPACE + ".updateMemberPw", params);
+	}
+
+	@Override
+	public MemberVO selectMemberByEmail(String email) throws SQLException {
+		return sqlSession.selectOne(NAMESPACE + ".selectMemberByEmail", email);
+	}
+
+	@Override
+	public int selectMemberCountThisDay() throws SQLException {
+		return sqlSession.selectOne(NAMESPACE + ".selectMemberCountThisDay");
+	}
+
+	@Override
+	public int selectMemberCountThisMonth() throws SQLException {
+		return sqlSession.selectOne(NAMESPACE + ".selectMemberCountThisMonth");
 	}
 
 }

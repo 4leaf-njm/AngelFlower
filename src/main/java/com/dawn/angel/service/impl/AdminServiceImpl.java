@@ -2,6 +2,7 @@ package com.dawn.angel.service.impl;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import com.dawn.angel.dao.AdminDAO;
 import com.dawn.angel.domain.AdminVO;
@@ -24,6 +25,7 @@ public class AdminServiceImpl implements AdminService{
 
 	@Override
 	public void modifyAdmin(AdminVO admin) throws SQLException {
+		adminDAO.updateAdmin(admin);
 	}
 
 	@Override
@@ -81,4 +83,42 @@ public class AdminServiceImpl implements AdminService{
 		return adminDAO.selectAdminListSearchCount(cri, adminId);
 	}
 
+	@Override
+	public AdminVO getAdminFindId(Map<String, Object> params) throws SQLException {
+		return adminDAO.selectAdminFindId(params);
+	}
+
+	@Override
+	public AdminVO getAdminFindPw(Map<String, Object> params) throws SQLException {
+		return adminDAO.selectAdminFindPw(params);
+	}
+
+	@Override
+	public void modifyAdminPw(Map<String, Object> params) throws SQLException {
+		adminDAO.updateAdminPw(params);
+	}
+
+	@Override
+	public int getAdminByEmail(String email) throws SQLException {
+		AdminVO admin = adminDAO.selectAdminByEmail(email);
+		if(admin == null) 
+			return 1;
+		else
+			return 0;
+	}
+
+	@Override
+	public void modifyAdminRole(String adminId, int roleNo) throws SQLException {
+		adminDAO.updateAdminRole(adminId, roleNo);
+	}
+
+	@Override
+	public int getAdminCountThisDay() throws SQLException {
+		return adminDAO.selectAdminCountThisDay();
+	}
+
+	@Override
+	public int getAdminCountThisMonth() throws SQLException {
+		return adminDAO.selectAdminCountThisMonth();
+	}
 }

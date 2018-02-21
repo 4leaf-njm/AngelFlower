@@ -32,6 +32,7 @@ function join01() {
 	$('#step2').show();
 }
 
+var emailchk = false;
 function join_chk() {
 	var frm = document.frm_join;
 	var gubun = frm.gubun.value;
@@ -134,7 +135,11 @@ function join_chk() {
 		alert('이메일이 올바르지 않습니다.');
 		frm.email1.focus();
 		return;
-	} 
+	} else if (emailchk == false) {
+		alert('이메일 중복확인을 해주세요.');
+		frm.email1.focus();
+		return;
+	}
 	
 	if(!idchk) {
 		alert('아이디가 올바르지 않습니다.');
@@ -326,5 +331,105 @@ function settingBirth() {
 	for(var i=1; i<=31; i++) {
 		var value = (i+'').length == 1 ? '0' + i : i;
 		selectDay.add(new Option(i, value), optionIndex++);
+	}
+}
+
+function go_findId() {
+	var frm = document.frmid;
+	if(frm.name.value == '') {
+		alert('이름을 입력하세요.');
+		frm.name.focus();
+		return;
+	} else if(frm.email.value == '') {
+		alert('이메일을 입력하세요.');
+		frm.email.focus();
+		return;
+	}
+	frm.submit();
+}
+
+function go_findPw() {
+	var frm = document.frmpw;
+	if(frm.id.value == '') {
+		alert('아이디를 입력하세요.');
+		frm.id.focus();
+		return;
+	} else if(frm.name.value == '') {
+		alert('이름을 입력하세요.');
+		frm.name.focus();
+		return;
+	} else if(frm.email.value == '') {
+		alert('이메일을 입력하세요.');
+		frm.email.focus();
+		return;
+	}
+	frm.submit();
+}
+
+function go_modifyPw() {
+	var frm = document.frmnew;
+	if(frm.pwd.value == '') {
+		alert('비밀번호를 입력하세요.');
+		frm.pwd.focus();
+		return;
+	} else if(frm.pwdchk.value == '') {
+		alert('비밀번호 확인을 입력하세요.');
+		frm.pwdchk.focus();
+		return;
+	} else if (frm.pwd.value.length < 8 || frm.pwd.value.length > 16) {
+		alert('비밀번호를 8~16자리로 입력해주세요.');
+		frm.pwd.focus();
+		return;
+	} else if(frm.pwd.value != frm.pwdchk.value) {
+		alert('비밀번호가 일치하지 않습니다.');
+		frm.pwdchk.focus();
+		return;
+	} 
+	frm.submit();
+}
+
+function go_emailchk() {
+	var frm = document.frm_join;
+	if($('#emailChk').text() == '중복 확인') {
+		var email = '';
+		if(frm.emailType.value == 'n')
+			email = frm.email1.value + '@' + frm.email2.value;
+		else
+			email = frm.email1.value + '@' + frm.email3.value;
+		var email_reg = new RegExp('^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$', 'i');
+		var email_match = email_reg.exec(email);
+		if(email_match == null) {
+			alert('이메일이 올바르지 않습니다.');
+			frm.email1.focus();
+			return;
+		}
+		$.ajax({
+			type: 'post',
+			url: 'emailCheck.do', 
+			data: {'email': email},
+			dataType: 'json',
+			success: function(data) {
+				if(data.msg == 'success') {
+					alert('사용가능한 이메일입니다.');
+					$('#emailChk').text('다시 입력');
+					frm.email1.setAttribute('readonly', 'readonly');
+					frm.email2.setAttribute('readonly', 'readonly');
+					frm.email3.setAttribute('disabled', 'readonly');
+					emailchk = true;
+				} else {
+					alert('이미 사용중인 이메일입니다.');
+					emailchk = false;
+				}
+			},
+			error: function() {
+				alert('error');
+			}
+		});
+	} else {
+		frm.email1.removeAttribute('readonly');
+		frm.email2.removeAttribute('readonly');
+		frm.email3.removeAttribute('disabled');
+		$('#emailChk').text('중복 확인');
+		emailchk = false;
 	}
 }

@@ -15,17 +15,6 @@ function ajaxBestList(category) {
 				html += 	'<p><span class="lbl lbl01">적립금</span>' + comma(value.save) + '</p>';
 				html += '</li>';
 			})
-			if(data.length < 6) {
-				for(var i=data.length; i<6; i++) {
-					html += '<li>';
-					html += 	'<img src="' + $('#ctx').text() + '/resources/images/item/default.jpg" width="180" height="235"/>';
-					html += 	'<h3 style="color: #f67575">상품 준비중</h3>';
-					html += 	'<p class="price">판매가 : <span>0</span> 원</p>';
-					html += 	'<p class="sale">회원가 : <strong>0</strong> 원</p>';
-					html += 	'<p><span class="lbl lbl01">적립금</span>0</p>';
-					html += '</li>';
-				}
-			}
 			$('.bestMenu ul').html(html);
 		},
 		error: function(){
@@ -45,13 +34,11 @@ function ajaxReviewList(category, type, page, sido, gugun) {
 			$.each(data.reviewList, function(index, value){
 				html += '<li>';
 				if(value.type == 1) {
-					var title = value.revTitle;
-					title = title.replace(title.substr(title.length-1, 1), '*') + ' 님';
 					html += 	'<img src="' + $('#ctx').text() + '/resources/upload/review/' + value.revImage + '" alt="' + value.prodName + '" />';
 					html += 	'<div class="region">';
 					html += 		'<span class="type01">배송지역</span>';
 					html += 		'<h3>'+ value.revRegion +'</h3>';
-					html += 		'<p>'+ title +'</p>';
+					html += 		'<p>'+ value.revTitle +'</p>';
 					html += 	'</div>';
 					html += 	'<div class="info">';
 					html += 		'<h3>'+ value.revProd +'</h3>';
@@ -96,6 +83,10 @@ function ajaxReviewList(category, type, page, sido, gugun) {
 	});
 }
 
+function go_prodList(menu, page, sort) {
+	location.href = $('#ctx').text() + '/product/list.do?menu=' + menu + '&sort=' + sort + '&page=' + page;
+}
+
 function go_order() {
 	document.frm_prod.action = $('#ctx').text() + '/order/directOrder.do';
 	document.frm_prod.quantity.value = $('td.number > div').text();
@@ -112,4 +103,8 @@ function go_addWish() {
 	document.frm_prod.action = $('#ctx').text() + '/order/wish.do';
 	document.frm_prod.quantity.value = $('td.number > div').text();
 	document.frm_prod.submit();
+}
+
+function review_reg() {
+	
 }

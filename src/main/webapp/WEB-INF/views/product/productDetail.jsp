@@ -18,7 +18,7 @@
 			<span class="lbl lbl01">적립금</span>
 		</p>
 	</div>
-	<img src="${pageContext.request.contextPath }/resources/images/item/${prod.image}" alt="${prod.name }" class="img_prod"/>
+	<img src="${pageContext.request.contextPath }/resources/upload/product/${prod.image}" alt="${prod.name }" class="img_prod"/>
 	<div class="infoTable">
 		<table class="detail">
 			<tr>
@@ -61,13 +61,14 @@
 			<input type="hidden" name="prodNo" value="${prod.prodNo }" />
 			<input type="hidden" name="memId" value="${sessionScope.loginUser.id }" />
 			<input type="hidden" name="quantity" />
+			<input type="hidden" name="menu" value="${m}" />
 		</form>
 		
 		<div class="btn_box">
 			<a href="javascript:go_order()" class="buy">바로구매</a>
 			<a href="javascript:go_addCart()" class="cart">장바구니</a>
 			<a href="javascript:go_addWish()" class="zim">찜하기</a>
-			<p><a href="#" class="ad">광고</a></p>
+			<p><a href="javascript:go_prodList('${m}', '${cri.page}', '${sort}')" class="back">목록</a></p>
 		</div>
 		
 		<script>
@@ -96,7 +97,7 @@
 		<ul>
 		<c:forEach var="prod" items="${relList}">
 			<li data-no="${prod.prodNo }">
-				<img src="${pageContext.request.contextPath }/resources/images/item/${prod.image}" alt="${prod.name}" width="160" height="220"/>
+				<img src="${pageContext.request.contextPath }/resources/upload/product/${prod.image}" alt="${prod.name}" width="160" height="220"/>
 				<div>
 					<h3>${prod.name}</h3>
 					<p class="price">판매가 : <fmt:formatNumber value="${prod.price1}" pattern="#,##0" /> 원</p>
@@ -109,7 +110,9 @@
 		<script>
 			$('.rel_prod li').click(function(){
 				var prodNo = $(this).data('no');
-				location.href='<c:url value="detail.do?no=' + prodNo + '"/>';
+				var page = '${cri.page}';
+				var sort = '${sort}';
+				location.href='<c:url value="detail.do?menu=${m}&sort=' + sort + '&page=' + page + '&no=' + prodNo + '"/>';
 			})
 		
 			$('.rel_prod li').hover(function(){
@@ -130,30 +133,71 @@
 		<ul>
 			<li style="width: 110px;">상품이미지</li>
 			<li style="width: 83px;">만족도</li>
-			<li style="width: 525px;">구매후기</li>
-			<li style="width: 133px;">작성자</li>
-			<li style="width: 35px;">일자</li>
+			<li style="width: 549px;">구매후기</li>
+			<li style="width: 114px;">작성자</li>
+			<li style="width: 31px;">일자</li>
 		</ul>
+		<c:choose>
+		<c:when test="${empty comList}">
+		<div class="empty">
+			<p>작성된 상품후기가 없습니다.</p>
+		</div>
+		</c:when>
+		<c:otherwise>
 		<c:forEach var="com" items="${comList}">
-		<div>
-			<img src="${pageContext.request.contextPath }/resources/images/item/${com.image}" />
+		<div class="rev">
+			<img src="${pageContext.request.contextPath }/resources/upload/review/${com.comImage}" />
 			<div>
 				<div class="top">
-					<p style="width: 101px; margin: 0 21px 0 40px; text-align: left;">
-						<c:forEach begin="1" end="${com.star}">
+					<p style="width: 105px; margin: 0 30px 0 36px; text-align: center;">
+						<c:forEach begin="1" end="${com.comStar}">
 						<img src="${pageContext.request.contextPath }/resources/images/icon/ico_star.gif" />
 						</c:forEach>
 					</p>
-					<p style="width: 517px; line-height: 170%;">${com.content}</p>
+					<p style="width: 552px; line-height: 170%;">${com.comContent}</p>
 					<p style="width: 101px;">${com.memId}</p>
-					<p style="width: 78px;"><fmt:formatDate value="${com.regdate}" pattern="yyyy-MM-dd"/></p>
+					<p style="width: 79px;"><fmt:formatDate value="${com.comRegdate}" pattern="yyyy-MM-dd"/></p>
 				</div>
 				<div class="bottom">
-					<p><img src="${pageContext.request.contextPath }/resources/images/icon/ico_reply.gif" />${com.reply}</p>
+					<p><img src="${pageContext.request.contextPath }/resources/images/icon/ico_reply.gif" />${com.comReply}</p>
 				</div>
 			</div>
 		</div>
 		</c:forEach>
+		</c:otherwise>
+		</c:choose>
+		<form action="review_reg.do" method="post" name="frm_rev" enctype="multipart/form-data">
+			<div class="reg">
+				<input type="hidden" name="memId" value="${sessionScope.loginUser.id}" />
+				<input type="hidden" name="comStar" value="2" />
+				<input type="hidden" name="type" value="2" />
+				<input type="hidden" name="category" value="${m}" />
+				<input type="hidden" name="prodNo" value="${prod.prodNo}" />
+				<div>
+					<img src="${pageContext.request.contextPath }/resources/images/item/default.jpg" id="rev_image"/>
+					<label for="mfile">등록</label>
+					<input type="file" id="mfile" name="mfile" value="파일 첨부" onchange="javascript:readURL(this, '#rev_image');">
+				</div>
+				<p style="width: 105px; margin: 0 30px 0 34px; text-align: center;" id="star">
+				<c:forEach begin="1" end="5" varStatus="status">
+					<span id="star${status.count}" class="on"><i class="fa fa-star" data-idx="${status.count}"></i></span>
+				</c:forEach>
+				</p>
+				<p style="width: 552px; line-height: 170%;">
+					<textarea rows="6" cols="20" name="comContent"></textarea>
+				</p>
+				<p style="width: 101px;">
+				<c:choose>
+				<c:when test="${sessionScope.loginUser.id eq null}">비회원</c:when>
+				<c:otherwise>${sessionScope.loginUser.id}</c:otherwise>
+				</c:choose>
+				</p>
+				<p style="width: 79px;"><fmt:formatDate value="${now}" pattern="yyyy-MM-dd"/></p>
+			</div>
+		</form>
+	</div>
+	<div class="btn_box" style="text-align: center;">
+		<a href="javascript:review_reg()" class="btn_reg" id="btnReg">후기 작성</a>
 	</div>
 	
 	<ul class="tap">
@@ -205,10 +249,41 @@
 <%@ include file="/WEB-INF/views/include/footer.jsp" %>
 
 <script src="${pageContext.request.contextPath }/resources/js/product.js"></script>
-
 <c:if test="${param.direct eq 'y'}">
 <script>
 	alert('장바구니에 담겨 있는 상품도 함께 주문됩니다.\n원치 않으실 경우 장바구니를 비워주세요.');
 	location.href = getContextPath() + "/order/order.do";
 </script>
 </c:if>
+<script>
+	$('#btnReg').click(function(){
+		var text = $(this).text();
+		if(text == '후기 작성') {
+			$('.tap1 .reg').show();
+			$(this).text('후기 등록');
+		} else {
+			var frm = document.frm_rev;
+			if(frm.comContent.value == '') {
+				alert('후기 내용을 입력해주세요.');
+				frm.comContent.focus();
+				return;
+			}
+			var comstar = $('#star span.on').length;
+			frm.comStar.value = comstar;
+			frm.submit();
+		}
+	});
+	$('#star span').click(function(){
+		var idx = $(this).find('.fa').data('idx');
+		for(var i=1; i<=5; i++) {
+			if(i <= idx) {
+				$('#star'+i).html('<i class="fa fa-star" data-idx="' + i + '"></i>');
+				$('#star'+i).addClass('on');
+			}
+			else {
+				$('#star'+i).html('<i class="fa fa-star-o" data-idx="' + i + '"></i>');
+				$('#star'+i).removeClass('on');
+			} 
+		}
+	});
+</script>

@@ -3,9 +3,6 @@
 /* util area */
 .util{height: 30px; background: #f4f4f4; border-bottom: 3px solid #e4e4e4;}
 .util > div {width: 1200px; margin: 0 auto;}
-.util .util_left {float: left; margin: 5px 0 0 0;}
-.util .util_left > li {float: left; margin-right: 20px; color: #666165; font-weight: bold;}
-.util .util_left > li a {font-size: 14px;}
 .util .util_right {float: right; margin: 5px 0 0 0;}
 .util .util_right > li.admin {font-size: 14px;}
 .util .util_right > li.admin p {display: inline-block; font-size: 15px;}
@@ -45,9 +42,9 @@
 /* category area */
 .category {width: 1200px; margin: 0 auto;}
 .category ul {margin: 80px 0 0;}
-.category ul > li {position: relative; display: inline-block; margin: 0 11px;}
+.category ul > li {position: relative; display: inline-block; margin: 0 14px;}
 .category ul > li img {position: absolute; top: -50px; left: -20px;}
-.category ul > li a {display: block; width: 130px; height: 60px; padding: 12px 0 0 80px; text-align: center; border: 1px solid #e4e4e4; font-size: 25px; font-weight: bold; color: #000;}
+.category ul > li a {display: block; width: 131px; height: 60px; padding: 12px 0 0 80px; text-align: center; border: 1px solid #e4e4e4; font-size: 23px; font-weight: bold; color: #000;}
 .category ul > li a span {display: block; padding: 5px 0 0 0; font-size: 13px; color: #666666;}
 
 /* visual area */
@@ -70,7 +67,7 @@
 .best .menu li:first-child {border-left: none;}
 .best .menu li.on {background: #34353a; color: #fff;}
 .best .bestMenu {padding: 15px 20px;}
-.best .bestMenu ul {padding: 0 0 0 70px; height: 870px;}
+.best .bestMenu ul {padding: 0 0 0 70px; min-height: 430px;}
 .best .bestMenu li{position: relative; display:inline-block; width: 310px; margin: 15px 10px;}
 .best .bestMenu li:hover {cursor: pointer;}
 .best .bestMenu li img {padding: 15px; border: 1px solid #cccccc; border-radius: 8px;}
@@ -126,22 +123,22 @@
 .sub .account > div.bank01 p {color: #ff9900;}
 .sub .account > div.bank02 p {color: #49ab48;}
 .sub .account > div.bank03 p {color: #426bb2;}
-.sub .board {width: 540px;}
+.sub .board {width: 540px; padding: 30px 0 0; vertical-align: top;}
 .sub .board > div {position: relative; margin: 0 0 30px 0;}
 .sub .board > div > p {position: absolute; top: 0; right: 0;}
 .sub .board > div ul {padding: 0 0 0 40px; list-style: disc;}
 .sub .board > div ul li {position: relative; width: 100%; padding: 5px 0;}
-.sub .board > div ul li a {color: #333333; font-size: 15px;}
-.sub .board > div ul li span {position: absolute; top: 0; right: 0; color: #999999;}
+.sub .board > div ul li a {color: #333333; font-size: 13px;}
+.sub .board > div ul li span {position: absolute; top: 0; right: 0; color: #999999; font-size: 13px;}
 .sub > img {margin: 55px 0 0 17px; vertical-align: top;}
 
 /* quick menu */
 .quick {position: absolute; top: 0; right: -150px; width: 135px;}
 .quick > h2 {height: 30px; line-height: 30px; text-align: center; color: #fff; background: #34353a; border: 3px solid #242b41;}
 .quick > div {padding: 10px; text-align: center; border: 3px solid #e4e4e4; border-top: none;}
-.quick > div h3 {color: #4e4e4e; font-family: HY헤드라인M; font-size: 14px;}
-.quick > div ul {margin: 10px 0 0 0; padding: 8px; background: #e9f0fa;}
-.quick > div ul li {width: 90px; margin: 0 auto 10px; padding: 5px 0 10px; background: #fff; text-align: center;}
+.quick > div h3 {color: #4e4e4e; font-family: '맑은 고딕'; font-size: 14px;}
+.quick > div ul {overflow: hidden; margin: 10px 0 0 0; padding: 8px; height: 359px; background: #e9f0fa;}
+.quick > div ul li {width: 90px; height: 98px; margin: 0 auto 10px; padding: 5px 0 10px; background: #fff; text-align: center;}
 .quick > div ul li:last-child {margin-bottom: 0;}
 .quick > div ul li p {padding: 5px 0 0 0; color: #666666; font-size: 10px; font-weight: bold;}
 .quick > p.gocart {border: 3px solid #364058;}
@@ -156,7 +153,7 @@
 #footer > div > ul > li:first-child:after {display: none;}
 #footer > div > ul > li a {display: inline-block; height: 45px; line-height: 45px; color: #333333;}
 #footer > div > select {float: right; margin-top: 10px; width: 150px; height: 30px; font-size: 13px;}
-#footer > address {width: 860px; margin: 70px auto 50px; line-height: 200%;}
+#footer > address {width: 920px; margin: 70px auto 50px; line-height: 200%;}
 
 .tap {width: 1150px; margin: 70px auto 0; border-bottom: 7px solid #555; font-size: 0;}
 .tap > li {display: inline-block; width: 300px; height: 56px; line-height: 56px; background: #fff; text-align: center; vertical-align: bottom; font-family: '맑은 고딕'; font-size : 23px; font-weight: bold; color: #7f7f7f; }

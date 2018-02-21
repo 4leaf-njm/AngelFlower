@@ -2,33 +2,75 @@
     pageEncoding="UTF-8"%>
 
 <head>
-	<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/commons/login.css" />
+	<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/commons/find.css" />
 </head>
 
 <%@ include file="/WEB-INF/views/include/header.jsp" %>
 
 <!-- container (S) -->
 <div id="container">
-	<hr class="line01" />
-	<div class="login">
-		<h2>로그인</h2>
-		<p>회원 로그인을 하시면 보다 편리한 서비스를 이용하실 수 있습니다.</p>
-		<form method="post" name="frm_login">
-			<div class="frm">
-				<input type="text" name="id" placeholder="아이디를 입력하세요." />
-				<input type="password" name="pw" placeholder="비밀번호를 입력하세요." />
-			</div>
-			<a href="javascript:go_login()" class="btn_login">로그인</a>
-		</form>
-		<div class="find">
+	<div class="find">
+		<h2>아이디 / 비밀번호 찾기</h2>
+		<p>회원가입 시, 입력하신 회원정보로 아이디와 비밀번호를 확인할 수 있습니다.</p>
+		<div class="form">
 			<div>
-				<p>회원이 아니신가요 ?</p>
-				<a href='<c:url value="/commons/join.do" />'>회원가입</a>
+				<h3>아이디 찾기</h3>
+				<form action="findId.do" method="post" name="frmid">
+					<table>
+						<tr>
+							<th>이   름</th>
+							<td><input type="text" name="name" /></td>
+						</tr>
+						<tr>
+							<th>이메일</th>
+							<td><input type="text" name="email" /></td>
+						</tr>	
+					</table>
+				</form>
+				<a href="javascript:go_findId()" class="btn">확인</a>
 			</div>
 			<div>
-				<p>아이디/비밀번호를 잊으셨나요 ?</p>
-				<a href="#">아이디/비밀번호 찾기</a>
+				<h3>비밀번호 찾기</h3>
+				<form action="findPw.do" method="post" name="frmpw">
+					<table>
+						<tr>
+							<th>아이디</th>
+							<td><input type="text" name="id" /></td>
+						</tr>
+						<tr>
+							<th>이   름</th>
+							<td><input type="text" name="name" /></td>
+						</tr>
+						<tr>
+							<th>이메일</th>
+							<td><input type="text" name="email" /></td>
+						</tr>	
+					</table>
+				</form>
+				<a href="javascript:go_findPw()" class="btn">확인</a>
 			</div>
+		</div>
+		<div class="res" id="resid">
+			<div>
+				<p><span id="name"></span> 님의 아이디는 <span id="id"></span> 입니다.</p>
+			</div>
+			<a href="${pageContext.request.contextPath }/commons/login.do" class="btn">로그인</a>
+		</div>
+		<div class="res" id="respw">
+			<form action="modifyPw.do" method="post" name="frmnew">
+				<input type="hidden" name="id" />
+				<table>
+					<tr>
+						<th>새로운 비밀번호</th>
+						<td><input type="password" name="pwd" /></td>
+					</tr>
+					<tr>
+						<th>새로운 비밀번호 확인</th>
+						<td><input type="password" name="pwdchk" /></td>
+					</tr>
+				</table>
+			</form>
+			<a href="javascript:go_modifyPw()" class="btn">확인</a>
 		</div>
 	</div>
 	
@@ -38,8 +80,27 @@
 
 <%@ include file="/WEB-INF/views/include/footer.jsp" %>
 
-<c:if test="${msg ne null}">
-	<script>
-		alert('${msg}')
-	</script>
+<c:if test="${msg eq 'success'}">
+<c:choose>
+<c:when test="${type eq 'id'}">
+<script>
+	$('.form').hide();
+	$('#resid').show();
+	$('#resid #name').text('${user.name}');
+	$('#resid #id').text('${user.id}');
+</script>
+</c:when>
+<c:otherwise>
+<script>
+	document.frmnew.id.value = '${user.id}';
+	$('.form').hide();
+	$('#respw').show();
+</script>
+</c:otherwise>
+</c:choose>
+</c:if>
+<c:if test="${msg eq 'fail'}">
+<script>
+	alert('가입된 정보가 없습니다.');
+</script>
 </c:if>

@@ -1,3 +1,5 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -15,22 +17,6 @@
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="${pageContext.request.contextPath }/resources/js/default.js"></script>
 <script src="${pageContext.request.contextPath }/resources/jquery-ui/jquery-ui.min.js"></script>
-<script>
-$(document).ready(function(){
-	 var obj1 = $('.content');
-	 var obj2 = $('.lnb');
-	 
-	 var height1 = parseInt(obj1.css('height').replace('px', ''));
-	 var height2 = parseInt(obj2.css('height').replace('px', ''));
-	
-	 obj2.css('height', (height1 + 35) + 'px');
-	 
-	 $('.paging li').click(function(){
-		$(this).parent('.paging').find('li').removeClass('on');
-		$(this).addClass('on');
-	});
-});
-</script>
 </head>
 <body>
 
@@ -61,33 +47,43 @@ $(document).ready(function(){
 		<div class="gnb">
 			<ul>
 				<li>
-					<a href="${pageContext.request.contextPath }/admin/mb/list.do?m=1">
+					<a href="${pageContext.request.contextPath }/admin/home.do">
+						<i class="fa fa-home" aria-hidden="true"></i>홈
+					</a>
+				</li>
+				<li>
+					<a href="${pageContext.request.contextPath }/admin/mb/list.do?m=2">
 						<i class="fa fa-user" aria-hidden="true"></i>회원관리
 					</a>
 				</li>
 				<li>
-					<a href="${pageContext.request.contextPath }/admin/prd/list.do?m=2">
+					<a href="${pageContext.request.contextPath }/admin/prd/list.do?m=3">
 						<i class="fa fa-shopping-basket" aria-hidden="true"></i>상품관리
 					</a>
 				</li>
 				<li>
-					<a href="${pageContext.request.contextPath }/admin/ord/list.do?m=3">
+					<a href="${pageContext.request.contextPath }/admin/ord/list.do?m=4">
 						<i class="fa fa-shopping-cart" aria-hidden="true"></i>주문관리
 					</a>
 				</li>
 				<li>
-					<a href="${pageContext.request.contextPath }/admin/bj/reclist.do?m=4">
+					<a href="${pageContext.request.contextPath }/admin/bj/reclist.do?m=5">
 						<i class="fa fa-truck" aria-hidden="true"></i>발주관리
 					</a>
 				</li>
 				<li>
-					<a href="${pageContext.request.contextPath }/admin/pay/totsale.do?m=5&y=<fmt:formatDate value="${now}" pattern="yyyy"/>">
+					<a href="${pageContext.request.contextPath }/admin/pay/bjsale.do?m=6&y=<fmt:formatDate value="${now}" pattern="yyyy"/>">
 						<i class="fa fa-krw" aria-hidden="true"></i>정산관리
 					</a>
 				</li>
 				<li>
-					<a href="${pageContext.request.contextPath }/admin/rev/shiplist.do?m=6">
+					<a href="${pageContext.request.contextPath }/admin/rev/shiplist.do?m=7">
 						<i class="fa fa-pencil" aria-hidden="true"></i>후기관리
+					</a>
+				</li>
+				<li>
+					<a href="${pageContext.request.contextPath }/admin/store/notice.do?m=8">
+						<i class="fa fa-bank" aria-hidden="true"></i>홈피관리
 					</a>
 				</li>
 			</ul>

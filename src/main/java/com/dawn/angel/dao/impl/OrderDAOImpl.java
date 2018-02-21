@@ -60,23 +60,14 @@ public class OrderDAOImpl implements OrderDAO{
 	}
 
 	@Override
-	public OrderVO selectOrderByNoForGuest(int orderNo) throws SQLException {
-		return sqlSession.selectOne(NAMESPACE + ".selectOrderByNoForGuest", orderNo);
-	}
-
-	@Override
-	public List<OrderVO> selectOrderDetailListForGuest(int orderNo) throws SQLException {
-		return sqlSession.selectList(NAMESPACE + ".selectOrderDetailListForGuest", orderNo);
-	}
-
-	@Override
 	public int selectOrderCountById(String memId) throws SQLException {
 		return sqlSession.selectOne(NAMESPACE + ".selectOrderCountById", memId);
 	}
 
 	@Override
 	public int selectOrderCountByProd(int prodNo) throws SQLException {
-		return sqlSession.selectOne(NAMESPACE + ".selectOrderCountByProd", prodNo);
+		Integer count = sqlSession.selectOne(NAMESPACE + ".selectOrderCountByProd", prodNo);
+		return count == null ? 0 : count;
 	}
 
 	@Override
@@ -216,6 +207,73 @@ public class OrderDAOImpl implements OrderDAO{
 		params.put("date", date);
 		params.put("cri", cri);
 		return sqlSession.selectOne(NAMESPACE + ".selectOrderSearchListForPayCount", params);
+	}
+
+	@Override
+	public List<OrderVO> selectMyOrderList(String memId) throws SQLException {
+		return sqlSession.selectList(NAMESPACE + ".selectMyOrderList", memId);
+	}
+
+	@Override
+	public List<OrderVO> selectOrderTotalListForBalju(String adminId) throws SQLException {
+		return sqlSession.selectList(NAMESPACE + ".selectOrderTotalListForBalju", adminId);
+	}
+	
+	@Override
+	public List<OrderVO> selectOrderTotalListForBalju(Criteria cri, String adminId) throws SQLException {
+		int offset = cri.getPageStart();
+		int limit = cri.getPerPageNum();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return sqlSession.selectList(NAMESPACE + ".selectOrderTotalListForBalju", adminId, rowBounds);
+	}
+
+	@Override
+	public int selectOrderTotalCountForBalju(String adminId) throws SQLException {
+		return sqlSession.selectOne(NAMESPACE + ".selectOrderTotalCountForBalju", adminId);
+	}
+
+	@Override
+	public List<OrderVO> selectOrderDepListForBalju(Criteria cri, String adminId) throws SQLException {
+		int offset = cri.getPageStart();
+		int limit = cri.getPerPageNum();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return sqlSession.selectList(NAMESPACE + ".selectOrderDepListForBalju", adminId, rowBounds);
+	}
+
+	@Override
+	public int selectOrderDepCountForBalju(String adminId) throws SQLException {
+		return sqlSession.selectOne(NAMESPACE + ".selectOrderDepCountForBalju", adminId);
+	}
+
+	@Override
+	public List<OrderVO> selectOrderShipListForBalju(Criteria cri, String adminId) throws SQLException {
+		int offset = cri.getPageStart();
+		int limit = cri.getPerPageNum();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return sqlSession.selectList(NAMESPACE + ".selectOrderShipListForBalju", adminId, rowBounds);
+	}
+
+	@Override
+	public int selectOrderShipCountForBalju(String adminId) throws SQLException {
+		return sqlSession.selectOne(NAMESPACE + ".selectOrderShipCountForBalju", adminId);
+	}
+
+	@Override
+	public void updateOrderSerial(OrderVO order) throws SQLException {
+		sqlSession.update(NAMESPACE + ".updateOrderSerial", order);
+	}
+
+	@Override
+	public List<OrderVO> selectOrderListThisMonth() throws SQLException {
+		return sqlSession.selectList(NAMESPACE + ".selectOrderListThisMonth");
+	}
+
+	@Override
+	public List<OrderVO> selectOrderListThisDay() throws SQLException {
+		return sqlSession.selectList(NAMESPACE + ".selectOrderListThisDay");
 	}
 	
 }

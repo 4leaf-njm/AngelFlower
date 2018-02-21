@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Banner-Mapper">
+	<resultMap id="bannerMap" type="banner">
+		<id property="bannerNo" column="banner_no" />
+		<result property="bannerTitle" column="banner_title" />
+		<result property="bannerImage" column="banner_image" />
+		<result property="rank" column="rank" />
+	</resultMap>
+
+	<select id="selectBannerList" resultMap="bannerMap">
+		select * from banner order by rank
+	</select>
+	
+	<select id="selectBannerByNo" parameterType="int" resultMap="bannerMap">
+		select * from banner where banner_no = #{bannerNo}
+	</select>
+	
+	<update id="updateBanner">
+		update banner set banner_title = #{bannerTitle}, banner_image = #{bannerImage},
+		rank = #{rank} where banner_no = #{bannerNo}
+	</update>
+</mapper>

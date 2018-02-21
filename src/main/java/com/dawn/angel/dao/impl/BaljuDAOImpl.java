@@ -86,6 +86,19 @@ public class BaljuDAOImpl implements BaljuDAO {
 	}
 
 	@Override
+	public List<BaljuVO> selectBaljuTotalListForPay(Criteria cri) throws SQLException {
+		int offset = cri.getPageStart();
+		int limit = cri.getPerPageNum();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		return sqlSession.selectList(NAMESPACE + ".selectBaljuTotalListForPay", null, rowBounds);
+	}
+	
+	@Override
+	public int selectBaljuTotalListCount() throws SQLException {
+		return sqlSession.selectOne(NAMESPACE + ".selectBaljuTotalListCount");
+	}
+	
+	@Override
 	public List<BaljuVO> selectBaljuListForPay(String adminId, int year, int month) throws SQLException {
 		Map<String, Object> params = new HashMap<String, Object>();
 		String m = Integer.toString(month);

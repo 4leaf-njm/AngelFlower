@@ -15,6 +15,7 @@
 				<th>성명</th>
 				<th>핸드폰</th>
 				<th>받는 금액</th>
+				<th>보기</th>
 				<th>상태</th>
 				<th>비고</th>
 			</tr>
@@ -33,6 +34,7 @@
 				<td>${balju.baljuSendName }</td>
 				<td>${balju.baljuSendPhone }</td>
 				<td><fmt:formatNumber value="${balju.baljuRecPrice }" pattern="#,##0" /> 원</td>
+				<td><a href="javascript:go_baljuDetail('${m}', '${s}', '${balju.baljuNo}')" class="btn btn01">상세</a></td>
 				<td>
 				<c:choose>
 				<c:when test="${balju.checkyn eq 'y'.charAt(0)}">승인</c:when>
@@ -40,7 +42,7 @@
 				</c:choose>
 				</td>
 				<td>
-					<a href="javascript:go_permitBalju('${m}', '${s}', '${balju.baljuNo }', '${pageMaker.cri.page}')" class="btn btn01">승인</a>
+					<a href="javascript:go_permitBalju('${m}', '${s}', '${balju.baljuNo }', '${pageMaker.cri.page}', '${balju.checkyn}')" class="btn btn01">승인</a>
 				</td>
 			</tr>
 			</c:forEach>

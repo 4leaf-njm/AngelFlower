@@ -42,4 +42,35 @@
 		update member set use_yn = 'n' 
 		where mem_id = #{id}
 	</update>
+	
+	<select id="selectMemberFindId" parameterType="hashmap" resultMap="memberMap">
+		select * from member where mem_name = #{name} and mem_email = #{email}
+	</select>
+	
+	<select id="selectMemberFindPw" parameterType="hashmap" resultMap="memberMap">
+		select * from member where mem_id = #{id} and mem_name = #{name} and mem_email = #{email}
+	</select>
+	
+	<update id="updateMemberPw" parameterType="hashmap">
+		update member set mem_pwd = #{pwd} where mem_id = #{id}
+	</update>
+	
+	<select id="selectMemberByEmail" parameterType="str" resultMap="memberMap">
+		select * from member where mem_email = #{email}
+	</select>
+	
+	<update id="updateMember" parameterType="member">
+		update member set mem_pwd = #{pwd}, mem_birth = #{birth}, mem_gender = #{gender}, 
+		mem_phone = #{phone}, mem_address = #{address}, mem_email = #{email}
+		where mem_id = #{id}
+	</update>
+	
+	<select id="selectMemberCountThisDay" resultType="int">
+		select count(*) from member where date_format(regdate, '%Y-%m-%d') = curdate() and use_yn = 'y'
+	</select>
+	
+	<select id="selectMemberCountThisMonth" resultType="int">
+		select count(*) from member where month(regdate) = month(curdate()) and use_yn = 'y'
+	</select>
+	
 </mapper>
